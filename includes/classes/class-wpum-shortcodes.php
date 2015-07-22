@@ -292,9 +292,14 @@ class WPUM_Shortcodes {
 			$display_buttons = false;
 		}
 
-		get_wpum_template( 'profile-card.php', array( 
+		// Detect which template should be loaded
+		$card_template = 'profile-card.php';
+		if( ! empty( $template ) ) {
+			$card_template = "profile-card-{$template}.php";
+		}
+
+		get_wpum_template( $card_template, array( 
 				'user_data'       => get_user_by( 'id', intval( $user_id ) ),
-				'template'        => $template,
 				'wrapper_id'      => $wrapper_id,
 				'link_to_profile' => $link_to_profile,
 				'display_buttons' => $display_buttons,
@@ -468,6 +473,13 @@ class WPUM_Shortcodes {
 		);
 		$user_query = new WP_User_Query( apply_filters( "wpum_user_directory_query", $args, $directory_id ) );
 
+		// Detect which template we should be using.
+		$template     = "user-directory.php";
+		$template_tag = wpum_directory_has_custom_template( $directory_id );
+		if( $template_tag ) {
+			$template = "user-directory-{$template_tag}.php";
+		}
+
 		// Build Pagination Count
 		// Modify $number var if a custom amount is set from the frontend
 		// This updates the pagination too.
@@ -486,11 +498,10 @@ class WPUM_Shortcodes {
 			'directory_id' => $directory_id,
 			'paged'        => $paged,
 			//'search_form'  => wpum_directory_has_search_form( $directory_id ), Search form is under construction.
-			'template'     => wpum_directory_has_custom_template( $directory_id )
 		);
 
 		// Load the template
-		get_wpum_template( 'user-directory.php', array( 'directory_args' => $directory_args ) );
+		get_wpum_template( $template, array( 'directory_args' => $directory_args ) );
 
 		$output = ob_get_clean();
 

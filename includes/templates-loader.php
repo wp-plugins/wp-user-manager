@@ -91,3 +91,23 @@ function get_wpum_template_part( $slug, $name = '', $template_path = 'wpum', $de
 		load_template( $template, false );
 	}
 }
+
+/**
+ * Returns the path to the WPUM templates directory
+ *
+ * @since 1.0.2
+ * @return string
+ */
+function wpum_get_templates_dir() {
+	return WPUM_PLUGIN_DIR . 'templates';
+}
+
+/**
+ * Returns the URL to the WPUM templates directory
+ *
+ * @since 1.0.2
+ * @return string
+ */
+function wpum_get_templates_url() {
+	return WPUM_PLUGIN_URL . 'templates';
+}

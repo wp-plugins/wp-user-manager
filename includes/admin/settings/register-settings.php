@@ -188,6 +188,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Login page:', 'wpum' ),
 					'desc'    => __('Select the page where you have added the login shortcode.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'password_recovery_page' => array(
@@ -195,6 +196,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Password recovery page:', 'wpum' ),
 					'desc'    => __('Select the page where you have added the password recovery shortcode.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'registration_page' => array(
@@ -202,6 +204,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Registration page:', 'wpum' ),
 					'desc'    => __('Select the page where you have added the registration shortcode.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'account_page' => array(
@@ -209,6 +212,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Account page:', 'wpum' ),
 					'desc'    => __('Select the page where you have added the account shortcode.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'profile_page' => array(
@@ -216,6 +220,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Profile page:', 'wpum' ),
 					'desc'    => __('Select the page where you have added the profile shortcode.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'header3' => array(
@@ -265,7 +270,7 @@ function wpum_get_registered_settings() {
 					'desc'        => __('Hide admin bar for specific user roles.', 'wpum'),
 					'type'        => 'multiselect',
 					'placeholder' => __('Select the user roles from the list.', 'wpum'),
-					'class'       => 'select2',
+					'class'       => 'select2_multiselect',
 					'options'     => wpum_get_roles()
 				),
 			)
@@ -300,7 +305,7 @@ function wpum_get_registered_settings() {
 					'desc'        => __('Select which roles can be selected upon registration.', 'wpum'),
 					'type'        => 'multiselect',
 					'placeholder' => __('Select the user roles from the list.', 'wpum'),
-					'class'       => 'select2',
+					'class'       => 'select2_multiselect',
 					'options'     => wpum_get_roles()
 				),
 				'header4' => array(
@@ -319,6 +324,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Terms Page:', 'wpum' ),
 					'desc'    => __('Select the page that contains your terms.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'header5' => array(
@@ -433,6 +439,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Login redirect:', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users after they login. If empty will return to the current page.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'logout_redirect' => array(
@@ -440,6 +447,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Logout redirect:', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users after they logout. If empty will return to wp-login.php', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'wp_login_signup_redirect' => array(
@@ -447,6 +455,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Backend register redirect:', 'wpum' ),
 					'desc'    => sprintf(__('Select a page if you wish to redirect users who try to signup through <a href="%s">the default registration page on wp-login.php</a>', 'wpum'), site_url( 'wp-login.php?action=register' ) ),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'backend_profile_redirect' => array(
@@ -454,6 +463,7 @@ function wpum_get_registered_settings() {
 					'name'    => __( 'Backend profile redirect:', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users who try to access their profile on the backend.', 'wpum'),
 					'type'    => 'select',
+					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 			)

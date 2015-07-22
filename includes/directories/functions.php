@@ -167,12 +167,15 @@ function wpum_directory_has_search_form( $directory_id = 0 ) {
  */
 function wpum_directory_has_custom_template( $directory_id = 0 ) {
 
+	$template = false;
+
 	$custom_template = get_post_meta( $directory_id, 'directory_template', true );
 
-	if ( !empty( $custom_template ) )
-		return $custom_template;
+	if ( ! empty( $custom_template ) ) {
+		$template = $custom_template;
+	}
 
-	return false;
+	return $template;
 }
 
 /**

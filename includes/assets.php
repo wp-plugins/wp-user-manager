@@ -80,9 +80,39 @@ function wpum_frontend_cssjs() {
 	// Use minified libraries if SCRIPT_DEBUG is turned off
 	$suffix  = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 
+	// Default URL
+	$url = $css_dir . 'wp_user_manager_frontend' . $suffix . '.css';
+
+	$file          = 'wp_user_manager_frontend' . $suffix . '.css';
+	$templates_dir = 'wpum/';
+	$child_theme_style_sheet    = trailingslashit( get_stylesheet_directory() ) . $templates_dir . $file;
+	$child_theme_style_sheet_2  = trailingslashit( get_stylesheet_directory() ) . $templates_dir . 'wp_user_manager_frontend.css';
+	$parent_theme_style_sheet   = trailingslashit( get_template_directory()   ) . $templates_dir . $file;
+	$parent_theme_style_sheet_2 = trailingslashit( get_template_directory()   ) . $templates_dir . 'wp_user_manager_frontend.css';
+	$wpum_plugin_style_sheet     = trailingslashit( wpum_get_templates_dir()    ) . $file;
+	
+	// Look in the child theme directory first, followed by the parent theme, followed by the WPUM core templates directory
+	// Also look for the min version first, followed by non minified version, even if SCRIPT_DEBUG is not enabled.
+	// This allows users to copy just wp_user_manager_frontend.css to their theme
+	if ( file_exists( $child_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $child_theme_style_sheet_2 ) ) ) ) {
+		if( ! empty( $nonmin ) ) {
+			$url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . 'wp_user_manager_frontend.css';
+		} else {
+			$url = trailingslashit( get_stylesheet_directory_uri() ) . $templates_dir . $file;
+		}
+	} elseif ( file_exists( $parent_theme_style_sheet ) || ( ! empty( $suffix ) && ( $nonmin = file_exists( $parent_theme_style_sheet_2 ) ) ) ) {
+		if( ! empty( $nonmin ) ) {
+			$url = trailingslashit( get_template_directory_uri() ) . $templates_dir . 'wp_user_manager_frontend.css';
+		} else {
+			$url = trailingslashit( get_template_directory_uri() ) . $templates_dir . $file;
+		}
+	} elseif ( file_exists( $wpum_plugin_style_sheet ) || file_exists( $wpum_plugin_style_sheet ) ) {
+		$url = trailingslashit( wpum_get_templates_url() ) . $file;
+	}
+
 	// Styles & scripts registration
 	wp_register_script( 'wpum-frontend-js', $js_dir . 'wp_user_manager' . $suffix . '.js', array( 'jquery' ), WPUM_VERSION, true );
-	wp_register_style( 'wpum-frontend-css', $css_dir . 'wp_user_manager_frontend' . $suffix . '.css' , WPUM_VERSION );
+	wp_register_style( 'wpum-frontend-css', $url , WPUM_VERSION );
 
 	// Enqueue everything
 	wp_enqueue_script( 'jQuery' );

@@ -22,7 +22,11 @@ jQuery(document).ready(function ($) {
 
 		// General Functions
 		general : function() {
-			jQuery("select.select2, .wppf-multiselect").select2();
+			jQuery("select.select2").select2({
+				width: 'resolve'
+			});
+
+			jQuery(".wppf-multiselect, select.select2_multiselect").select2();
 		},
 
 		// Ajax Function to restore emails

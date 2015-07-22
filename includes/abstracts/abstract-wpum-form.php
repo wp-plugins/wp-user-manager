@@ -238,7 +238,7 @@ abstract class WPUM_Form {
 
 		$fields = self::$fields[ $key ];
 
-		uasort( $fields, __CLASS__ . '::priority_cmp' );
+		//uasort( $fields, __CLASS__ . '::priority_cmp' );
 
 		return $fields;
 	}

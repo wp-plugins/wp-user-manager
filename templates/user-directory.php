@@ -7,16 +7,6 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.0
  */
-
-// Return different template if set.
-if( $directory_args['template'] ) {
-	get_wpum_template( "user-directory-{$directory_args['template']}.php", array( 
-			'directory_args' => $directory_args
-		) 
-	);
-	return;
-}
-
 ?>
 
 <!-- start directory -->

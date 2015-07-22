@@ -135,6 +135,7 @@ add_action( 'wpum_before_login_form', 'wpum_show_failed_login_message' );
  * @return void
  */
 function wpum_profile_update_messages() {
+
 	if ( isset( $_GET['updated'] ) && $_GET['updated'] == 'success' ) :
 		$args = array(
 			'id'   => 'wpum-profile-updated',

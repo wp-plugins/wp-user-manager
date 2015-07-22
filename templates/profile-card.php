@@ -8,20 +8,6 @@
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.0
  */
-
-// Return different template if set.
-if ( $template ) {
-	get_wpum_template( "profile-card-{$template}.php", array(
-			'user_data'       => $user_data,
-			'template'        => $template,
-			'wrapper_id'      => $wrapper_id,
-			'link_to_profile' => $link_to_profile,
-			'display_buttons' => $display_buttons,
-			'atts'            => $atts
-		)
-	);
-	return;
-}
 ?>
 
 <div id="wpum-profile-card<?php echo $wrapper_id; ?>" class="wpum-profile-card">

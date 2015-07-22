@@ -9,6 +9,11 @@
 jQuery(document).ready(function ($) {
 
 	/**
+	 *  Get current page url
+	 */
+	var wpum_location = $( location );
+
+	/**
 	 * Frontend Scripts
 	 */
 	var WPUM_Frontend = {
@@ -117,6 +122,42 @@ jQuery(document).ready(function ($) {
 	};
 
 	WPUM_Frontend.init();
+
+	/**
+	 * Remove query arguments from pages to prevent multiple message to appear.
+	 */
+	window.wpum_removeArguments = function() {
+	    function removeParam(key, sourceURL) {
+	        var rtn = sourceURL.split("?")[0],
+	            param, params_arr = [],
+	            queryString = (sourceURL.indexOf("?") !== -1) ? sourceURL.split("?")[1] : "";
+	        if (queryString !== "") {
+	            params_arr = queryString.split("&");
+	            for (var i = params_arr.length - 1; i >= 0; i -= 1) {
+	                param = params_arr[i].split("=")[0];
+	                if ($.inArray(param, key) > -1) {
+	                    params_arr.splice(i, 1);
+	                }
+	            }
+	            rtn = rtn + "?" + params_arr.join("&");
+	        }
+	        return rtn;
+	    }
+
+	    var remove_query_args = ['updated'];
+
+	    url = wpum_location.attr('href');
+	    url = removeParam(remove_query_args, url);
+
+	    if (typeof history.replaceState === 'function') {
+	        history.replaceState({}, '', url);
+	    }
+	}; 
+
+ 	// Run the above script only on plugin's pages
+ 	if( jQuery( 'body' ).hasClass('wpum-account-page') ) {
+ 		window.wpum_removeArguments();
+ 	}
 
 	// Run pwd meter if enabled
 	if( wpum_frontend_js.pwd_meter == 1 ) {

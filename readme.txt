@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -83,6 +83,14 @@ Here [http://docs.wpusermanager.com/](http://docs.wpusermanager.com/)
 View all the screenshots here [http://wpusermanager.com/screenshots/](http://wpusermanager.com/screenshots/)
 
 == Changelog ==
+
+= 1.0.2 =
+- Added: added: better way to find and select pages within the admin panel
+- Added: allow developers to override the default css file by placing it into the theme
+- Fixed: custom template for directory not working
+- fixed: custom template loading for profile card shortcode
+- fixed: success message still displaying if an error occures when updating the account details - resulting in both success and error message showing up
+- fixed: fields not correctly ordered upon installation
 
 = 1.0.1 =
 - Added: russian language file support. Thanks to Ctajleh
