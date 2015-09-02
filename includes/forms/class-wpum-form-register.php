@@ -22,7 +22,7 @@ class WPUM_Form_Register extends WPUM_Form {
 	 * The name of the form
 	 */
 	public static $form_name = 'register';
-	
+
 	/**
 	 * Password Method
 	 */
@@ -47,12 +47,12 @@ class WPUM_Form_Register extends WPUM_Form {
 		 * 1 - Validate password strength
 		 * 2 - Add meter after password field
 		 * 3 - Execute automatic login
-		 * 
+		 *
 		 */
 		if( wpum_get_option( 'custom_passwords' ) ) {
-			
+
 			self::$random_password = false;
-			
+
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_password' ), 10, 3 );
 
 			if( wpum_get_option('display_password_meter_registration') ) {
@@ -98,7 +98,7 @@ class WPUM_Form_Register extends WPUM_Form {
 		 *
 		 */
 		if( wpum_get_option( 'allow_role_select' ) ) {
-			
+
 			add_action( 'wpum_get_registration_fields', array( __CLASS__, 'add_role' ) );
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_role' ), 10, 3 );
 			add_action( 'wpum/form/register/success', array( __CLASS__, 'save_role' ), 10, 10 );
@@ -183,7 +183,7 @@ class WPUM_Form_Register extends WPUM_Form {
 	 * @return void
 	 */
 	public static function add_psw_meter( $field ) {
-		echo '<span id="password-strength">' . __( 'Strength Indicator', 'wpum' ) . '</span>';		
+		echo '<span id="password-strength">' . __( 'Strength Indicator', 'wpum' ) . '</span>';
 	}
 
 	/**
@@ -299,7 +299,7 @@ class WPUM_Form_Register extends WPUM_Form {
 	 * @return void
 	 */
 	public static function add_role( $fields ) {
-		
+
 		$fields[ 'role' ] = array(
 			'label'       => __('Select Role', 'wpum'),
 			'type'        => 'select',
@@ -401,7 +401,7 @@ class WPUM_Form_Register extends WPUM_Form {
 	 * @return void
 	 */
 	public static function process() {
-		
+
 		// Get fields
 		self::get_registration_fields();
 
@@ -438,15 +438,19 @@ class WPUM_Form_Register extends WPUM_Form {
 
 		// Try registration
 		if( self::$random_password ) {
-			$do_user = register_new_user($username, $email);
+
+			$do_user = self::random_psw_registration( $username, $email );
+
 		} else {
+
 			$pwd = $values['register']['password'];
 			$do_user = wp_create_user( $username, $pwd, $email );
+
 		}
 
 		// Check for errors
 		if ( is_wp_error( $do_user ) ) {
-			
+
 			foreach ($do_user->errors as $error) {
 				self::add_error( $error[0] );
 			}
@@ -455,7 +459,7 @@ class WPUM_Form_Register extends WPUM_Form {
 		} else {
 
 			$user_id = $do_user;
-			
+
 			// Set some meta if available
 			if( array_key_exists( 'first_name' , $values['register'] ) )
 				update_user_meta( $user_id, 'first_name', $values['register']['first_name'] );
@@ -477,10 +481,31 @@ class WPUM_Form_Register extends WPUM_Form {
 				self::add_confirmation( apply_filters( 'wpum/form/register/success/message', __( 'Registration complete.', 'wpum' ) ) );
 			endif;
 
-			// Add ability to extend registration process.				
+			// Add ability to extend registration process.
 			do_action( "wpum/form/register/success" , $user_id, $values );
 
 		}
+
+	}
+
+	/**
+	 * Generate random password and register user
+	 *
+	 * @since 1.0.3
+	 * @param  string $username username
+	 * @param  string $email    email
+	 * @return mixed
+	 */
+	public static function random_psw_registration( $username, $email ) {
+
+		// Generate something random for a password.
+		$pwd = wp_generate_password( 20, false );
+
+		$do_user = wp_create_user( $username, $pwd, $email );
+
+		wp_new_user_notification( $do_user, $pwd );
+
+		return $do_user;
 
 	}
 
@@ -492,7 +517,7 @@ class WPUM_Form_Register extends WPUM_Form {
 	 * @return void
 	 */
 	public static function output( $atts = array() ) {
-		
+
 		// Get fields
 		self::get_registration_fields();
 
@@ -507,16 +532,16 @@ class WPUM_Form_Register extends WPUM_Form {
 		if( !get_option( 'users_can_register' ) ) :
 
 			// Display error message
-			$message = array( 
-				'id'   => 'wpum-registrations-disabled', 
-				'type' => 'notice', 
+			$message = array(
+				'id'   => 'wpum-registrations-disabled',
+				'type' => 'notice',
 				'text' => __( 'Registrations are currently disabled.', 'wpum' )
 			);
 			wpum_message( $message );
 
 		elseif( is_user_logged_in() ) :
 
-			get_wpum_template( 'already-logged-in.php', 
+			get_wpum_template( 'already-logged-in.php',
 				array(
 					'args' => $atts
 				)
@@ -525,7 +550,7 @@ class WPUM_Form_Register extends WPUM_Form {
 		// Show register form if not logged in
 		else :
 
-			get_wpum_template( 'forms/registration-form.php', 
+			get_wpum_template( 'forms/registration-form.php',
 				array(
 					'atts' => $atts,
 					'form' => self::$form_name,

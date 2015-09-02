@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -22,7 +22,7 @@ Managing your members, creating front-end profiles and custom login and registra
 [website](http://wpusermanager.com) | [addons](http://wpusermanager.com/addons) | [documentation](http://docs.wpusermanager.com/) | [support](http://wpusermanager.com/support/)
 
 = Smart & Effective =
-[WP User Manager](http://wpusermanager.com) is a simple-to-use solution to manage your WordPress community and create beautiful user profiles. Powerful and flexible, yet easy to setup and use, WPUM takes care of all your users needs and saves you time. 
+[WP User Manager](http://wpusermanager.com) is a simple-to-use solution to manage your WordPress community and create beautiful user profiles. Powerful and flexible, yet easy to setup and use, WPUM takes care of all your users needs and saves you time.
 
 = Features included =
 
@@ -55,6 +55,7 @@ Read more about our features on [wpusermanager.com](http://wpusermanager.com/fea
 
 - English
 - Russian (thanks to Ctajleh)
+- French (thanks to Doxtra)
 
 = Support =
 
@@ -84,6 +85,17 @@ View all the screenshots here [http://wpusermanager.com/screenshots/](http://wpu
 
 == Changelog ==
 
+= 1.0.3 =
+- added: French language support. Thanks to Doxtra
+- fixed: wrong nonce name for emails restore
+- fixed: removed nonce validation from login form, this was a leftover from the plugin's beta
+- fixed: removed unused code in ajax handler Class
+- fixed: login via email and username or email not working
+- fixed: remove query string after login when redirecting to same page
+- fixed: malformed query string when using captcha + wrong login details
+- fixed: random password generation registration broken in wp4.3
+- updated: language files
+
 = 1.0.2 =
 - Added: added: better way to find and select pages within the admin panel
 - Added: allow developers to override the default css file by placing it into the theme
@@ -93,7 +105,7 @@ View all the screenshots here [http://wpusermanager.com/screenshots/](http://wpu
 - fixed: fields not correctly ordered upon installation
 
 = 1.0.1 =
-- Added: russian language file support. Thanks to Ctajleh
+- Added: Russian language file support. Thanks to Ctajleh
 - Adjusted: use WP core function when a user deletes the avatar
 - Adjusted: redirect to welcome screen only for major updates
 - Fixed: show correct success message upon registration when random password is generated

@@ -134,7 +134,7 @@ function wpum_option_restore_emails() {
 
 	$output = '<a id="wpum-restore-emails" href="'.esc_url( add_query_arg( array('tool' => 'restore-email') , admin_url( 'users.php?page=wpum-settings&tab=tools' ) ) ).'" class="button">'.__('Restore default emails', 'wpum').'</a>';
 	$output .= '<br/><p class="description">' . __('Click the button to restore the default emails content and subject.', 'wpum') . '</p>';
-	$output .= wp_nonce_field( "wpum_nonce_login_form", "wpum_backend_security" );
+	$output .= wp_nonce_field( "wpum_nonce_email_reset", "wpum_backend_security" );
 
 	echo $output;
 
@@ -174,7 +174,7 @@ function wpum_profile_permalink() {
 		$output = '<p style="color:red;"><strong>'. __('Your users profile page is not configured.', 'wpum') .'</strong>'. ' ' . sprintf( __('<a href="%s">Setup your profile page here.</a>', 'wpum'), admin_url( 'users.php?page=wpum-settings&tab=general' ) ) .'</p>';
 
 	if( get_option('permalink_structure' ) == '' )
-		$output = '<p style="color:red;"><strong>' . sprintf(__( 'You must <a href="%s">change your permalinks</a> to anything else other than "default" for profiles to work.', 'wpum' ), admin_url( 'options-permalink.php' ) ) .'</strong></p>' ;	
+		$output = '<p style="color:red;"><strong>' . sprintf(__( 'You must <a href="%s">change your permalinks</a> to anything else other than "default" for profiles to work.', 'wpum' ), admin_url( 'options-permalink.php' ) ) .'</strong></p>' ;
 
 	echo $output;
 
@@ -227,7 +227,7 @@ function wpum_check_installation_date() {
 
 	$install_date = get_option( 'wpum_activation_date' );
     $past_date = strtotime( '-14 days' );
- 	
+
  	// Delete the notice
     if( isset( $_GET['hide_rating_notice'] ) && $_GET['hide_rating_notice'] == 1 ) {
     	delete_option( 'wpum_activation_date' );

@@ -121,10 +121,10 @@ function wpum_get_registration_fields() {
 
 	// Manipulate fields list into a list formatted for the forms API.
 	$fields = array();
-	
+
 	// Loop through the found fields
 	foreach ( $data as $key => $field ) {
-		
+
 		// Adjust field type parameter if no field type template is defined.
 		switch ( $field['type'] ) {
 			case 'username':
@@ -182,10 +182,10 @@ function wpum_get_account_fields() {
 
 	// Manipulate fields list into a list formatted for the forms API.
 	$fields = array();
-	
+
 	// Loop through the found fields
 	foreach ( $data as $key => $field ) {
-		
+
 		// Adjust field type parameter if no field type template is defined.
 		switch ( $field['type'] ) {
 			case 'username':
@@ -221,7 +221,7 @@ function wpum_get_account_fields() {
 
 	// The username cannot be changed, let's remove that field since it's useless
 	unset( $fields['username'] );
-	
+
 	// Remove the user avatar field if not enabled
 	if( ! wpum_get_option( 'custom_avatars' ) )
 		unset( $fields['user_avatar'] );
@@ -268,7 +268,7 @@ function wpum_install_groups() {
 
 		// Create database table for field groups
 		@WPUM()->field_groups->create_table();
-		
+
 		// Add primary group
 		$field_groups_args = array(
 			'id'         => 1,
@@ -401,7 +401,7 @@ function wpum_install_fields() {
 				'meta'                 => 'user_avatar',
 			)
 		);
-		
+
 		foreach ( $fields as $field ) {
 			WPUM()->fields->add( $field );
 		}

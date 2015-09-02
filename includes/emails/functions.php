@@ -37,7 +37,7 @@ function wpum_register_emails() {
 	$default_emails = array();
 
 	foreach ( $emails as $id => $settings ) {
-		
+
 		$default_emails[ $id ] = array(
 			'subject' => $settings['subject'],
 			'message' => $settings['message'],

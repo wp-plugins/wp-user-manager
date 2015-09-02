@@ -20,31 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class WPUM_Ajax_Handler {
 
 	/**
-	 * Store login method
-	 *
-	 * @var login_method.
-	 * @since 1.0.0
-	 */
-	var $login_method;
-
-	/**
-	 * Store password method
-	 *
-	 * @var random_password.
-	 * @since 1.0.0
-	 */
-	public static $random_password = true;
-
-	/**
 	 * __construct function.
 	 *
 	 * @access public
 	 * @return void
 	 */
 	public function __construct() {
-
-		// retrieve login method
-		$this->login_method = wpum_get_option( 'login_method', 'username' );
 
 		// Restore Email
 		add_action( 'wp_ajax_wpum_restore_emails', array( $this, 'restore_emails' ) );
@@ -68,7 +49,7 @@ class WPUM_Ajax_Handler {
 	public function restore_emails() {
 
 		// Check our nonce and make sure it's correct.
-		check_ajax_referer( 'wpum_nonce_login_form', 'wpum_backend_security' );
+		check_ajax_referer( 'wpum_nonce_email_reset', 'wpum_backend_security' );
 
 		// Abort if something isn't right.
 		if ( !is_admin() || !current_user_can( 'manage_options' ) ) {
@@ -81,7 +62,7 @@ class WPUM_Ajax_Handler {
 
 		// Delete the option first
 		delete_option( 'wpum_emails' );
-		
+
 		// Get all registered emails
 		wpum_register_emails();
 
@@ -167,7 +148,7 @@ class WPUM_Ajax_Handler {
 				$args = array(
 					'field_order' => (int) $field['priority'],
 				);
-				WPUM()->fields->update( (int) $field['field_id'], $args );		
+				WPUM()->fields->update( (int) $field['field_id'], $args );
 			}
 		} else {
 			$return = array(
