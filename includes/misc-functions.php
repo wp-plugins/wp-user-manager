@@ -399,11 +399,9 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 
 	if ( isset( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ]['name'] ) ) {
 
-		if ( ! empty( $field['allowed_mime_types'] ) ) {
-			$allowed_mime_types = $field['allowed_mime_types'];
-		} else {
-			$allowed_mime_types = get_allowed_mime_types();
-		}
+		add_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
+
+		$allowed_mime_types = get_allowed_mime_types();
 
 		$file_urls       = array();
 		$files_to_upload = wpum_prepare_uploaded_files( $_FILES[ $field_key ] );
@@ -411,7 +409,7 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 		foreach ( $files_to_upload as $file_key => $file_to_upload ) {
 
 			if ( !in_array( $file_to_upload['type'] , $allowed_mime_types ) )
-				return new WP_Error( 'validation-error', sprintf( __( 'Allowed files types are: %s', 'wpum' ), implode( ', ', array_keys( $field['allowed_mime_types'] ) ) ) );
+				return new WP_Error( 'validation-error', sprintf( __( 'Allowed files types are: %s', 'wpum' ), implode( ', ', array_keys( $allowed_mime_types ) ) ) );
 
 			if ( defined( 'WPUM_MAX_AVATAR_SIZE' ) && $field_key == 'user_avatar' && $file_to_upload['size'] > WPUM_MAX_AVATAR_SIZE )
 				return new WP_Error( 'avatar-too-big', __( 'The uploaded file is too big.', 'wpum' ) );
@@ -436,6 +434,8 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 		} else {
 			return current( $file_urls );
 		}
+
+		remove_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
 
 		return $files_to_upload;
 	}
@@ -763,7 +763,7 @@ function wpum_account_tab_exists( $tab ) {
  */
 function wpum_get_login_redirect_url() {
 
-	$url = site_url( $_SERVER['REQUEST_URI'] );
+	$url = ( is_ssl() ? 'https://' : 'http://' ) . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 	$url = add_query_arg( array(
 		'login' => false,

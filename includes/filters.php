@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * Add Settings Link To WP-Plugin Page
- * 
+ *
  * @since 1.0.0
  * @access public
  * @return array
@@ -27,13 +27,13 @@ add_filter( "plugin_action_links_".WPUM_SLUG , 'wpum_add_settings_link');
 
 /**
  * Add links to plugin row
- * 
+ *
  * @since 1.0.0
  * @access public
  * @return array
  */
 function wpum_plugin_row_meta( $input, $file ) {
-	
+
 	if ( $file != 'wp-user-manager/wp-user-manager.php' )
 		return $input;
 
@@ -50,7 +50,7 @@ add_filter( 'plugin_row_meta', 'wpum_plugin_row_meta', 10, 2 );
 
 /**
  * Add User ID Column to users list
- * 
+ *
  * @since 1.0.0
  * @access public
  * @return array
@@ -73,7 +73,7 @@ function wpum_upload_dir( $pathdata ) {
 	global $wpum_upload, $wpum_uploading_file;
 
 	if ( ! empty( $wpum_upload ) ) {
-		$dir = apply_filters( 'wpum_upload_dir', 'wp-user-manager-uploads/' . sanitize_key( $wpum_uploading_file ), sanitize_key( $wpum_uploading_file ) );
+		$dir = apply_filters( 'wpum_upload_dir', 'wp-user-manager-uploads' );
 
 		if ( empty( $pathdata['subdir'] ) ) {
 			$pathdata['path']   = $pathdata['path'] . '/' . $dir;
@@ -100,7 +100,7 @@ add_filter( 'upload_dir', 'wpum_upload_dir' );
  * @return      string
  */
 function wpum_admin_rate_us( $footer_text ) {
-	
+
 	$screen = get_current_screen();
 
 	if ( $screen->base !== 'users_page_wpum-settings' )
@@ -112,13 +112,13 @@ function wpum_admin_rate_us( $footer_text ) {
 	);
 
 	return str_replace( '</span>', '', $footer_text ) . ' | ' . $rate_text . ' <span class="dashicons dashicons-star-filled footer-star"></span><span class="dashicons dashicons-star-filled footer-star"></span><span class="dashicons dashicons-star-filled footer-star"></span><span class="dashicons dashicons-star-filled footer-star"></span><span class="dashicons dashicons-star-filled footer-star"></span></span>';
-	
+
 }
 add_filter( 'admin_footer_text', 'wpum_admin_rate_us' );
 
 /**
  * Add custom classes to body tag
- * 
+ *
  * @since	    1.0.0
  * @param       array $classes
  * @return      array
@@ -135,7 +135,7 @@ function wpum_body_classes($classes) {
 		// add class if we're on a account page
 		$classes[] = 'wpum-account-page';
 	} else if( is_page( wpum_get_core_page_id('profile') ) ) {
-		
+
 		// add class if we're on a profile page
 		$classes[] = 'wpum-profile-page';
 
@@ -147,7 +147,7 @@ function wpum_body_classes($classes) {
 		// add class if we're on a password page
 		$classes[] = 'wpum-password-page';
 	}
-		
+
 	return $classes;
 }
 add_filter( 'body_class', 'wpum_body_classes' );
@@ -156,7 +156,7 @@ add_filter( 'body_class', 'wpum_body_classes' );
  * Modify the WP_User_Query on the directory page.
  * Check whether the directory should be displaying
  * specific user roles only.
- * 
+ *
  * @since 1.0.0
  * @param array $args WP_User_Query args.
  * @param string $directory_id id number of the directory.
@@ -192,7 +192,7 @@ add_filter( 'wpum_user_directory_query', 'wpum_directory_pre_set_roles', 10, 2 )
  * Modify the WP_User_Query on the directory page.
  * Check whether the directory should be excluding
  * specific users by id.
- * 
+ *
  * @since 1.0.0
  * @param array $args WP_User_Query args.
  * @param string $directory_id id number of the directory.
@@ -213,7 +213,7 @@ add_filter( 'wpum_user_directory_query', 'wpum_directory_pre_set_exclude_users',
 /**
  * Modify the WP_User_Query on the directory page.
  * Specify a custom sorting order.
- * 
+ *
  * @since 1.0.0
  * @param array $args WP_User_Query args.
  * @param string $directory_id id number of the directory.
@@ -259,7 +259,7 @@ add_filter( 'wpum_user_directory_query', 'wpum_directory_pre_set_order', 12, 2 )
 /**
  * Modify the WP_User_Query on the directory page.
  * Check whether the directory should be setting a specific amount of users.
- * 
+ *
  * @since 1.0.0
  * @param array $args WP_User_Query args.
  * @param string $directory_id id number of the directory.
@@ -279,7 +279,7 @@ add_filter( 'wpum_user_directory_query', 'wpum_directory_pre_set_amount', 11, 2 
 
 /**
  * Retrieve custom avatar if any
- * 
+ *
  * @since 1.0.0
  *
  * @param int|string|object $id_or_email A user ID,  email address, or comment object
@@ -298,7 +298,7 @@ function wpum_get_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 		$comment_email = $id_or_email->comment_author_email;
 
 		$user = get_user_by( 'email', $comment_email );
-		
+
 		if( $user ) {
 			$custom_avatar = get_user_meta( $user->ID , 'current_user_avatar', true );
 		}
@@ -306,7 +306,7 @@ function wpum_get_avatar( $avatar, $id_or_email, $size, $default, $alt ) {
 	} elseif ( is_email( $id_or_email ) && email_exists( $id_or_email ) || is_numeric( $id_or_email ) ) {
 		$custom_avatar = get_user_meta( $id_or_email, 'current_user_avatar', true );
 	}
-	
+
 	if ( !empty( $custom_avatar ) ) {
 		$avatar = "<img alt='{$safe_alt}' src='{$custom_avatar}' class='avatar avatar-{$size} photo' height='{$size}' width='{$size}' />";
 	}
@@ -364,3 +364,21 @@ function wpum_admin_body_classes( $classes ) {
 
 }
 add_filter( 'admin_body_class', 'wpum_admin_body_classes' );
+
+/**
+ * Filter allowed file types on upload forms.
+ * @param  array $upload_mimes list of file types
+ * @return array $upload_mimes list of file types
+ */
+function wpum_adjust_mime_types( $upload_mimes ) {
+
+	$allowed_types = array(
+		'jpg|jpeg|jpe' => 'image/jpeg',
+		'gif' => 'image/gif',
+		'png' => 'image/png'
+	);
+
+	$upload_mimes = array_intersect_key( $upload_mimes, $allowed_types );
+
+	return $upload_mimes;
+}

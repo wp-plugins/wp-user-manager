@@ -97,6 +97,27 @@ function wpum_register_widgets() {
 add_action( 'widgets_init', 'wpum_register_widgets', 1 );
 
 /**
+ * Add hidden field into login form to identify login
+ * has been made from a wpum login form
+ *
+ * @since 1.0.5
+ * @access public
+ * @return mixed
+ */
+function wpum_add_field_to_login( $content, $args ) {
+
+	// Check if it's a wpum login form.
+	// We add the hidden field only to forms powered by wpum
+	// to avoid conflicts with other login forms.
+	// Only a wpum login form would have the login_link key
+	if( is_array( $args ) && in_array( 'login_link' , $args ) ) {
+		return '<input type="hidden" name="wpum_is_login_form" value="wpum">';
+	}
+
+}
+add_action( 'login_form_middle', 'wpum_add_field_to_login', 10, 2 );
+
+/**
  * Authenticate the user and decide which login method to use.
  *
  * @since 1.0.3
@@ -154,7 +175,7 @@ function wpum_authenticate_login_method( $user, $username, $password ) {
 }
 
 // Run filters only when alternative methods are selected
-if( wpum_get_option( 'login_method') !== 'username' ) {
+if( ( wpum_get_option( 'login_method') == 'email' || wpum_get_option( 'login_method') == 'username_email' ) && isset( $_POST['wpum_is_login_form'] ) ) {
 	remove_filter( 'authenticate', 'wp_authenticate_username_password', 20, 3 );
 	add_filter( 'authenticate', 'wpum_authenticate_login_method', 20, 3 );
 }

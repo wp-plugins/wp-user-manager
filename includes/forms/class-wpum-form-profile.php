@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 class WPUM_Form_Profile extends WPUM_Form {
 
 	public static $form_name = 'profile';
-	
+
 	private static $user;
 
 	/**
@@ -35,13 +35,13 @@ class WPUM_Form_Profile extends WPUM_Form {
 
 		// Set values to the fields
 		if( ! is_admin() ) {
-			
+
 			self::$user = wp_get_current_user();
 			add_filter( 'wpum_profile_field_value', array( __CLASS__, 'set_fields_values' ), 10, 3 );
 			add_filter( 'wpum_profile_field_options', array( __CLASS__, 'set_fields_options' ), 10, 3 );
 			add_filter( 'wpum/form/validate=profile', array( __CLASS__, 'validate_email' ), 10, 3 );
 			add_filter( 'wpum/form/validate=profile', array( __CLASS__, 'validate_nickname' ), 10, 3 );
-		
+
 		}
 
 		// Store uploaded avatar
@@ -153,7 +153,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 	}
 
 	/**
-	 * Returns the correct default selected option based 
+	 * Returns the correct default selected option based
 	 * on what display_name the user has chosen.
 	 *
 	 * @access public
@@ -253,7 +253,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 
 			$current_user = wp_get_current_user();
 
-			if( $username !== $current_user->user_nicename && wpum_nickname_exists( $username ) )
+			if( $nickname !== $current_user->user_nicename && wpum_nickname_exists( $nickname ) )
 				return new WP_Error( 'username-validation-error', __( 'This nickname cannot be used.', 'wpum' ) );
 
 		endif;
@@ -327,7 +327,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 					$user_data += array( 'user_nicename' => $meta_value );
 					$user_data += array( 'nickname' => $meta_value );
 				break;
-				
+
 				default:
 					$user_data += array( $meta_key => $meta_value );
 					break;
@@ -353,7 +353,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 			exit();
 
 		}
-		
+
 
 	}
 
@@ -386,7 +386,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 			case 'display_lastfirst':
 				$name = $values['last_name'] . ' ' . $values['first_name'];
 				break;
-			
+
 			default:
 				$name = self::$user->user_login;
 				break;
@@ -444,8 +444,8 @@ class WPUM_Form_Profile extends WPUM_Form {
 				// Show errors from fields
 				self::show_errors();
 			}
-			
-			get_wpum_template( 'account.php', 
+
+			get_wpum_template( 'account.php',
 				array(
 					'atts'        => $atts,
 					'form'        => self::$form_name,
@@ -458,7 +458,7 @@ class WPUM_Form_Profile extends WPUM_Form {
 
 		// Show login form if not logged in
 		else :
-				
+
 			echo wpum_login_form();
 
 		endif;

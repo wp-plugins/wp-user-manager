@@ -85,7 +85,7 @@ abstract class WPUM_Form {
 
 		foreach ( self::$fields as $group_key => $group_fields ) {
 			foreach ( $group_fields as $key => $field ) {
-				
+
 				// Get the type
 				$field_type = str_replace( '-', '_', $field['type'] );
 				// Get the type object
@@ -201,8 +201,9 @@ abstract class WPUM_Form {
 				if ( $field['required'] && empty( $values[ $group_key ][ $key ] ) ) {
 					return new WP_Error( 'validation-error', sprintf( __( '%s is a required field', 'wpum' ), $field['label'] ) );
 				}
+
 				if ( 'file' === $field['type'] && ! empty( $field['allowed_mime_types'] ) ) {
-					
+
 					if( is_wp_error( $values[ $group_key ][ $key ] ) )
 						return new WP_Error( 'validation-error', $values[ $group_key ][ $key ]->get_error_message() );
 
@@ -217,6 +218,7 @@ abstract class WPUM_Form {
 					}
 
 				}
+
 			}
 		}
 

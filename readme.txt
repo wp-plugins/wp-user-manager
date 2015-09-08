@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.0.3
+Stable tag: 1.0.5
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -84,6 +84,17 @@ Here [http://docs.wpusermanager.com/](http://docs.wpusermanager.com/)
 View all the screenshots here [http://wpusermanager.com/screenshots/](http://wpusermanager.com/screenshots/)
 
 == Changelog ==
+
+= 1.0.5 =
+- added: German language support. Thanks to Tobias
+- fixed: users unable to login under certain conditions
+- fixed: users unable to update their profile when using nickname permalink structure
+- fixed: wrong email being sent to the user if it was created manually via the admin panel
+- tweak: wpum_get_login_redirect_url() now uses wp_login_form() redirect parameter by default
+
+= 1.0.4 =
+- fixed: restrict file types that can be upload as avatar only to images
+- fixed: creation of additional folder on server when uploading avatars
 
 = 1.0.3 =
 - added: French language support. Thanks to Doxtra
