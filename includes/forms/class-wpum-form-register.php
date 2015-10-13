@@ -56,7 +56,7 @@ class WPUM_Form_Register extends WPUM_Form {
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_password' ), 10, 3 );
 
 			if( wpum_get_option('display_password_meter_registration') ) {
-				add_action( 'wpum/form/register/after/field=password', array( __CLASS__, 'add_psw_meter' ), 10 );
+				add_action( 'wpum/form/register/after/field=password', 'wpum_psw_indicator', 10 );
 			}
 
 			if( wpum_get_option('login_after_registration') ) {
@@ -173,17 +173,6 @@ class WPUM_Form_Register extends WPUM_Form {
 
 		return $passed;
 
-	}
-
-	/**
-	 * Add password meter field.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public static function add_psw_meter( $field ) {
-		echo '<span id="password-strength">' . __( 'Strength Indicator', 'wpum' ) . '</span>';
 	}
 
 	/**
@@ -472,7 +461,7 @@ class WPUM_Form_Register extends WPUM_Form {
 
 			// Send notification if password is manually added by the user.
 			if( ! self::$random_password ):
-				wp_new_user_notification( $do_user, $pwd );
+				wpum_new_user_notification( $do_user, $pwd );
 			endif;
 
 			if( self::$random_password ) :
@@ -503,7 +492,7 @@ class WPUM_Form_Register extends WPUM_Form {
 
 		$do_user = wp_create_user( $username, $pwd, $email );
 
-		wp_new_user_notification( $do_user, $pwd );
+		wpum_new_user_notification( $do_user, $pwd );
 
 		return $do_user;
 

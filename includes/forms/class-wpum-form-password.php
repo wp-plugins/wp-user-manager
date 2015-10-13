@@ -38,6 +38,10 @@ class WPUM_Form_Password extends WPUM_Form {
 		if( isset( $_GET['password-reset'] ) )
 			add_filter( 'wpum/form/validate=password', array( __CLASS__, 'validate_passwords' ), 10, 3 );
 
+		// Add password meter field
+		if( wpum_get_option('display_password_meter_registration') && isset( $_GET['password-reset'] ) )
+			add_action( 'wpum_after_inside_password_form_template', 'wpum_psw_indicator' );
+
 	}
 
 	/**
@@ -60,7 +64,7 @@ class WPUM_Form_Password extends WPUM_Form {
 				),
 			),
 			'password' => array(
-				'password_1' => array(
+				'password' => array(
 					'label'       => __( 'New password', 'wpum' ),
 					'type'        => 'password',
 					'required'    => true,
@@ -79,7 +83,7 @@ class WPUM_Form_Password extends WPUM_Form {
 
 		// Temporarily remove fields if not into password reset form
 		if( !isset( $_GET['password-reset'] ) ) :
-			unset( self::$fields['password']['password_1'] );
+			unset( self::$fields['password']['password'] );
 			unset( self::$fields['password']['password_2'] );
 		endif;
 
@@ -118,7 +122,7 @@ class WPUM_Form_Password extends WPUM_Form {
 	 */
 	public static function validate_passwords( $passed, $fields, $values ) {
 
-		$password_1 = $values['password'][ 'password_1' ];
+		$password_1 = $values['password'][ 'password' ];
 		$password_2 = $values['password'][ 'password_2' ];
 
 		if ( empty( $password_1 ) || empty( $password_2 ) ) {
@@ -160,12 +164,12 @@ class WPUM_Form_Password extends WPUM_Form {
 
 		// Check what the form status we should process
 		if ( !empty( $_POST['wpum_password_form_status'] ) && $_POST['wpum_password_form_status'] == 'recover' ) {
-			
+
 			self::retrieve_password( $values['user'][ 'username_email' ] );
 
 		} else if ( !empty( $_POST['wpum_password_form_status'] ) && $_POST['wpum_password_form_status'] == 'reset' ) {
 
-			self::reset_password( $values['password'][ 'password_1' ], $values['password'][ 'password_2' ], $_POST['wpum_psw_reset_key'], $_POST['wpum_psw_reset_login'] );
+			self::reset_password( $values['password'][ 'password' ], $values['password'][ 'password_2' ], $_POST['wpum_psw_reset_key'], $_POST['wpum_psw_reset_login'] );
 
 		}
 
@@ -264,7 +268,7 @@ class WPUM_Form_Password extends WPUM_Form {
 	}
 
 	/**
-	 * Process the password reset form. 
+	 * Process the password reset form.
 	 * This is the function that actually changes the password of the user.
 	 *
 	 * @access public
@@ -344,7 +348,7 @@ class WPUM_Form_Password extends WPUM_Form {
 	 * @return void
 	 */
 	public static function change_password( $user, $new_pass ) {
-		
+
 		do_action( 'password_reset', $user, $new_pass );
 
 		wp_set_password( $new_pass, $user->ID );
@@ -362,7 +366,7 @@ class WPUM_Form_Password extends WPUM_Form {
 	 * @return void
 	 */
 	public static function output( $atts = array() ) {
-		
+
 		// Get fields
 		self::get_password_fields();
 
@@ -376,7 +380,7 @@ class WPUM_Form_Password extends WPUM_Form {
 		// Display template
 		if( is_user_logged_in() ) :
 
-			get_wpum_template( 'already-logged-in.php', 
+			get_wpum_template( 'already-logged-in.php',
 				array(
 					'args' => $atts
 				)
@@ -384,7 +388,7 @@ class WPUM_Form_Password extends WPUM_Form {
 
 		// Show psw form if not logged in
 		else :
-			get_wpum_template( 'forms/password-form.php', 
+			get_wpum_template( 'forms/password-form.php',
 				array(
 					'atts'            => $atts,
 					'form'            => self::$form_name,

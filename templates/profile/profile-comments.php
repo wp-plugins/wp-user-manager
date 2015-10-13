@@ -21,10 +21,10 @@ $comments = get_comments( $args );
 
 <div class="wpum-profile-comments" id="wpum-comments-by-<?php echo $user_data->ID;?>">
 
-	<?php 
+	<?php
 
 		// Check if user has made any comment.
-		if( !empty( $comments ) ) : 
+		if( !empty( $comments ) ) :
 
 			foreach ( $comments as $comment ) :
 
@@ -49,14 +49,14 @@ $comments = get_comments( $args );
 		else :
 
 			// Display error message
-			$args = array( 
-				'id'   => 'wpum-comments-not-found', 
-				'type' => 'notice', 
+			$args = array(
+				'id'   => 'wpum-comments-not-found',
+				'type' => 'notice',
 				'text' => sprintf( __( '%s has not made any comment yet.', 'wpum' ), $user_data->display_name )
 			);
 			wpum_message( $args );
 
-		endif; 
+		endif;
 
 	?>
 

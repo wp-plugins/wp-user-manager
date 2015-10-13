@@ -31,10 +31,10 @@
 		do_action( 'wpum_after_user_directory', $directory_args );
 
 	} else {
-	
-		$args = array( 
-			'id'   => 'wpum-no-user-found', 
-			'type' => 'notice', 
+
+		$args = array(
+			'id'   => 'wpum-no-user-found',
+			'type' => 'notice',
 			'text' => __( 'No users have been found', 'wpum' )
 		);
 		$warning = wpum_message( $args, true );

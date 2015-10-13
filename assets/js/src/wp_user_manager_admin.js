@@ -18,15 +18,22 @@ jQuery(document).ready(function ($) {
 			this.restore_emails();
 			this.drag_and_drop_fields_table();
 			this.confirm_dialog();
+			this.admin_upload();
 		},
 
 		// General Functions
 		general : function() {
-			jQuery("select.select2").select2({
-				width: 'resolve'
-			});
 
-			jQuery(".wppf-multiselect, select.select2_multiselect").select2();
+			if ( $.isFunction($.fn.select2) ) {
+
+				jQuery("select.select2").select2({
+					width: 'resolve'
+				});
+
+				jQuery(".wppf-multiselect, select.select2_multiselect").select2();
+
+			}
+
 		},
 
 		// Ajax Function to restore emails
@@ -60,12 +67,13 @@ jQuery(document).ready(function ($) {
 						error: function(xhr, status, error) {
 						    alert(xhr.responseText);
 						}
+
 					});
 
 			    } else {
-			        
+
 			        return false;
-			    
+
 			    }
 
 			});
@@ -86,21 +94,21 @@ jQuery(document).ready(function ($) {
 					delay: 150,
 					handle: ".column-order, .move-field",
 					update: function(event, ui) {
-		                
-		                // Update TR data
+
+		        // Update TR data
 						$(this).children('tr').each(function() {
-				            $(this).data('priority',$(this).index());
-				        });
-						
+							$(this).data('priority',$(this).index());
+				    });
+
 						// Prepare field data
-		                dataArray = $.map($(this).children('tr'), function(el){
-					        return { 'priority':$(el).data('priority'), 'field_id':$(el).data('field-id') }; 
-					    });
+						dataArray = $.map($(this).children('tr'), function(el){
+							return { 'priority':$(el).data('priority'), 'field_id':$(el).data('field-id') };
+						});
 
-					    // Get nonce
-					    var wpum_editor_nonce = $('#wpum_fields_editor_nonce').val();
+					  // Get nonce
+					  var wpum_editor_nonce = $('#wpum_fields_editor_nonce').val();
 
-		                $.ajax({
+		        $.ajax({
 							type: 'POST',
 							dataType: 'json',
 							url: wpum_admin_js.ajax,
@@ -127,7 +135,8 @@ jQuery(document).ready(function ($) {
 							}
 						});
 
-		            }
+		      }
+
 				}).disableSelection();
 			}
 
@@ -185,10 +194,70 @@ jQuery(document).ready(function ($) {
 			    return confirm( wpum_admin_js.confirm );
 			})
 
+		},
+
+		// Handles files upload in admin panel
+		admin_upload : function() {
+
+			// Uploading files
+			var file_frame;
+			window.formfield = '';
+
+			$( document.body ).on('click', '.wpum_settings_upload_button', function(e) {
+
+					e.preventDefault();
+
+					var button = $(this);
+
+					window.formfield = $(this).parent().prev();
+
+					// If the media frame already exists, reopen it.
+					if ( file_frame ) {
+						file_frame.open();
+						return;
+					}
+
+					// Create the media frame.
+			    file_frame = wp.media.frames.file_frame = wp.media({
+			      title: wpum_admin_js.upload_title,
+			      button: {
+			        text: wpum_admin_js.use_this_file,
+			      },
+			      multiple: false  // Set to true to allow multiple files to be selected
+			    });
+
+					// When an image is selected, run a callback.
+			    file_frame.on( 'select', function() {
+			      // We set multiple to false so only get one image from the uploader
+			      attachment = file_frame.state().get('selection').first().toJSON();
+
+						// Send file url to text field
+						window.formfield.val( attachment.url );
+			    });
+
+			    // Finally, open the modal
+			    file_frame.open();
+
+			});
+
 		}
 
 	};
 
 	WPUM_Admin.init();
+
+	// Load dashboard widget via ajax
+	if( jQuery( '#wpum_dashboard_users' ).length ) {
+		$.ajax({
+			type: "GET",
+			data: {
+				action: 'wpum_load_dashboard_users_overview'
+			},
+			url: wpum_admin_js.ajax,
+			success: function ( response ) {
+				$('#wpum_dashboard_users .inside').html( response );
+			}
+		});
+	}
 
 });

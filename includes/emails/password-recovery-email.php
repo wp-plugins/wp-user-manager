@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * WPUM_password_Email Class
  * This class registers a new email for the editor.
- * 
+ *
  * @since 1.0.0
  */
 class WPUM_password_Email extends WPUM_Emails {
-	
+
 	/**
 	 * This function sets up a custom email.
 	 *
@@ -26,16 +26,16 @@ class WPUM_password_Email extends WPUM_Emails {
 	 * @return  void
 	 */
 	function __construct() {
-		
+
 		// Configure Email
 		$this->name        = 'password';
 		$this->title       = __( "Password Recovery Email", 'wpum' );
 		$this->description = __( "This is the email that is sent to the visitor upon password reset request.", 'wpum' );
 		$this->subject     = $this->subject();
 		$this->message     = $this->message();
-		
+
 		// do not delete!
-    	parent::__construct();
+		parent::__construct();
 	}
 
 	/**
@@ -65,11 +65,11 @@ class WPUM_password_Email extends WPUM_Emails {
 		$message .= __( "If this was a mistake, just ignore this email and nothing will happen.\n\n", 'wpum' );
 		$message .= __( "To reset your password, visit the following address:\n\n", 'wpum' );
 		$message .= __( "{recovery_url}", 'wpum' );
-		
+
 		return $message;
 
 	}
-	
+
 }
 
 new WPUM_password_Email();

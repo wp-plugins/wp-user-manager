@@ -25,42 +25,42 @@ jQuery(document).ready(function ($) {
 
 		// Check password strenght function
 		checkPasswordStrength : function( $pass1, $strengthResult, $submitButton, blacklistArray ) {
-	       
-	        var pass1 = $pass1.val();
-	 
+
+	      var pass1 = $pass1.val();
+
 	    	// Reset the form & meter
-	        $strengthResult.removeClass( 'short bad good strong' );
-	 
+	      $strengthResult.removeClass( 'short bad good strong' );
+
 		    // Extend our blacklist array with those from the inputs & site data
 		    blacklistArray = blacklistArray.concat( wp.passwordStrength.userInputBlacklist() )
-		 
+
 		    // Get the password strength
 		    var strength = wp.passwordStrength.meter( pass1, blacklistArray );
-		 
+
 		    // Add the strength meter results
 		    switch ( strength ) {
-		 
+
 		        case 2:
 		            $strengthResult.addClass( 'bad' ).html( pwsL10n.bad );
 		            break;
-		 
+
 		        case 3:
 		            $strengthResult.addClass( 'good' ).html( pwsL10n.good );
 		            break;
-		 
+
 		        case 4:
 		            $strengthResult.addClass( 'strong' ).html( pwsL10n.strong );
 		            break;
-		 
+
 		        case 5:
 		            $strengthResult.addClass( 'short' ).html( pwsL10n.mismatch );
 		            break;
-		 
+
 		        default:
 		            $strengthResult.addClass( 'short' ).html( pwsL10n.short );
-		 
+
 		    }
-		 
+
 		    return strength;
 
 		},
@@ -152,7 +152,7 @@ jQuery(document).ready(function ($) {
 	    if (typeof history.replaceState === 'function') {
 	        history.replaceState({}, '', url);
 	    }
-	}; 
+	};
 
  	// Run the above script only on plugin's pages
  	if( jQuery( 'body' ).hasClass('wpum-account-page') ) {
@@ -164,9 +164,9 @@ jQuery(document).ready(function ($) {
 		$( 'body' ).on( 'keyup', 'input[name=password]',
 	        function( event ) {
 	            WPUM_Frontend.checkPasswordStrength(
-	                $('.wpum-registration-form-wrapper input[name=password], .wpum-profile-form-wrapper input[name=password], .wpum-update-password-form-wrapper input[name=password]'),         // First password field
-	                $('.wpum-registration-form-wrapper #password-strength, .wpum-profile-form-wrapper #password-strength, .wpum-update-password-form-wrapper #password-strength'),           // Strength meter
-	                $('#submit_wpum_register, #submit_wpum_profile'),           // Submit button
+	                $('.wpum-registration-form-wrapper input[name=password], .wpum-profile-form-wrapper input[name=password], .wpum-update-password-form-wrapper input[name=password], .wpum-password-form input[name=password]'),         // First password field
+	                $('.wpum-registration-form-wrapper #password-strength, .wpum-profile-form-wrapper #password-strength, .wpum-update-password-form-wrapper #password-strength, .wpum-password-form #password-strength'),           // Strength meter
+	                $('#submit_wpum_register, #submit_wpum_profile, #submit_wpum_password'),           // Submit button
 	                ['admin', 'administrator', 'test', 'user', 'demo']        // Blacklisted words
 	            );
 	        }

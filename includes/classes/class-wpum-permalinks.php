@@ -61,7 +61,7 @@ class WPUM_Permalinks {
 
 		// Define args for account page
 		$wp->add_query_var( 'account_tab' );
-		$account_page_id = wpum_get_core_page_id( 'account' );
+		$account_page_id   = wpum_get_core_page_id( 'account' );
 		$account_page_slug = esc_attr( get_post_field( 'post_name', intval( $account_page_id ) ) );
 
 		add_rewrite_rule( $account_page_slug . '/([^/]*)', 'index.php?page_id='. $account_page_id .'&account_tab=$matches[1]', 'top' );
@@ -93,7 +93,7 @@ class WPUM_Permalinks {
 		$saved_structure = get_option( 'wpum_permalink', 'user_id' );
 
 		ob_start();
-?>
+		?>
 
 		<?php if ( get_option( 'permalink_structure' ) == '' ) { ?>
 
@@ -156,10 +156,8 @@ class WPUM_Permalinks {
 
 		// Check that the saved permalink method is one of the registered structures.
 		if ( isset( $_POST['user_permalink'] ) && array_key_exists( $_POST['user_permalink'] , wpum_get_permalink_structures() ) ) {
-
 			$user_permalink = sanitize_text_field( $_POST['user_permalink'] );
 			update_option( 'wpum_permalink', $user_permalink );
-
 		}
 
 	}

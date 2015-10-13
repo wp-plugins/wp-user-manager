@@ -41,8 +41,8 @@ class WPUM_Directory {
 	 * @return void
 	 */
 	public function __construct() {
-		
-		add_action( 'init', array( $this, 'directory_post_type' ) );
+
+			add_action( 'init', array( $this, 'directory_post_type' ) );
   		add_action( 'admin_init', array( $this, 'meta_options' ) );
 
   		// Only in admin panel
@@ -99,7 +99,7 @@ class WPUM_Directory {
 			'publicly_queryable'  => true,
 			'capability_type'     => 'page',
 		);
-		
+
 		register_post_type( 'wpum_directory', apply_filters( 'wpum_directory_post_type_args', $args ) );
 
 	}
@@ -158,7 +158,7 @@ class WPUM_Directory {
 				),
 			),
 		);
-		
+
 		// Create the new metabox
 		$this->general_options = new Pretty_Metabox( apply_filters( 'wpum_directory_general_options', $general_options ) );
 
@@ -233,7 +233,7 @@ class WPUM_Directory {
 
 		switch ( $columns ) {
 			case 'roles':
-				$roles = get_post_meta( $post->ID, 'directory_roles', true );	
+				$roles = get_post_meta( $post->ID, 'directory_roles', true );
 				if( $roles ) {
 					echo implode( ', ', $roles );
 				} else {
@@ -264,7 +264,7 @@ class WPUM_Directory {
 	 * @return $actions array contains all action links.
 	 */
 	public function remove_action_rows( $actions, $post ) {
-		
+
 		if ( $post->post_type == 'wpum_directory' ) {
 			unset($actions['inline hide-if-no-js']);
 			unset($actions['view']);
@@ -282,7 +282,7 @@ class WPUM_Directory {
 	 * @return void
 	 */
 	function post_updated_messages( $messages ) {
-		
+
 		global $post, $post_ID;
 
 		$messages['wpum_directory'] = array(

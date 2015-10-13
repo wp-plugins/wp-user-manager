@@ -3,7 +3,7 @@
  * Plugin Name: WP User Manager
  * Plugin URI:  http://wpusermanager.com
  * Description: Create customized user profiles and easily add custom user registration, login and password recovery forms to your WordPress website. WP User Manager is the best solution to manage your users.
- * Version: 1.0.5
+ * Version: 1.1.0
  * Author:      Alessandro Tesoro
  * Author URI:  http://wpusermanager.com
  * License:     GPLv2+
@@ -174,7 +174,7 @@ class WP_User_Manager {
 
 		// Plugin version
 		if ( ! defined( 'WPUM_VERSION' ) ) {
-			define( 'WPUM_VERSION', '1.0.5' );
+			define( 'WPUM_VERSION', '1.1.0' );
 		}
 
 		// Plugin Folder Path
@@ -274,6 +274,12 @@ class WP_User_Manager {
 			require_once WPUM_PLUGIN_DIR . 'includes/emails/password-recovery-email.php';
 			// Load Custom Fields Editor
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/fields/class-wpum-fields-editor.php';
+
+			// Load admin menu manager functionalities
+			require_once WPUM_PLUGIN_DIR . 'includes/classes/class-wpum-walker-nav-menu-checklist.php';
+			require_once WPUM_PLUGIN_DIR . 'includes/admin/menu-functions.php';
+			// Load dashboard widget
+			require_once WPUM_PLUGIN_DIR . 'includes/admin/dashboard-widget.php';
 
 			// Custom Fields Framework
 			if ( ! class_exists( 'Pretty_Metabox' ) )

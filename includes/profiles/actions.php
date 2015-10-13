@@ -11,7 +11,7 @@
 
 /**
  * Force 404 error if user or tabs do not exist.
- * 
+ *
  * @since 1.0.0
  * @access public
  * @return void
@@ -39,7 +39,7 @@ add_action( 'template_redirect', 'wpum_profile_force_404_error' );
 
 /**
  * Display user name in profile.php template.
- * 
+ *
  * @since 1.0.0
  * @param object $user_data holds WP_User object
  * @access public
@@ -53,7 +53,7 @@ function wpum_profile_show_user_name( $user_data ) {
 		// Show edit account only when viewing own profile
 		if( $user_data->ID == get_current_user_id() )
 			$output .= '<small><a href="'. wpum_get_core_page_url('account') .'" class="wpum-profile-account-edit">'. __(' (Edit Account)', 'wpum') .'</a></small>';
-		
+
 	$output .= '</div>';
 
 	echo $output;
@@ -63,7 +63,7 @@ add_action( 'wpum_main_profile_details', 'wpum_profile_show_user_name', 10 );
 
 /**
  * Display user description in profile.php template.
- * 
+ *
  * @since 1.0.0
  * @param object $user_data holds WP_User object
  * @access public
@@ -82,7 +82,7 @@ add_action( 'wpum_main_profile_details', 'wpum_profile_show_user_description', 1
 
 /**
  * Display user name in profile.php template.
- * 
+ *
  * @since 1.0.0
  * @param object $user_data holds WP_User object
  * @access public

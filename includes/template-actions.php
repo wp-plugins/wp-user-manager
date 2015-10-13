@@ -80,7 +80,7 @@ add_action( 'wpum_before_account', 'wpum_add_account_tabs', 10, 6 );
  */
 function wpum_show_account_edit_form( $current_tab, $all_tabs, $form, $fields, $user_id, $atts ) {
 
-	get_wpum_template( 'forms/account-form.php', 
+	get_wpum_template( 'forms/account-form.php',
 		array(
 			'atts'    => $atts,
 			'form'    => $form,
@@ -116,9 +116,9 @@ add_action( 'wpum_account_tab_change-password', 'wpum_show_psw_update_form', 10,
 function wpum_show_failed_login_message() {
 
 	if( isset( $_GET['login'] ) && $_GET['login'] == 'failed' ) {
-		$args = array( 
-				'id'   => 'wpum-login-failed', 
-				'type' => 'error', 
+		$args = array(
+				'id'   => 'wpum-login-failed',
+				'type' => 'error',
 				'text' => __( 'Login failed: You have entered incorrect login details, please try again.', 'wpum' )
 		);
 		$warning = wpum_message( $args, true );

@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return void
  */
 function wpum_admin_messages() {
-	
+
 	global $wpum_options;
 	$screen = get_current_screen();
 
@@ -32,7 +32,7 @@ function wpum_admin_messages() {
 	}
 
 	if (  isset( $_GET['emails-updated'] ) && $_GET['emails-updated'] == true ) {
-		add_settings_error( 'wpum-notices', 'emails-updated', __( 'Email successfully updated.', 'wpum' ), 'updated' );	
+		add_settings_error( 'wpum-notices', 'emails-updated', __( 'Email successfully updated.', 'wpum' ), 'updated' );
 	}
 
 	// Display Errors in plugin settings page
@@ -40,16 +40,16 @@ function wpum_admin_messages() {
 
 		// Display error if no core page is setup
 		if ( !wpum_get_option('login_page') || !wpum_get_option('password_recovery_page') || !wpum_get_option('registration_page') || !wpum_get_option('account_page') || !wpum_get_option('profile_page') ) {
-			add_settings_error( 'wpum-notices', 'page-missing', __('One or more WPUM pages are not configured.', 'wpum') . ' ' . sprintf( __('<a href="%s" class="button-primary">Click here to setup your pages</a>', 'wpum'), admin_url( 'users.php?page=wpum-settings&tab=general&wpum_action=install_pages' ) ), 'error' );	
+			add_settings_error( 'wpum-notices', 'page-missing', __('One or more WPUM pages are not configured.', 'wpum') . ' ' . sprintf( __('<a href="%s" class="button-primary">Click here to setup your pages</a>', 'wpum'), admin_url( 'users.php?page=wpum-settings&tab=general&wpum_action=install_pages' ) ), 'error' );
 		}
 
 		// Display error if wrong permalinks
 		if( get_option('permalink_structure' ) == '' ) {
-			add_settings_error( 'wpum-notices', 'permalink-wrong', sprintf(__( 'You must <a href="%s">change your permalinks</a> to anything else other than "default" for profiles to work.', 'wpum' ), admin_url( 'options-permalink.php' ) ), 'error' );	
+			add_settings_error( 'wpum-notices', 'permalink-wrong', sprintf(__( 'You must <a href="%s">change your permalinks</a> to anything else other than "default" for profiles to work.', 'wpum' ), admin_url( 'options-permalink.php' ) ), 'error' );
 		}
 
 		if( isset( $_GET['setup_done'] ) && $_GET['setup_done'] == 'true' ) {
-			add_settings_error( 'wpum-notices', 'pages-updated', __( 'Pages setup completed.', 'wpum' ), 'updated' );	
+			add_settings_error( 'wpum-notices', 'pages-updated', __( 'Pages setup completed.', 'wpum' ), 'updated' );
 		}
 
 	}

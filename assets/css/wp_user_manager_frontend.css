@@ -519,11 +519,24 @@ div.wpum-helper-links p {
   background-color: #eee;
   border: 1px solid #ddd;
   margin: 13px 5px 5px 1px;
-  padding: 3px 5px;
-  text-align: center;
-  width: 50%;
+  padding: 5px 15px;
+  width: 100%;
   display: block;
-  font-size: 11px; }
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center; }
+  #password-strength.short {
+    background-color: #f1adad;
+    border-color: #e35b5b; }
+  #password-strength.bad {
+    background-color: #fbc5a9;
+    border-color: #f78b53; }
+  #password-strength.good {
+    background-color: #ffe399;
+    border-color: #ffc733; }
+  #password-strength.strong {
+    background-color: #c1e1b9;
+    border-color: #83c373; }
 
 /* Messages */
 div.wpum-message {
@@ -569,5 +582,8 @@ div.wpum-message {
       #wpum-account-forms-tabs ul li.active a {
         background: #efefef;
         text-decoration: none; }
+
+.wpum-required-star {
+  color: #b94a48; }
 
 /*# sourceMappingURL=wp_user_manager_frontend.css.map */

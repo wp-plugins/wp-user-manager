@@ -30,6 +30,24 @@ function wpum_restrict_wp_register() {
 add_action( 'login_form_register', 'wpum_restrict_wp_register' );
 
 /**
+ * Stops users from accessing wp-login.php?action=lostpassword
+ *
+ * @since 1.1.0
+ * @access public
+ * @return void
+ */
+function wpum_restrict_wp_lostpassword() {
+
+	if ( wpum_get_option( 'wp_login_password_redirect' ) ):
+		$permalink = wpum_get_option( 'wp_login_password_redirect' );
+		wp_redirect( esc_url( get_permalink( $permalink ) ) );
+		exit();
+	endif;
+
+}
+add_action( 'login_form_lostpassword', 'wpum_restrict_wp_lostpassword' );
+
+/**
  * Stops users from seeing the admin bar on the frontend.
  *
  * @since 1.0.0
@@ -106,13 +124,21 @@ add_action( 'widgets_init', 'wpum_register_widgets', 1 );
  */
 function wpum_add_field_to_login( $content, $args ) {
 
+	$output = '';
+
 	// Check if it's a wpum login form.
-	// We add the hidden field only to forms powered by wpum
+	// We add the hidden field only to forms powered by wpum,
 	// to avoid conflicts with other login forms.
-	// Only a wpum login form would have the login_link key
+	// Only a wpum login form would have the login_link key.
 	if( is_array( $args ) && in_array( 'login_link' , $args ) ) {
-		return '<input type="hidden" name="wpum_is_login_form" value="wpum">';
+		$output .= '<input type="hidden" name="wpum_is_login_form" value="wpum">';
 	}
+
+	// Store redirect url if specified
+	$redirect = ( isset( $_GET['redirect_to'] ) && $_GET['redirect_to'] !=='' ) ? urlencode( $_GET['redirect_to'] ) : false;
+	$output .= '<input type="hidden" name="wpum_test" value="'.$redirect.'">';
+
+	return $output;
 
 }
 add_action( 'login_form_middle', 'wpum_add_field_to_login', 10, 2 );
@@ -190,15 +216,15 @@ if( ( wpum_get_option( 'login_method') == 'email' || wpum_get_option( 'login_met
  */
 function wpum_authenticate_login_form( $user ) {
 
-	if ( !defined( 'DOING_AJAX' ) && isset( $_SERVER['HTTP_REFERER'] ) && isset( $_POST['log'] ) && isset( $_POST['pwd'] ) ) :
+	if ( ! defined( 'DOING_AJAX' ) && isset( $_SERVER['HTTP_REFERER'] ) && isset( $_POST['log'] ) && isset( $_POST['pwd'] ) ) :
 
 		// check what page the login attempt is coming from
 		$referrer = $_SERVER['HTTP_REFERER'];
 
 		// remove previously added query strings
 		$referrer = add_query_arg( array(
-			'login' => false,
-			'captcha' => false
+			'login'       => false,
+			'captcha'     => false
 		), $referrer );
 
 		$error = false;
@@ -208,14 +234,14 @@ function wpum_authenticate_login_form( $user ) {
 		}
 
 		// check that were not on the default login page
-		if ( !empty( $referrer ) && !strstr( $referrer, 'wp-login' ) && !strstr( $referrer, 'wp-admin' ) && $error ) {
+		if ( ! empty( $referrer ) && ! strstr( $referrer, 'wp-login' ) && ! strstr( $referrer, 'wp-admin' ) && $error ) {
 
 			$referrer =  add_query_arg( array(
-				'login' => 'failed'
+				'login' => 'failed',
+				'redirect_to' => ( isset( $_POST['redirect_to'] ) && $_POST['redirect_to'] !== '' ) ? urlencode( $_POST['redirect_to'] ): false
 			), $referrer );
 
-			wp_redirect( esc_url( $referrer ) );
-
+			wp_redirect( esc_url_raw( $referrer ) );
 			exit;
 
 		}
@@ -240,20 +266,21 @@ function wpum_handle_failed_login( $user ) {
 
 		// remove previously added query strings
 		$referrer = add_query_arg( array(
-			'login' => false,
-			'captcha' => false
+			'login'       => false,
+			'captcha'     => false
 		), $referrer );
 
 		// check that were not on the default login page
-		if ( !empty( $referrer ) && !strstr( $referrer, 'wp-login' ) && !strstr( $referrer, 'wp-admin' ) && $user!=null ) {
+		if ( ! empty( $referrer ) && ! strstr( $referrer, 'wp-login' ) && ! strstr( $referrer, 'wp-admin' ) && $user != null ) {
 
 			$referrer =  add_query_arg( array(
-				'login' => 'failed'
+				'login'       => 'failed',
+				'redirect_to' => ( isset( $_POST['redirect_to'] ) && $_POST['redirect_to'] !== '' ) ? urlencode( $_POST['redirect_to'] ): false
 			), $referrer );
 
-			wp_redirect( esc_url( $referrer ) );
-
+			wp_redirect( esc_url_raw( $referrer ) );
 			exit;
+
 		}
 	endif;
 
@@ -276,3 +303,39 @@ function wpum_php_is_old() {
 	}
 }
 add_action( 'admin_notices', 'wpum_php_is_old' );
+
+/**
+ * Add a "view profile" link to the admin user table.
+ *
+ * @since 1.1.0
+ * @param  array $actions     list of actions
+ * @param  object $user_object user details
+ * @return array              list of actions
+ */
+function wpum_admin_user_action_link( $actions, $user_object ) {
+
+	if( wpum_get_core_page_id( 'profile' ) ) :
+		$actions['view_profile'] = '<a href="'. wpum_get_user_profile_url( $user_object ) .'">'. esc_html__( 'View Profile', 'wpum' ) .'</a>';
+	endif;
+
+	return $actions;
+
+}
+add_filter( 'user_row_actions', 'wpum_admin_user_action_link', 10, 2 );
+
+/**
+ * Redirect user to a page upon successfull registration.
+ *
+ * @param  int $user_id id of the newly registered user.
+ * @param  array $values  list of values submitted into the registration form.
+ * @return void
+ */
+function wpum_redirect_on_successfull_registration( $user_id, $values ) {
+
+	if( wpum_registration_redirect_url() ) {
+		wp_redirect( wpum_registration_redirect_url() );
+		exit;
+	}
+
+}
+add_action( 'wpum/form/register/success', 'wpum_redirect_on_successfull_registration', 9999, 3 );

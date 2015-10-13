@@ -226,19 +226,19 @@ add_action( 'admin_print_footer_scripts', 'wpum_new_line_quicktag' );
 function wpum_check_installation_date() {
 
 	$install_date = get_option( 'wpum_activation_date' );
-    $past_date = strtotime( '-14 days' );
+  $past_date = strtotime( '-14 days' );
 
  	// Delete the notice
-    if( isset( $_GET['hide_rating_notice'] ) && $_GET['hide_rating_notice'] == 1 ) {
-    	delete_option( 'wpum_activation_date' );
-    	wp_redirect( admin_url() );
-    	exit();
-    }
+  if( isset( $_GET['hide_rating_notice'] ) && $_GET['hide_rating_notice'] == 1 ) {
+  	delete_option( 'wpum_activation_date' );
+  	wp_redirect( admin_url() );
+  	exit();
+  }
 
-    // Display the notice
-    if ( $install_date && $past_date >= $install_date ) {
-        add_action( 'admin_notices', 'wpum_display_rating_notice' );
-    }
+  // Display the notice
+  if ( $install_date && $past_date >= $install_date ) {
+      add_action( 'admin_notices', 'wpum_display_rating_notice' );
+  }
 
 }
 add_action( 'admin_init', 'wpum_check_installation_date' );
@@ -252,12 +252,12 @@ add_action( 'admin_init', 'wpum_check_installation_date' );
 function wpum_display_rating_notice() {
 
 	$url_rate = 'http://wordpress.org/support/view/plugin-reviews/wp-user-manager?filter=5#postform';
-
 	$remove_url = add_query_arg( array( 'hide_rating_notice' => true ), admin_url() );
 
-    ?>
-    <div class="updated">
-        <p><?php echo sprintf( __( "Hey, looks like you've been using the <b>WP User Manager</b> plugin for some time now - that's awesome! <br/> Could you please give it a review on wordpress.org ? Just to help us spread the word and boost our motivation :) <br/> <br/><a href='%s' class='button button-primary' target='_blank'>Yes, you deserve it!</a> - <a href='%s'>I've already done this!</a>", 'wpum' ), $url_rate, esc_url( $remove_url ) ); ?></p>
-    </div>
-    <?php
+  ?>
+  <div class="updated">
+      <p><?php echo sprintf( __( "Hey, looks like you've been using the <b>WP User Manager</b> plugin for some time now - that's awesome! <br/> Could you please give it a review on wordpress.org ? Just to help us spread the word and boost our motivation :) <br/> <br/><a href='%s' class='button button-primary' target='_blank'>Yes, you deserve it!</a> - <a href='%s'>I've already done this!</a>", 'wpum' ), $url_rate, esc_url( $remove_url ) ); ?></p>
+  </div>
+  <?php
+
 }

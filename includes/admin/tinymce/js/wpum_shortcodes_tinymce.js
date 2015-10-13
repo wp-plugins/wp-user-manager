@@ -36,34 +36,34 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Login Form Shortcode',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'id', 
+											type: 'textbox',
+											name: 'id',
 											label: 'Form ID (optional)',
 											value: ''
 										},
 										{
-											type: 'textbox', 
-											name: 'label_username', 
+											type: 'textbox',
+											name: 'label_username',
 											label: 'Username label (optional)',
 											value: ''
 										},
 										{
-											type: 'textbox', 
-											name: 'label_password', 
+											type: 'textbox',
+											name: 'label_password',
 											label: 'Password label (optional)',
 											value: ''
 										},
 										{
-											type: 'textbox', 
-											name: 'label_remember', 
+											type: 'textbox',
+											name: 'label_remember',
 											label: 'Remember label (optional)',
 											value: ''
 										},
 										{
-											type: 'textbox', 
-											name: 'label_log_in', 
+											type: 'textbox',
+											name: 'label_log_in',
 											label: 'Login label (optional)',
 											value: ''
 										},
@@ -105,10 +105,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Registration Form',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'form_id', 
+											type: 'textbox',
+											name: 'form_id',
 											label: 'Form ID (optional)',
 											value: ''
 										},
@@ -144,10 +144,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Password Recovery Form',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'form_id', 
+											type: 'textbox',
+											name: 'form_id',
 											label: 'Form ID (optional)',
 											value: ''
 										},
@@ -203,7 +203,7 @@
 
 					]
 				},
-				
+
 				/** Users **/
 				{
 					text: 'Users',
@@ -215,10 +215,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Recently Registered Users',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'amount', 
+											type: 'textbox',
+											name: 'amount',
 											label: 'Users amount:',
 											value: ''
 										},
@@ -242,10 +242,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Profile Card',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'user_id', 
+											type: 'textbox',
+											name: 'user_id',
 											label: 'User ID',
 											value: ''
 										},
@@ -275,10 +275,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'User Directory',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'id', 
+											type: 'textbox',
+											name: 'id',
 											label: 'Directory ID',
 											value: ''
 										}
@@ -292,7 +292,7 @@
 
 					]
 				},
-				
+
 				/** Restrictions **/
 				{
 					text: 'Restrictions',
@@ -312,10 +312,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Restrict to specific users only',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'ids', 
+											type: 'textbox',
+											name: 'ids',
 											label: 'Comma separated user id(s)',
 											value: '1, 55, 80'
 										}
@@ -333,10 +333,10 @@
 							onclick: function() {
 								editor.windowManager.open( {
 									title: 'Restrict to specific user roles only',
-									body: [ 
+									body: [
 										{
-											type: 'textbox', 
-											name: 'roles', 
+											type: 'textbox',
+											name: 'roles',
 											label: 'Comma separated user role(s)',
 											value: 'subscriber, administrator'
 										}
@@ -351,22 +351,49 @@
 					]
 				},
 
+				/* Login Link */
+				{
+					text: 'Login Link',
+					onclick: function() {
+						editor.windowManager.open( {
+							title: 'Login Link',
+							body: [
+								{
+									type:  'textbox',
+									name:  'redirect',
+									label: 'Redirect after login (optional)',
+									value: ''
+								},
+								{
+									type:  'textbox',
+									name:  'label',
+									label: 'Link Label',
+									value: 'Login'
+								},
+							],
+							onsubmit: function( e ) {
+								editor.insertContent( '[wpum_login redirect="' + e.data.redirect + '" label="' + e.data.label + '" ]');
+							}
+						});
+					}
+				}, // End Login Link
+				
 				/* Logout Link */
 				{
 					text: 'Logout Link',
 					onclick: function() {
 						editor.windowManager.open( {
 							title: 'Logout Link',
-							body: [ 
+							body: [
 								{
-									type: 'textbox', 
-									name: 'redirect', 
+									type: 'textbox',
+									name: 'redirect',
 									label: 'Redirect after logout (optional)',
 									value: ''
 								},
 								{
-									type: 'textbox', 
-									name: 'label', 
+									type: 'textbox',
+									name: 'label',
 									label: 'Link Label',
 									value: 'Logout'
 								},

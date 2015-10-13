@@ -238,7 +238,7 @@ function wpum_get_registered_settings() {
 				'display_password_meter_registration' => array(
 					'id'   => 'display_password_meter_registration',
 					'name' => __( 'Display password meter:', 'wpum' ),
-					'desc' => __('Enable to display a password meter on registration page and account page.', 'wpum'),
+					'desc' => __('Enable to display a password meter into the forms.', 'wpum'),
 					'type' => 'checkbox'
 				),
 				'header_n' => array(
@@ -369,6 +369,12 @@ function wpum_get_registered_settings() {
 					'type'    => 'select',
 					'options' => wpum_get_email_templates()
 				),
+				'email_logo' => array(
+					'id'   => 'email_logo',
+					'name' => __( 'Logo', 'wpum' ),
+					'desc' => __( 'Upload or choose a logo to be displayed at the top of emails. Displayed on HTML emails only.', 'wpum' ),
+					'type' => 'upload'
+				),
 				'emails_editor' => array(
 					'id'   => 'emails_editor',
 					'name' => __( 'Emails Editor:', 'wpum' ),
@@ -436,7 +442,7 @@ function wpum_get_registered_settings() {
 			array(
 				'login_redirect' => array(
 					'id'      => 'login_redirect',
-					'name'    => __( 'Login redirect:', 'wpum' ),
+					'name'    => __( 'Login', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users after they login. If empty will return to the current page.', 'wpum'),
 					'type'    => 'select',
 					'class'   => 'select2',
@@ -444,23 +450,39 @@ function wpum_get_registered_settings() {
 				),
 				'logout_redirect' => array(
 					'id'      => 'logout_redirect',
-					'name'    => __( 'Logout redirect:', 'wpum' ),
+					'name'    => __( 'Logout', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users after they logout. If empty will return to wp-login.php', 'wpum'),
+					'type'    => 'select',
+					'class'   => 'select2',
+					'options' => wpum_get_pages()
+				),
+				'registration_redirect' => array(
+					'id'      => 'registration_redirect',
+					'name'    => __( 'Registration Redirect', 'wpum' ),
+					'desc'    => __('Select the page where you want to redirect users after they successfully register. If empty a message will be displayed instead.', 'wpum'),
 					'type'    => 'select',
 					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'wp_login_signup_redirect' => array(
 					'id'      => 'wp_login_signup_redirect',
-					'name'    => __( 'Backend register redirect:', 'wpum' ),
+					'name'    => __( 'Backend register', 'wpum' ),
 					'desc'    => sprintf(__('Select a page if you wish to redirect users who try to signup through <a href="%s">the default registration page on wp-login.php</a>', 'wpum'), site_url( 'wp-login.php?action=register' ) ),
+					'type'    => 'select',
+					'class'   => 'select2',
+					'options' => wpum_get_pages()
+				),
+				'wp_login_password_redirect' => array(
+					'id'      => 'wp_login_password_redirect',
+					'name'    => __( 'Backend lost password', 'wpum' ),
+					'desc'    => sprintf(__('Select a page if you wish to redirect users who try to recover a lost password through <a href="%s">the default password recovery page on wp-login.php</a>', 'wpum'), site_url( 'wp-login.php?action=lostpassword' ) ),
 					'type'    => 'select',
 					'class'   => 'select2',
 					'options' => wpum_get_pages()
 				),
 				'backend_profile_redirect' => array(
 					'id'      => 'backend_profile_redirect',
-					'name'    => __( 'Backend profile redirect:', 'wpum' ),
+					'name'    => __( 'Backend profile', 'wpum' ),
 					'desc'    => __('Select the page where you want to redirect users who try to access their profile on the backend.', 'wpum'),
 					'type'    => 'select',
 					'class'   => 'select2',
@@ -716,7 +738,7 @@ function wpum_text_callback( $args ) {
  */
 function wpum_number_callback( $args ) {
 	global $wpum_options;
-    
+
     if ( isset( $wpum_options[ $args['id'] ] ) )
 		$value = $wpum_options[ $args['id'] ];
 	else
@@ -926,6 +948,31 @@ function wpum_color_callback( $args ) {
 	$html .= '<label for="wpum_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
 
 	echo $html;
+}
+
+/**
+ * Upload Callback.
+ *
+ * @since 1.1.0
+ * @param array $args Arguments passed by the setting
+ * @global $wpum_options Array of all the Options
+ * @return void
+ */
+function wpum_upload_callback( $args ) {
+
+	global $wpum_options;
+
+	if ( isset( $wpum_options[ $args['id'] ] ) ) {
+	  $value = $wpum_options[$args['id']];
+	} else {
+	  $value = isset($args['std']) ? $args['std'] : '';
+	}
+	$size = ( isset( $args['size'] ) && ! is_null( $args['size'] ) ) ? $args['size'] : 'regular';
+	$html = '<input type="text" class="' . $size . '-text" id="wpum_settings[' . $args['id'] . ']" name="wpum_settings[' . $args['id'] . ']" value="' . esc_attr( stripslashes( $value ) ) . '"/>';
+	$html .= '<span>&nbsp;<input type="button" class="wpum_settings_upload_button button-secondary" value="' . __( 'Upload File', 'wpum' ) . '"/></span>';
+	$html .= '<label for="wpum_settings[' . $args['id'] . ']"> '  . $args['desc'] . '</label>';
+	echo $html;
+
 }
 
 /**

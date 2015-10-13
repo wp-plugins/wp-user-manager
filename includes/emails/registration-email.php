@@ -14,11 +14,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 /**
  * WPUM_register_Email Class
  * This class registers a new email for the editor.
- * 
+ *
  * @since 1.0.0
  */
 class WPUM_register_Email extends WPUM_Emails {
-	
+
 	/**
 	 * This function sets up a custom email.
 	 *
@@ -26,7 +26,7 @@ class WPUM_register_Email extends WPUM_Emails {
 	 * @return  void
 	 */
 	function __construct() {
-		
+
 		// Configure Email
 		$this->name        = 'register';
 		$this->title       = __( "Registration Email", 'wpum' );
@@ -35,7 +35,7 @@ class WPUM_register_Email extends WPUM_Emails {
 		$this->message     = $this->message();
 
 		// do not delete!
-    	parent::__construct();
+		parent::__construct();
 	}
 
 	/**
@@ -65,11 +65,11 @@ class WPUM_register_Email extends WPUM_Emails {
 		$message .= __( "These are your account details \n\n", 'wpum');
 		$message .= __( "Username: {username},\n", 'wpum' );
 		$message .= __( "Password: {password}", 'wpum' );
-		
+
 		return $message;
 
 	}
-	
+
 }
 
 new WPUM_register_Email();

@@ -29,15 +29,16 @@ class WPUM_Emails_Editor {
 	public function __construct() {
 
 		$this->allowed_email_tags = array(
-		    'a' => array(
-		        'href' => array(),
-		        'title' => array()
-		    ),
-			'br'     => array(),
-			'em'     => array(),
-			'strong' => array(),
+		  'a'         => array(
+		      'href'  => array(),
+		      'title' => array()
+		  ),
+			'p'          => array(),
+			'br'         => array(),
+			'em'         => array(),
+			'strong'     => array(),
 		);
-		
+
 		if( ! class_exists( 'WP_List_Table' ) ) {
 		    require_once( ABSPATH . 'wp-admin/includes/class-wp-list-table.php' );
 		}

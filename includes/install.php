@@ -38,10 +38,10 @@ function wpum_install() {
 
 	// Setup default emails content
 	$default_emails = array();
-	
+
 	// Delete the option
 	delete_option( 'wpum_emails' );
-	
+
 	// Get all registered emails
 	wpum_register_emails();
 

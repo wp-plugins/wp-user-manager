@@ -1,9 +1,7 @@
 <?php
 /**
  * Email Header
- *
- * 
- * @version     1.0.0
+ * @version     1.1.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
@@ -58,6 +56,8 @@ $header_content_h1 = "
 	font-weight: 500;
 	line-height: 1.2;
 ";
+
+$header_img = wpum_get_option( 'email_logo', '' );
 ?>
 <!DOCTYPE html>
 <html>
@@ -70,6 +70,11 @@ $header_content_h1 = "
 		<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
 			<tr>
 				<td align="center" valign="top">
+					<?php if( ! empty( $header_img ) ) : ?>
+						<div id="template_header_image">
+							<?php echo '<p style="margin-top:0;"><img src="' . esc_url( $header_img ) . '" alt="' . get_bloginfo( 'name' ) . '" /></p>'; ?>
+						</div>
+					<?php endif; ?>
 					<table border="0" cellpadding="0" cellspacing="0" width="520" id="template_container" style="<?php echo $template_container; ?>">
 						<tr>
 							<td align="center" valign="top">

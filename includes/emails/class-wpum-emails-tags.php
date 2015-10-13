@@ -14,12 +14,12 @@
  * in a function hooked to the 'wpum_email_tags' action
  *
  * @package     wp-user-manager
- * @author   	Copyright (c) 2014, Pippin Williamson
+ * @author   		Copyright (c) 2014, Pippin Williamson
  * @author      Barry Kooij
  * @author      Alessandro Tesoro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  * @since       1.0.0
- * 
+ *
  */
 
 // Exit if accessed directly
@@ -319,7 +319,7 @@ function wpum_email_tag_sitename( $user_id ) {
 
 /**
  * Email template tag: password
- * 
+ *
  * The function checks whether custom passwords are enabled.
  * If enabled, the mail won't contain the password.
  *
@@ -331,7 +331,7 @@ function wpum_email_tag_sitename( $user_id ) {
  * @return string sitename
  */
 function wpum_email_tag_password( $user_id, $private_key ) {
-	
+
 	$pwd = $private_key;
 
 	if( wpum_get_option('custom_passwords') )
@@ -347,7 +347,7 @@ function wpum_email_tag_password( $user_id, $private_key ) {
  * @return string username
  */
 function wpum_email_tag_username( $user_id ) {
-	
+
 	$username = get_userdata( $user_id );
 	$username = esc_attr($username->user_login);
 
@@ -362,7 +362,7 @@ function wpum_email_tag_username( $user_id ) {
  * @return string url
  */
 function wpum_email_tag_recovery_url( $user_id, $private_key ) {
-	
+
 	$username = get_userdata( $user_id );
 	$username = esc_attr($username->user_login);
 

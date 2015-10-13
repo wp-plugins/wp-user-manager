@@ -2,7 +2,7 @@
 /**
  * WP User Manager Forms: update password form
  * This form is used into the account page when a user is already logged in.
- * 
+ *
  * @package     wp-user-manager
  * @author      Alessandro Tesoro
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
@@ -36,7 +36,7 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 
 		// Add password meter field
 		if( wpum_get_option('display_password_meter_registration') )
-			add_action( 'wpum_after_inside_password_update_form', array( __CLASS__, 'add_password_meter_field' ) );
+			add_action( 'wpum_after_inside_password_update_form', 'wpum_psw_indicator' );
 
 	}
 
@@ -68,17 +68,6 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 			),
 		) );
 
-	}
-
-	/**
-	 * Add password meter field.
-	 *
-	 * @access public
-	 * @since 1.0.0
-	 * @return void
-	 */
-	public static function add_password_meter_field() {
-		echo '<span id="password-strength">'.__('Strength Indicator', 'wpum').'</span>';		
 	}
 
 	/**
@@ -156,7 +145,7 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 		}
 
 		// Proceed to update the password
-		$user_data = array( 
+		$user_data = array(
 			'ID'        => get_current_user_id(),
 			'user_pass' => $values['password_update']['password']
 		);
@@ -183,7 +172,7 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 	 * @return void
 	 */
 	public static function output( $atts = array() ) {
-		
+
 		// Get fields
 		self::get_update_password_fields();
 
@@ -197,7 +186,7 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 		// Display template
 		if( is_user_logged_in() ) :
 
-			get_wpum_template( 'forms/password-update-form.php', 
+			get_wpum_template( 'forms/password-update-form.php',
 				array(
 					'form'            => self::$form_name,
 					'password_fields' => self::get_fields( 'password_update' ),
@@ -205,7 +194,7 @@ class WPUM_Form_Update_Password extends WPUM_Form {
 			);
 
 		else :
-			
+
 			echo wpum_login_form();
 
 		endif;

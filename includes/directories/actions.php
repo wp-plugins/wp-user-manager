@@ -23,10 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function wpum_directory_topbar( $directory_args ) {
 
 	get_wpum_template( "directory/top-bar.php", array(
-			'users_found'  => $directory_args['users_found'],
-			//'search_form'  => $directory_args['search_form'], Search form under construction
-			'directory_id' => $directory_args['directory_id']
-		) );
+		'users_found'  => $directory_args['users_found'],
+		//'search_form'  => $directory_args['search_form'], Search form under construction
+		'directory_id' => $directory_args['directory_id']
+	) );
 
 }
 add_action( 'wpum_before_user_directory', 'wpum_directory_topbar' );

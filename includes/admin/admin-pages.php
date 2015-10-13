@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 function wpum_add_options_link() {
 
 	global $wpum_settings_page;
-	
+
 	$wpum_settings_page = add_users_page( __( 'WPUM Profile Fields Editor', 'wpum' ), __( 'Profile Fields', 'wpum' ), 'manage_options', 'wpum-profile-fields', 'WPUM_Fields_Editor::editor_page' );
 	$wpum_settings_page = add_users_page( __( 'WPUM Edit Field', 'wpum' ), __( 'Edit Field', 'wpum' ), 'manage_options', 'wpum-edit-field', 'WPUM_Fields_Editor::edit_field_page' );
 	$wpum_settings_page = add_users_page( __('WP User Manager Settings', 'wpum'), __('WPUM Settings', 'wpum'), 'manage_options', 'wpum-settings', 'wpum_options_page' );

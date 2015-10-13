@@ -16,18 +16,18 @@ $posts_query = new WP_Query( apply_filters( 'wpum_profile_posts_query_args', $ar
 ?>
 
 <div class="wpum-user-posts-list">
-	
+
 	<!-- the loop -->
-	<?php 
+	<?php
 
 		if ( $posts_query->have_posts() ) :
 
 			while ( $posts_query->have_posts() ) : $posts_query->the_post(); ?>
 
 				<div class="wpum-post" id="wpum-post-<?php echo the_id();?>">
-				
+
 					<a href="<?php the_permalink();?>" class="wpum-post-title"><?php the_title();?></a>
-						
+
 					<ul class="wpum-post-meta">
 						<li>
 							<strong><?php _e( 'Posted on:', 'wpum' ); ?></strong>
@@ -46,9 +46,9 @@ $posts_query = new WP_Query( apply_filters( 'wpum_profile_posts_query_args', $ar
 		else :
 
 			// Display error message
-			$args = array( 
-				'id'   => 'wpum-posts-not-found', 
-				'type' => 'notice', 
+			$args = array(
+				'id'   => 'wpum-posts-not-found',
+				'type' => 'notice',
 				'text' => sprintf( __( '%s did not submit any posts yet.', 'wpum' ), $user_data->display_name )
 			);
 			wpum_message( $args );

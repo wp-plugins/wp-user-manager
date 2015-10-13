@@ -45,14 +45,6 @@ class WPUM_Getting_Started {
 	 * @return void
 	 */
 	public function admin_menus() {
-		// About Page
-		add_dashboard_page(
-			__( 'Welcome to WP User Manager', 'wpum' ),
-			__( 'Welcome to WP User Manager', 'wpum' ),
-			$this->minimum_capability,
-			'wpum-about',
-			array( $this, 'about_screen' )
-		);
 
 		// Getting Started Page
 		add_dashboard_page(
@@ -73,7 +65,6 @@ class WPUM_Getting_Started {
 	 * @return void
 	 */
 	public function admin_head() {
-		remove_submenu_page( 'index.php', 'wpum-about' );
 		remove_submenu_page( 'index.php', 'wpum-getting-started' );
 
 		// Badge for welcome page
@@ -129,49 +120,12 @@ class WPUM_Getting_Started {
 		$selected = isset( $_GET['page'] ) ? $_GET['page'] : 'wpum-about';
 		?>
 		<h2 class="nav-tab-wrapper">
-			
-			<?php if( WPUM_VERSION > 1 ) : ?>
-			<a class="nav-tab <?php echo $selected == 'wpum-about' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'wpum-about' ), 'index.php' ) ) ); ?>">
-				<?php _e( "What's New", 'wpum' ); ?>
-			</a>
-			<?php endif; ?>
-			
+
 			<a class="nav-tab <?php echo $selected == 'wpum-getting-started' ? 'nav-tab-active' : ''; ?>" href="<?php echo esc_url( admin_url( add_query_arg( array( 'page' => 'wpum-getting-started' ), 'index.php' ) ) ); ?>">
 				<?php _e( 'Getting Started', 'wpum' ); ?>
 			</a>
-			
+
 		</h2>
-		<?php
-	}
-
-	/**
-	 * Render About Screen
-	 *
-	 * @access public
-	 * @since 1.0
-	 * @return void
-	 */
-	public function about_screen() {
-		?>
-		<div class="wrap about-wrap">
-			
-			<h1><?php printf( __( 'Welcome to WP User Manager %s', 'wpum' ), WPUM_VERSION ); ?></h1>
-			<div class="about-text"><?php printf( __( 'Thank you for updating to the latest version! WP User Manager %s is ready to provide improved control over your WordPress users.', 'wpum' ), WPUM_VERSION ); ?></div>
-			<div class="wpum-badge"><?php printf( __( 'Version %s', 'wpum' ), WPUM_VERSION ); ?></div>
-
-			<?php $this->tabs(); ?>
-
-			<div class="changelog">
-				
-				<h3><?php _e( 'Full Changelog', 'wpum' );?></h3>
-
-				<div class="feature-section">
-					<?php echo $this->parse_readme(); ?>
-				</div>
-
-			</div>
-
-		</div>
 		<?php
 	}
 
@@ -185,7 +139,7 @@ class WPUM_Getting_Started {
 	public function getting_started_screen() {
 		?>
 		<div class="wrap about-wrap">
-			
+
 			<h1><?php printf( __( 'Welcome to WP User Manager %s', 'wpum' ), WPUM_VERSION ); ?></h1>
 			<div class="about-text"><?php printf( __( 'Thank you for installing the latest version! WP User Manager %s is ready to provide improved control over your WordPress users.', 'wpum' ), WPUM_VERSION ); ?></div>
 			<div class="wpum-badge"><?php printf( __( 'Version %s', 'wpum' ), WPUM_VERSION ); ?></div>
@@ -223,14 +177,14 @@ class WPUM_Getting_Started {
 
 			<div class="changelog under-the-hood feature-list">
 
-				<div class="feature-section col two-col">
+				<div class="feature-section  two-col">
 
-					<div>
+					<div class="col">
 						<h3><?php _e('Looking for help ?', 'wpum'); ?></h3>
 						<p><?php echo sprintf( __('We do all we can to provide every user with the best support possible. If you encounter a problem or have a question, please <a href="%s" target="_blank">contact us.</a> Make sure you <a href="%s">read the documentation</a> first.', 'wpum'), 'http://wpusermanager.com/contacts', 'http://documentation.wpusermanager.com' ); ?></p>
 					</div>
-					
-					<div class="last-feature">
+
+					<div class="last-feature col">
 						<h3><?php _e('Get Notified of Extension Releases', 'wpum'); ?></h3>
 						<p><?php echo sprintf( __('New extensions that make WP User Manager even more powerful will be released soon. Subscribe to the newsletter to stay up to date with our latest releases. Signup now to ensure you do not miss a release!', 'wpum'), '#' ); ?></p>
 						<a href="http://wpusermanager.com/newsletter" class="button"><?php _e('Signup Now', 'wpum'); ?> &raquo;</a>
@@ -241,7 +195,7 @@ class WPUM_Getting_Started {
 					<div class="return-to-dashboard">
 						<a href="<?php echo admin_url( 'users.php?page=wpum-settings' ); ?>"><?php _e('Go To WP User Manager &rarr; Settings', 'wpum'); ?></a>
 					</div>
-				
+
 				</div>
 			</div>
 
@@ -251,32 +205,7 @@ class WPUM_Getting_Started {
 	}
 
 	/**
-	 * Parse the readme.txt file
-	 *
-	 * @since 1.0.1
-	 * @return string $readme HTML formatted readme file
-	 */
-	public function parse_readme() {
-		$file = file_exists( WPUM_PLUGIN_DIR . 'readme.txt' ) ? WPUM_PLUGIN_DIR . 'readme.txt' : null;
-		if ( ! $file ) {
-			$readme = '<p>' . __( 'No valid changlog was found.', 'wpum' ) . '</p>';
-		} else {
-			$readme = file_get_contents( $file );
-			$readme = nl2br( esc_html( $readme ) );
-			$readme = explode( '== Changelog ==', $readme );
-			$readme = end( $readme );
-			$readme = preg_replace( '/`(.*?)`/', '<code>\\1</code>', $readme );
-			$readme = preg_replace( '/[\040]\*\*(.*?)\*\*/', ' <strong>\\1</strong>', $readme );
-			$readme = preg_replace( '/[\040]\*(.*?)\*/', ' <em>\\1</em>', $readme );
-			$readme = preg_replace( '/= (.*?) =/', '<h4>\\1</h4>', $readme );
-			$readme = preg_replace( '/\[(.*?)\]\((.*?)\)/', '<a href="\\2">\\1</a>', $readme );
-		}
-		return $readme;
-	}
-
-	/**
-	 * Sends user to the Welcome page on first activation of WPUM as well as each
-	 * time WPUM is upgraded to a new version
+	 * Sends user to the Welcome page on first activation of WPUM.
 	 *
 	 * @access public
 	 * @since 1.0
@@ -286,8 +215,6 @@ class WPUM_Getting_Started {
 	public function welcome() {
 
 		global $wpum_options;
-
-		$major_wpum_version = substr( WPUM_VERSION, 0, strrpos( WPUM_VERSION, '.' ) );
 
 		// Bail if no activation redirect
 		if ( ! get_transient( '_wpum_activation_redirect' ) )
@@ -302,11 +229,11 @@ class WPUM_Getting_Started {
 
 		$upgrade = get_option( 'wpum_version_upgraded_from' );
 
-		if( ! $upgrade ) { // First time install
-			wp_safe_redirect( admin_url( 'index.php?page=wpum-getting-started' ) ); exit;
-		} else if( version_compare( get_option( 'wpum_version_upgraded_from' ), $major_wpum_version, '<' ) ) { // Update
-			wp_safe_redirect( admin_url( 'index.php?page=wpum-about' ) ); exit;
+		if( ! $upgrade ) {
+			wp_safe_redirect( admin_url( 'index.php?page=wpum-getting-started' ) );
+			exit;
 		}
+
 	}
 
 }

@@ -18,9 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * @return array $field_types - list of field types.
  */
 function wpum_get_field_types() {
-
 	return apply_filters( 'wpum/field/types', array() );
-
 }
 
 /**
@@ -30,9 +28,7 @@ function wpum_get_field_types() {
  * @return array $field_classes - list of field types and class names.
  */
 function wpum_get_field_classes() {
-
 	return apply_filters( 'wpum/field/types/classes', array() );
-
 }
 
 /**
@@ -249,9 +245,7 @@ function wpum_get_field_input_html( $key, $field ) {
 		}
 
 	} else {
-
 		echo __( 'This field type has no output', 'wpum' );
-
 	}
 
 }
@@ -276,6 +270,7 @@ function wpum_install_groups() {
 			'can_delete' => false,
 			'is_primary' => true
 		);
+
 		WPUM()->field_groups->add( $field_groups_args );
 
 	}

@@ -26,7 +26,7 @@ class WPUM_Forms {
 	 * @return void
 	 */
 	public function __construct() {
-		
+
 		add_action( 'init', array( $this, 'load_posted_form' ) );
 
 	}

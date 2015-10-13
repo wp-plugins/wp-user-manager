@@ -26,10 +26,11 @@ class WPUM_Shortcodes {
 	 * @return void
 	 */
 	public function __construct() {
-		
+
 		add_filter( 'widget_text', 'do_shortcode' );
 		add_shortcode( 'wpum_login_form', array( $this, 'wpum_login_form' ) );
 		add_shortcode( 'wpum_logout', array( $this, 'wpum_logout' ) );
+		add_shortcode( 'wpum_login', array( $this, 'wpum_login' ) );
 		add_shortcode( 'wpum_register', array( $this, 'wpum_registration' ) );
 		add_shortcode( 'wpum_password_recovery', array( $this, 'wpum_password' ) );
 		add_shortcode( 'wpum_account', array( $this, 'wpum_account' ) );
@@ -126,7 +127,7 @@ class WPUM_Shortcodes {
 	}
 
 	/**
-	 * Login Form Shortcode
+	 * Render logout url
 	 *
 	 * @access public
 	 * @since  1.0.0
@@ -141,8 +142,34 @@ class WPUM_Shortcodes {
 
 		$output = null;
 
-		if(is_user_logged_in())
-			$output = sprintf( __('<a href="%s">%s</a>', 'wpum'), wpum_logout_url($redirect), esc_attr($label) );
+		if( is_user_logged_in() )
+			$output = sprintf( __('<a href="%s">%s</a>', 'wpum'), wpum_logout_url( $redirect ), esc_attr( $label ) );
+
+		return $output;
+
+	}
+
+	/**
+	 * Login Form Shortcode
+	 *
+	 * @access public
+	 * @since  1.0.0
+	 * @return $output shortcode output
+	 */
+	public function wpum_login( $atts, $content=null ) {
+
+		extract( shortcode_atts( array(
+			'redirect' => '',
+			'label'    => esc_html__( 'Login', 'wpum' )
+		), $atts ) );
+
+		$url = wpum_get_core_page_url( 'login' );
+
+		if( ! empty( $redirect ) ) {
+			$url = add_query_arg( array( 'redirect_to' => urlencode( $redirect ) ), $url );
+		}
+
+		$output = '<a href="'. esc_url( $url ) .'" class="wpum-login-link">'.esc_html( $label ).'</a>';
 
 		return $output;
 
@@ -223,10 +250,10 @@ class WPUM_Shortcodes {
 		ob_start();
 
 		if( wpum_can_access_profile() )
-			get_wpum_template( 'profile.php', array( 
+			get_wpum_template( 'profile.php', array(
 					'user_data' => wpum_get_user_by_data(),
-				) 
-			);
+			)
+		);
 
 		$output = ob_get_clean();
 
@@ -250,7 +277,7 @@ class WPUM_Shortcodes {
 
 		ob_start();
 
-		get_wpum_template( 'recently-registered.php', array( 'amount' => intval($amount), 'link_to_profile' => $link_to_profile ) );
+		get_wpum_template( 'recently-registered.php', array( 'amount' => intval( $amount ), 'link_to_profile' => $link_to_profile ) );
 
 		$output = ob_get_clean();
 
@@ -298,13 +325,13 @@ class WPUM_Shortcodes {
 			$card_template = "profile-card-{$template}.php";
 		}
 
-		get_wpum_template( $card_template, array( 
+		get_wpum_template( $card_template, array(
 				'user_data'       => get_user_by( 'id', intval( $user_id ) ),
 				'wrapper_id'      => $wrapper_id,
 				'link_to_profile' => $link_to_profile,
 				'display_buttons' => $display_buttons,
 				'atts'            => $atts
-			) 
+			)
 		);
 
 		$output = ob_get_clean();
@@ -330,9 +357,9 @@ class WPUM_Shortcodes {
 
 		} else {
 
-			$args = array( 
-				'id'   => 'wpum-guests-disabled', 
-				'type' => 'notice', 
+			$args = array(
+				'id'   => 'wpum-guests-disabled',
+				'type' => 'notice',
 				'text' => sprintf( __('This content is available to members only. Please <a href="%s">login</a> or <a href="%s">register</a> to view this area.', 'wpum'), wpum_get_core_page_url('login'), wpum_get_core_page_url('register')  )
 			);
 			$warning = wpum_message( apply_filters( 'wpum_restrict_logged_in_message', $args ), true );
@@ -369,9 +396,9 @@ class WPUM_Shortcodes {
 
 		} else {
 
-			$args = array( 
-				'id'   => 'wpum-guests-disabled', 
-				'type' => 'notice', 
+			$args = array(
+				'id'   => 'wpum-guests-disabled',
+				'type' => 'notice',
 				'text' => sprintf( __('This content is available to members only. Please <a href="%s">login</a> or <a href="%s">register</a> to view this area.', 'wpum'), wpum_get_core_page_url('login'), wpum_get_core_page_url('register')  )
 			);
 			$warning = wpum_message( apply_filters( 'wpum_restrict_to_users_message', $args ), true );
@@ -410,9 +437,9 @@ class WPUM_Shortcodes {
 
 		} else {
 
-			$args = array( 
-				'id'   => 'wpum-guests-disabled', 
-				'type' => 'notice', 
+			$args = array(
+				'id'   => 'wpum-guests-disabled',
+				'type' => 'notice',
 				'text' => sprintf( __('This content is available to members only. Please <a href="%s">login</a> or <a href="%s">register</a> to view this area.', 'wpum'), wpum_get_core_page_url('login'), wpum_get_core_page_url('register')  )
 			);
 			$warning = wpum_message( apply_filters( 'wpum_restrict_to_user_roles_args', $args ), true );
@@ -447,9 +474,9 @@ class WPUM_Shortcodes {
 
 		// Display error if something is wrong.
 		if( !$id || $check_directory !== 'publish' ) :
-			$args = array( 
-				'id'   => 'wpum-no-user-directory-id', 
-				'type' => 'error', 
+			$args = array(
+				'id'   => 'wpum-no-user-directory-id',
+				'type' => 'error',
 				'text' => __( 'Something went wrong, you have not set a directory ID or the directory is not published.', 'wpum' )
 			);
 			$warning = wpum_message( $args, true );
@@ -459,11 +486,12 @@ class WPUM_Shortcodes {
 		// Prepare Pagination
 		$number = wpum_directory_profiles_per_page( $directory_id );
 		$paged  = ( get_query_var('paged') ) ? get_query_var('paged') : 1;
+
 		if( $paged == 1 ) {
-      		$offset = 0;  
-    	} else {
+			$offset = 0;
+    } else {
 			$offset = ( $paged -1 ) * $number;
-    	}
+    }
 
 		// Make the query
 		$args = array(
@@ -476,6 +504,7 @@ class WPUM_Shortcodes {
 		// Detect which template we should be using.
 		$template     = "user-directory.php";
 		$template_tag = wpum_directory_has_custom_template( $directory_id );
+
 		if( $template_tag ) {
 			$template = "user-directory-{$template_tag}.php";
 		}
@@ -486,7 +515,7 @@ class WPUM_Shortcodes {
 		if( isset( $_GET['amount'] ) && is_numeric( $_GET['amount'] ) )
 			$number = $_GET['amount'];
 
-		$total_users  = $user_query->total_users;
+		$total_users = $user_query->total_users;
 		$total_pages = ceil( $total_users / $number );
 
 		// Merge directory details in array
