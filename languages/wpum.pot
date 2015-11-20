@@ -2,9 +2,9 @@
 # This file is distributed under the GPLv2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP User Manager 1.0.5\n"
+"Project-Id-Version: WP User Manager 1.1.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wp-user-manager\n"
-"POT-Creation-Date: 2015-10-13 10:37:00+00:00\n"
+"POT-Creation-Date: 2015-11-20 10:55:54+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,17 +24,12 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 
-#: includes/abstracts/abstract-wpum-field-type.php:103
-msgid "Basic"
-msgstr ""
-
-#: includes/abstracts/abstract-wpum-form.php:202
+#: includes/abstracts/abstract-wpum-form.php:201
 msgid "%s is a required field"
 msgstr ""
 
-#: includes/abstracts/abstract-wpum-form.php:215
-#: includes/misc-functions.php:497
-msgid "\"%s\" (filetype %s) needs to be one of the following file types: %s"
+#: includes/abstracts/abstract-wpum-form.php:206
+msgid "Please enter a valid email address for the \"%s\" field."
 msgstr ""
 
 #: includes/actions.php:300 includes/install.php:33
@@ -64,7 +59,7 @@ msgid ""
 "addons."
 msgstr ""
 
-#: includes/admin/admin-actions.php:21 includes/admin/welcome.php:217
+#: includes/admin/admin-actions.php:21 includes/admin/welcome.php:171
 #: includes/filters.php:41
 msgid "Documentation"
 msgstr ""
@@ -197,6 +192,10 @@ msgstr ""
 msgid "Field successfully updated."
 msgstr ""
 
+#: includes/admin/admin-notices.php:89
+msgid "Settings successfully imported."
+msgstr ""
+
 #: includes/admin/admin-pages.php:26
 msgid "WPUM Profile Fields Editor"
 msgstr ""
@@ -229,11 +228,19 @@ msgstr ""
 msgid "WPUM Email Editor"
 msgstr ""
 
-#: includes/admin/admin-pages.php:30
-msgid "WP User Manager Addons"
+#: includes/admin/admin-pages.php:30 includes/admin/tools.php:28
+msgid "WP User Manager Tools"
 msgstr ""
 
 #: includes/admin/admin-pages.php:30
+msgid "WPUM Tools"
+msgstr ""
+
+#: includes/admin/admin-pages.php:31
+msgid "WP User Manager Addons"
+msgstr ""
+
+#: includes/admin/admin-pages.php:31
 msgid "WPUM Addons"
 msgstr ""
 
@@ -322,95 +329,116 @@ msgstr ""
 msgid "WP User Manager - Fields Editor"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:204
+#: includes/admin/fields/class-wpum-fields-editor.php:207
 msgid ""
 "It seems you do not have any field groups. Please deactivate and "
 "re-activate the plugin."
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:223
+#: includes/admin/fields/class-wpum-fields-editor.php:226
 msgid "Select a field group to edit:"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:233
+#: includes/admin/fields/class-wpum-fields-editor.php:236
 msgid "Select"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:304
+#: includes/admin/fields/class-wpum-fields-editor.php:306
 msgid "Group Settings"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:305
+#: includes/admin/fields/class-wpum-fields-editor.php:307
 msgid "Fields Order"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:318
+#: includes/admin/fields/class-wpum-fields-editor.php:320
 msgid "Requirement"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:322
+#: includes/admin/fields/class-wpum-fields-editor.php:324
 msgid "Show on registration form"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:334
+#: includes/admin/fields/class-wpum-fields-editor.php:328
+#: includes/admin/fields/class-wpum-fields-editor.php:674
+msgid "Display full name"
+msgstr ""
+
+#: includes/admin/fields/class-wpum-fields-editor.php:332
+msgid "Visibility"
+msgstr ""
+
+#: includes/admin/fields/class-wpum-fields-editor.php:346
 msgid "Click and drag the %s button to change the order of the fields."
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:354
+#: includes/admin/fields/class-wpum-fields-editor.php:366
 msgid "Fields into this group can appear on the signup page."
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:371
+#: includes/admin/fields/class-wpum-fields-editor.php:383
 msgid "Group name"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:379
+#: includes/admin/fields/class-wpum-fields-editor.php:391
 msgid "Group description"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:398
+#: includes/admin/fields/class-wpum-fields-editor.php:410
 msgid "Delete Group"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:405
+#: includes/admin/fields/class-wpum-fields-editor.php:417
 msgid "Save Group Settings"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:487
+#: includes/admin/fields/class-wpum-fields-editor.php:514
 msgid "Editing field"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:488
+#: includes/admin/fields/class-wpum-fields-editor.php:515
 msgid "Back to editor"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:510
-#: includes/admin/fields/class-wpum-fields-editor.php:519
+#: includes/admin/fields/class-wpum-fields-editor.php:537
+#: includes/admin/fields/class-wpum-fields-editor.php:546
 msgid "Save Field"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:556
+#: includes/admin/fields/class-wpum-fields-editor.php:583
 msgid "Enter a name for this field"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:590
+#: includes/admin/fields/class-wpum-fields-editor.php:617
 msgid "Field Description (optional)"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:609
-msgid "Set this field as required ?"
+#: includes/admin/fields/class-wpum-fields-editor.php:636
+msgid "Set this field as required"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:610
+#: includes/admin/fields/class-wpum-fields-editor.php:637
 msgid "Enable to force the user to fill this field."
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:628
-msgid "Display this field on registration ?"
+#: includes/admin/fields/class-wpum-fields-editor.php:655
+msgid "Display this field on registration"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-fields-editor.php:629
+#: includes/admin/fields/class-wpum-fields-editor.php:656
 msgid "Enable to display this field on the registration form."
+msgstr ""
+
+#: includes/admin/fields/class-wpum-fields-editor.php:675
+msgid "Enable to display the user full name instead."
+msgstr ""
+
+#: includes/admin/fields/class-wpum-fields-editor.php:694
+msgid "Field Visibility"
+msgstr ""
+
+#: includes/admin/fields/class-wpum-fields-editor.php:695
+msgid "Determine the visibility of this field."
 msgstr ""
 
 #: includes/admin/fields/class-wpum-groups-fields.php:48
@@ -434,39 +462,27 @@ msgid "Required"
 msgstr ""
 
 #: includes/admin/fields/class-wpum-groups-fields.php:179
+#: includes/admin/fields/class-wpum-groups-fields.php:195
+#: includes/admin/fields/class-wpum-groups-fields.php:198
 msgid "Text"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-groups-fields.php:182
-#: includes/functions.php:90 templates/profile/profile-overview.php:28
-msgid "Email"
-msgstr ""
-
-#: includes/admin/fields/class-wpum-groups-fields.php:184
+#: includes/admin/fields/class-wpum-groups-fields.php:183
+#: includes/admin/fields/class-wpum-groups-fields.php:186
 msgid "Dropdown"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-groups-fields.php:186
-msgid "Textarea"
-msgstr ""
-
-#: includes/admin/fields/class-wpum-groups-fields.php:188
-#: includes/classes/class-wpum-shortcodes.php:73
-#: includes/forms/class-wpum-form-update-password.php:55
-#: includes/functions.php:115
-msgid "Password"
-msgstr ""
-
-#: includes/admin/fields/class-wpum-groups-fields.php:190
+#: includes/admin/fields/class-wpum-groups-fields.php:189
+#: includes/admin/fields/class-wpum-groups-fields.php:192
 #: includes/lib/wp-pretty-fields/fields/image.php:49
 msgid "Upload"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-groups-fields.php:224
+#: includes/admin/fields/class-wpum-groups-fields.php:237
 msgid "Edit"
 msgstr ""
 
-#: includes/admin/fields/class-wpum-groups-fields.php:230
+#: includes/admin/fields/class-wpum-groups-fields.php:243
 msgid "Delete"
 msgstr ""
 
@@ -494,7 +510,7 @@ msgstr ""
 msgid "Add to Menu"
 msgstr ""
 
-#: includes/admin/menu-functions.php:95 includes/misc-functions.php:692
+#: includes/admin/menu-functions.php:95 includes/misc-functions.php:657
 #: templates/user-overview.php:26
 msgid "Edit Account"
 msgstr ""
@@ -503,7 +519,7 @@ msgstr ""
 msgid "Log out"
 msgstr ""
 
-#: includes/admin/menu-functions.php:145 includes/misc-functions.php:622
+#: includes/admin/menu-functions.php:145 includes/misc-functions.php:587
 #: includes/widgets/wpum-registration.php:41
 #: templates/forms/registration-form.php:38
 msgid "Register"
@@ -511,6 +527,10 @@ msgstr ""
 
 #: includes/admin/menu-functions.php:150
 msgid "Log in"
+msgstr ""
+
+#: includes/admin/menu-functions.php:155
+msgid "Password recovery"
 msgstr ""
 
 #: includes/admin/settings/display-settings.php:32
@@ -584,7 +604,7 @@ msgid "Enable to display a password meter into the forms."
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:246
-#: includes/admin/settings/register-settings.php:332
+#: includes/admin/settings/register-settings.php:320
 msgid "Extra"
 msgstr ""
 
@@ -593,434 +613,445 @@ msgid "Allow users to login with:"
 msgstr ""
 
 #: includes/admin/settings/register-settings.php:257
-msgid "Display registration link:"
-msgstr ""
-
-#: includes/admin/settings/register-settings.php:258
-msgid "Enable to display a registration link into the login form."
-msgstr ""
-
-#: includes/admin/settings/register-settings.php:263
-msgid "Display password recovery link:"
-msgstr ""
-
-#: includes/admin/settings/register-settings.php:264
-msgid "Enable to display a password recovery link into the login form."
-msgstr ""
-
-#: includes/admin/settings/register-settings.php:269
 msgid "Admin Bar:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:270
+#: includes/admin/settings/register-settings.php:258
 msgid "Hide admin bar for specific user roles."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:272
-#: includes/admin/settings/register-settings.php:307
+#: includes/admin/settings/register-settings.php:260
+#: includes/admin/settings/register-settings.php:295
 msgid "Select the user roles from the list."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:282
+#: includes/admin/settings/register-settings.php:270
 msgid "Registrations Status:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:287
+#: includes/admin/settings/register-settings.php:275
 msgid "Default user registration role:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:292
+#: includes/admin/settings/register-settings.php:280
 msgid "Users custom passwords:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:293
+#: includes/admin/settings/register-settings.php:281
 msgid "Enable to allow users to set custom passwords on the registration page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:298
+#: includes/admin/settings/register-settings.php:286
 msgid "Allow role section:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:299
+#: includes/admin/settings/register-settings.php:287
 msgid "Enable to allow users to select a user role on registration."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:304
+#: includes/admin/settings/register-settings.php:292
 msgid "Allowed Roles:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:305
+#: includes/admin/settings/register-settings.php:293
 msgid "Select which roles can be selected upon registration."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:313
-#: includes/forms/class-wpum-form-register.php:272
+#: includes/admin/settings/register-settings.php:301
+#: includes/forms/class-wpum-form-register.php:265
 msgid "Terms &amp; Conditions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:318
+#: includes/admin/settings/register-settings.php:306
 msgid "Enable terms &amp conditions:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:319
+#: includes/admin/settings/register-settings.php:307
 msgid "Enable to force users to agree to your terms before registering an account."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:324
+#: includes/admin/settings/register-settings.php:312
 msgid "Terms Page:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:325
+#: includes/admin/settings/register-settings.php:313
 msgid "Select the page that contains your terms."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:337
+#: includes/admin/settings/register-settings.php:325
 msgid "Anti-spam Honeypot:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:338
+#: includes/admin/settings/register-settings.php:326
 msgid "Enables honeypot spam protection technique."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:343
+#: includes/admin/settings/register-settings.php:331
 msgid "Login after registration:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:344
+#: includes/admin/settings/register-settings.php:332
 msgid "Enable this option to authenticate users after registration."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:353
+#: includes/admin/settings/register-settings.php:341
 msgid "From Name:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:354
+#: includes/admin/settings/register-settings.php:342
 msgid ""
 "The name emails are said to come from. This should probably be your site "
 "name."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:360
+#: includes/admin/settings/register-settings.php:348
 msgid "From Email:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:361
+#: includes/admin/settings/register-settings.php:349
 msgid "This will act as the \"from\" and \"reply-to\" address."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:367
+#: includes/admin/settings/register-settings.php:355
 msgid "Email Template"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:368
+#: includes/admin/settings/register-settings.php:356
 msgid "Choose a template."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:374
+#: includes/admin/settings/register-settings.php:362
 msgid "Logo"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:375
+#: includes/admin/settings/register-settings.php:363
 msgid ""
 "Upload or choose a logo to be displayed at the top of emails. Displayed on "
 "HTML emails only."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:380
+#: includes/admin/settings/register-settings.php:368
 msgid "Emails Editor:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:385
+#: includes/admin/settings/register-settings.php:373
 msgid "Notifications Settings"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:390
+#: includes/admin/settings/register-settings.php:378
 msgid "Disable admin registration email:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:391
+#: includes/admin/settings/register-settings.php:379
 msgid ""
 "Enable this option to stop receiving notifications when a new user "
 "registers."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:396
+#: includes/admin/settings/register-settings.php:384
 msgid "Disable admin password recovery email:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:397
+#: includes/admin/settings/register-settings.php:385
 msgid ""
 "Enable this option to stop receiving notifications when a new user resets "
 "his password."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:406
+#: includes/admin/settings/register-settings.php:394
 msgid "Profile permalink:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:411
+#: includes/admin/settings/register-settings.php:399
 msgid "Allow guests to view profiles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:412
+#: includes/admin/settings/register-settings.php:400
 msgid "Enable this option to allow guests to view users profiles."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:417
+#: includes/admin/settings/register-settings.php:405
 msgid "Allow members to view profiles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:418
+#: includes/admin/settings/register-settings.php:406
 msgid ""
 "Enable this option to allow members to view users profiles. If disabled, "
 "users can only see their own profile."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:423
+#: includes/admin/settings/register-settings.php:411
 msgid "Custom Avatars"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:424
+#: includes/admin/settings/register-settings.php:412
 msgid ""
 "Enable this option to allow users to upload custom avatars for their "
 "profiles."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:429
+#: includes/admin/settings/register-settings.php:417
 msgid "Display posts"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:430
+#: includes/admin/settings/register-settings.php:418
 msgid "Enable this option to display users submitted post on their profile page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:435
+#: includes/admin/settings/register-settings.php:423
 msgid "Display comments"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:436
+#: includes/admin/settings/register-settings.php:424
 msgid ""
 "Enable this option to display users submitted comments on their profile "
 "page."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:445
+#: includes/admin/settings/register-settings.php:433
 #: includes/classes/class-wpum-shortcodes.php:77
 #: includes/classes/class-wpum-shortcodes.php:163 includes/functions.php:117
-#: includes/misc-functions.php:586 includes/widgets/wpum-login-form.php:41
+#: includes/misc-functions.php:551 includes/widgets/wpum-login-form.php:41
 msgid "Login"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:446
-msgid ""
-"Select the page where you want to redirect users after they login. If empty "
-"will return to the current page."
+#: includes/admin/settings/register-settings.php:434
+msgid "Select the page where you want to redirect users after they login."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:453
+#: includes/admin/settings/register-settings.php:441
+msgid "Always redirect"
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:442
+msgid ""
+"Enable this option to always redirect to the page selected above after "
+"login. Please <a href=\"%s\" target=\"_blank\">read documentation</a> for "
+"more information."
+msgstr ""
+
+#: includes/admin/settings/register-settings.php:447
 #: includes/classes/class-wpum-shortcodes.php:140
 #: templates/user-overview.php:28
 msgid "Logout"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:454
+#: includes/admin/settings/register-settings.php:448
 msgid ""
 "Select the page where you want to redirect users after they logout. If "
 "empty will return to wp-login.php"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:461
+#: includes/admin/settings/register-settings.php:455
 msgid "Registration Redirect"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:462
+#: includes/admin/settings/register-settings.php:456
 msgid ""
 "Select the page where you want to redirect users after they successfully "
 "register. If empty a message will be displayed instead."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:469
+#: includes/admin/settings/register-settings.php:463
 msgid "Backend register"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:470
+#: includes/admin/settings/register-settings.php:464
 msgid ""
 "Select a page if you wish to redirect users who try to signup through <a "
 "href=\"%s\">the default registration page on wp-login.php</a>"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:477
+#: includes/admin/settings/register-settings.php:471
 msgid "Backend lost password"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:478
+#: includes/admin/settings/register-settings.php:472
 msgid ""
 "Select a page if you wish to redirect users who try to recover a lost "
 "password through <a href=\"%s\">the default password recovery page on "
 "wp-login.php</a>"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:485
+#: includes/admin/settings/register-settings.php:479
 msgid "Backend profile"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:486
+#: includes/admin/settings/register-settings.php:480
 msgid ""
 "Select the page where you want to redirect users who try to access their "
 "profile on the backend."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:501
+#: includes/admin/settings/register-settings.php:495
 msgid "Restore default emails:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:506
+#: includes/admin/settings/register-settings.php:500
 msgid "Restore Pages:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:511
+#: includes/admin/settings/register-settings.php:505
 msgid "Excluded usernames:"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:512
+#: includes/admin/settings/register-settings.php:506
 msgid ""
 "Enter the usernames that you wish to disable. Separate each username on a "
 "new line."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:582
+#: includes/admin/settings/register-settings.php:576
 msgid "Settings successfully updated."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:610
+#: includes/admin/settings/register-settings.php:604
 msgid "General"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:611
+#: includes/admin/settings/register-settings.php:605
 msgid "Registration"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:612
+#: includes/admin/settings/register-settings.php:606
 msgid "Emails"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:613
+#: includes/admin/settings/register-settings.php:607
 msgid "Profiles"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:614
+#: includes/admin/settings/register-settings.php:608
 msgid "Redirects"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:617 includes/filters.php:42
+#: includes/admin/settings/register-settings.php:611 includes/filters.php:42
 msgid "Extensions"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:620
+#: includes/admin/settings/register-settings.php:614
 msgid "Tools"
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:790
+#: includes/admin/settings/register-settings.php:784
 msgid "The callback function used for the <strong>%s</strong> setting is missing."
 msgstr ""
 
-#: includes/admin/settings/register-settings.php:972
+#: includes/admin/settings/register-settings.php:966
 msgid "Upload File"
 msgstr ""
 
-#: includes/admin/welcome.php:50 includes/admin/welcome.php:51
-msgid "Welcome to WP User Manager"
+#: includes/admin/tools.php:64
+msgid "Export/Import Settings"
 msgstr ""
 
-#: includes/admin/welcome.php:59 includes/admin/welcome.php:60
+#: includes/admin/tools.php:82 includes/admin/tools.php:90
+msgid "Export Settings"
+msgstr ""
+
+#: includes/admin/tools.php:85
+msgid ""
+"Export the WP User Manager settings for this site as a .json file. This "
+"allows you to easily import the configuration into another site."
+msgstr ""
+
+#: includes/admin/tools.php:99 includes/admin/tools.php:110
+msgid "Import Settings"
+msgstr ""
+
+#: includes/admin/tools.php:102
+msgid ""
+"Import the WP User Manager settings from a .json file. This file can be "
+"obtained by exporting the settings on another site using the form above."
+msgstr ""
+
+#: includes/admin/tools.php:178
+msgid "Please upload a valid .json file"
+msgstr ""
+
+#: includes/admin/tools.php:178 includes/admin/tools.php:184
+msgid "Error"
+msgstr ""
+
+#: includes/admin/tools.php:184
+msgid "Please upload a file to import"
+msgstr ""
+
+#: includes/admin/welcome.php:51 includes/admin/welcome.php:52
 msgid "Getting started with WP User Manager"
 msgstr ""
 
-#: includes/admin/welcome.php:135
-msgid "What's New"
-msgstr ""
-
-#: includes/admin/welcome.php:140
+#: includes/admin/welcome.php:125
 msgid "Getting Started"
 msgstr ""
 
-#: includes/admin/welcome.php:158 includes/admin/welcome.php:189
+#: includes/admin/welcome.php:143
 msgid "Welcome to WP User Manager %s"
 msgstr ""
 
-#: includes/admin/welcome.php:159
-msgid ""
-"Thank you for updating to the latest version! WP User Manager %s is ready "
-"to provide improved control over your WordPress users."
-msgstr ""
-
-#: includes/admin/welcome.php:160 includes/admin/welcome.php:191
-msgid "Version %s"
-msgstr ""
-
-#: includes/admin/welcome.php:166
-msgid "Full Changelog"
-msgstr ""
-
-#: includes/admin/welcome.php:190
+#: includes/admin/welcome.php:144
 msgid ""
 "Thank you for installing the latest version! WP User Manager %s is ready to "
 "provide improved control over your WordPress users."
 msgstr ""
 
-#: includes/admin/welcome.php:195
+#: includes/admin/welcome.php:145
+msgid "Version %s"
+msgstr ""
+
+#: includes/admin/welcome.php:149
 msgid ""
 "Use the tips below to get started using WP User Manager. You will be up and "
 "running in no time!"
 msgstr ""
 
-#: includes/admin/welcome.php:201
+#: includes/admin/welcome.php:155
 msgid "Configure WP User Manager"
 msgstr ""
 
-#: includes/admin/welcome.php:203
+#: includes/admin/welcome.php:157
 msgid "Strengthen your passwords"
 msgstr ""
 
-#: includes/admin/welcome.php:204
+#: includes/admin/welcome.php:158
 msgid "Setup login method"
 msgstr ""
 
-#: includes/admin/welcome.php:205
+#: includes/admin/welcome.php:159
 msgid "Customize notifications"
 msgstr ""
 
-#: includes/admin/welcome.php:209
+#: includes/admin/welcome.php:163
 msgid "Customize Profiles"
 msgstr ""
 
-#: includes/admin/welcome.php:211
+#: includes/admin/welcome.php:165
 msgid "Customize profiles"
 msgstr ""
 
-#: includes/admin/welcome.php:212
+#: includes/admin/welcome.php:166
 msgid "Customize fields"
 msgstr ""
 
-#: includes/admin/welcome.php:213
+#: includes/admin/welcome.php:167
 msgid "Create user directories"
 msgstr ""
 
-#: includes/admin/welcome.php:218
+#: includes/admin/welcome.php:172
 msgid ""
 "Looking for help? <a href=\"%s\" target=\"_blank\">WP User Manager "
 "documentation</a> has got you covered."
 msgstr ""
 
-#: includes/admin/welcome.php:218
+#: includes/admin/welcome.php:172
 msgid "Read documentation"
 msgstr ""
 
-#: includes/admin/welcome.php:229
+#: includes/admin/welcome.php:183
 msgid "Looking for help ?"
 msgstr ""
 
-#: includes/admin/welcome.php:230
+#: includes/admin/welcome.php:184
 msgid ""
 "We do all we can to provide every user with the best support possible. If "
 "you encounter a problem or have a question, please <a href=\"%s\" "
@@ -1028,27 +1059,23 @@ msgid ""
 "documentation</a> first."
 msgstr ""
 
-#: includes/admin/welcome.php:234
+#: includes/admin/welcome.php:188
 msgid "Get Notified of Extension Releases"
 msgstr ""
 
-#: includes/admin/welcome.php:235
+#: includes/admin/welcome.php:189
 msgid ""
 "New extensions that make WP User Manager even more powerful will be "
 "released soon. Subscribe to the newsletter to stay up to date with our "
 "latest releases. Signup now to ensure you do not miss a release!"
 msgstr ""
 
-#: includes/admin/welcome.php:236
+#: includes/admin/welcome.php:190
 msgid "Signup Now"
 msgstr ""
 
-#: includes/admin/welcome.php:242
+#: includes/admin/welcome.php:196
 msgid "Go To WP User Manager &rarr; Settings"
-msgstr ""
-
-#: includes/admin/welcome.php:262
-msgid "No valid changlog was found."
 msgstr ""
 
 #: includes/assets.php:64
@@ -1084,8 +1111,8 @@ msgid "Checking credentials..."
 msgstr ""
 
 #: includes/classes/class-wpum-ajax-handler.php:57
-#: includes/classes/class-wpum-ajax-handler.php:138
-#: includes/classes/class-wpum-ajax-handler.php:155
+#: includes/classes/class-wpum-ajax-handler.php:179
+#: includes/classes/class-wpum-ajax-handler.php:196
 msgid "Error."
 msgstr ""
 
@@ -1093,16 +1120,20 @@ msgstr ""
 msgid "Emails successfully restored."
 msgstr ""
 
-#: includes/classes/class-wpum-ajax-handler.php:105
+#: includes/classes/class-wpum-ajax-handler.php:109
 msgid "Your profile picture has been deleted."
 msgstr ""
 
-#: includes/classes/class-wpum-ajax-handler.php:114
+#: includes/classes/class-wpum-ajax-handler.php:118
 #: includes/template-actions.php:151
 msgid "Something went wrong."
 msgstr ""
 
-#: includes/classes/class-wpum-ajax-handler.php:162
+#: includes/classes/class-wpum-ajax-handler.php:153
+msgid "Files successfully removed."
+msgstr ""
+
+#: includes/classes/class-wpum-ajax-handler.php:203
 msgid "Fields order successfully updated."
 msgstr ""
 
@@ -1115,6 +1146,12 @@ msgid ""
 "These settings control the permalinks used for users profiles. These "
 "settings only apply when <strong>not using \"default\" permalinks "
 "above</strong>."
+msgstr ""
+
+#: includes/classes/class-wpum-shortcodes.php:73
+#: includes/forms/class-wpum-form-update-password.php:55
+#: includes/functions.php:115
+msgid "Password"
 msgstr ""
 
 #: includes/classes/class-wpum-shortcodes.php:75 includes/functions.php:116
@@ -1140,11 +1177,11 @@ msgid ""
 "not published."
 msgstr ""
 
-#: includes/directories/actions.php:52
+#: includes/directories/actions.php:67
 msgid "Previous page"
 msgstr ""
 
-#: includes/directories/actions.php:53
+#: includes/directories/actions.php:68
 msgid "Next page"
 msgstr ""
 
@@ -1200,7 +1237,7 @@ msgid "General Settings"
 msgstr ""
 
 #: includes/directories/class-wpum-directory.php:124
-#: includes/directories/class-wpum-directory.php:215
+#: includes/directories/class-wpum-directory.php:214
 msgid "User Roles"
 msgstr ""
 
@@ -1212,134 +1249,146 @@ msgstr ""
 msgid "Select the user roles you wish to display into this directory."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:140
+#: includes/directories/class-wpum-directory.php:132
+msgid "Display search form"
+msgstr ""
+
+#: includes/directories/class-wpum-directory.php:133
+msgid "Enable this option to display the user search form"
+msgstr ""
+
+#: includes/directories/class-wpum-directory.php:139
 msgid "Exclude users"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:141
+#: includes/directories/class-wpum-directory.php:140
 msgid "Comma separated list of users id you wish to exclude."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:142
+#: includes/directories/class-wpum-directory.php:141
 msgid " Example: type %s to exclude users with those id(s)."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:147
-#: includes/directories/class-wpum-directory.php:217
+#: includes/directories/class-wpum-directory.php:146
+#: includes/directories/class-wpum-directory.php:216
 msgid "Profiles per page"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:148
+#: includes/directories/class-wpum-directory.php:147
 msgid "Select how many profiles you wish to display per page."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:154
+#: includes/directories/class-wpum-directory.php:153
 msgid "Directory Template"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:155
+#: includes/directories/class-wpum-directory.php:154
 msgid "Select a template from the list."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:168
+#: includes/directories/class-wpum-directory.php:167
 msgid "Users sorting"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:173
+#: includes/directories/class-wpum-directory.php:172
 msgid "Display sorter"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:174
+#: includes/directories/class-wpum-directory.php:173
 msgid ""
 "Enable this setting to display a dropdown menu into the directory with the "
 "sorting options."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:180
+#: includes/directories/class-wpum-directory.php:179
 msgid "Display amount filter"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:181
+#: includes/directories/class-wpum-directory.php:180
 msgid ""
 "Enable this setting to display a dropdown menu into the directory with the "
 "results amount filter."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:187
+#: includes/directories/class-wpum-directory.php:186
 msgid "Sorting method"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:188
+#: includes/directories/class-wpum-directory.php:187
 msgid "Select the sorting method for the directory"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:189
+#: includes/directories/class-wpum-directory.php:188
 msgid "If the sorter field is visible, this will be used as default option."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:218
+#: includes/directories/class-wpum-directory.php:215
+msgid "Search form"
+msgstr ""
+
+#: includes/directories/class-wpum-directory.php:217
 msgid "Shortcode"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:240
+#: includes/directories/class-wpum-directory.php:239
 msgid "All"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:290
-#: includes/directories/class-wpum-directory.php:293
+#: includes/directories/class-wpum-directory.php:289
+#: includes/directories/class-wpum-directory.php:292
 msgid "Directory updated."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:291
+#: includes/directories/class-wpum-directory.php:290
 msgid "Custom field updated."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:292
+#: includes/directories/class-wpum-directory.php:291
 msgid "Custom field deleted."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:295
+#: includes/directories/class-wpum-directory.php:294
 #. translators: %s: date and time of the revision
 msgid "Directory restored to revision from %s"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:296
+#: includes/directories/class-wpum-directory.php:295
 msgid "Directory created. Use the following shortcode to display this directory %s"
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:297
+#: includes/directories/class-wpum-directory.php:296
 msgid "Directory saved."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:298
+#: includes/directories/class-wpum-directory.php:297
 msgid "Directory submitted."
 msgstr ""
 
-#: includes/directories/class-wpum-directory.php:323
+#: includes/directories/class-wpum-directory.php:322
 msgid "%s directory updated."
 msgid_plural "%s directory updated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/directories/class-wpum-directory.php:324
+#: includes/directories/class-wpum-directory.php:323
 msgid "%s directory not updated, somebody is editing it."
 msgid_plural "%s directories not updated, somebody is editing them."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/directories/class-wpum-directory.php:325
+#: includes/directories/class-wpum-directory.php:324
 msgid "%s directory permanently deleted."
 msgid_plural "%s directories permanently deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/directories/class-wpum-directory.php:326
+#: includes/directories/class-wpum-directory.php:325
 msgid "%s directory has been deleted."
 msgid_plural "%s directories have been deleted."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/directories/class-wpum-directory.php:327
+#: includes/directories/class-wpum-directory.php:326
 msgid "%s directory restored from the Trash."
 msgid_plural "%s directories restored from the Trash."
 msgstr[0] ""
@@ -1498,8 +1547,80 @@ msgstr ""
 msgid "Password: {password}"
 msgstr ""
 
-#: includes/fields/functions.php:248
+#: includes/fields/functions.php:264
 msgid "This field type has no output"
+msgstr ""
+
+#: includes/fields/functions.php:993
+msgid "Publicly visible"
+msgstr ""
+
+#: includes/fields/functions.php:994
+msgid "Hidden"
+msgstr ""
+
+#: includes/fields/types/checkbox.php:57
+msgid "Enabled by default"
+msgstr ""
+
+#: includes/fields/types/checkbox.php:58
+msgid "Enable this option to set this checkbox as enabeld by default."
+msgstr ""
+
+#: includes/fields/types/file.php:59
+msgid "Allowed file types"
+msgstr ""
+
+#: includes/fields/types/file.php:60
+msgid ""
+"Enter the extension of the files that can be uploaded through this field, "
+"separated with a comma. Example: jpg, png, gif"
+msgstr ""
+
+#: includes/fields/types/file.php:66
+msgid "Allow multiple files"
+msgstr ""
+
+#: includes/fields/types/file.php:67
+msgid ""
+"Enable this option to allow users to upload multiple files through this "
+"field."
+msgstr ""
+
+#: includes/fields/types/file.php:73
+msgid "Maximum file size"
+msgstr ""
+
+#: includes/fields/types/file.php:74
+msgid ""
+"Enter the maximum file size users can upload through this field. The amount "
+"must be in bytes."
+msgstr ""
+
+#: includes/fields/types/number.php:57
+msgid "Minimum value"
+msgstr ""
+
+#: includes/fields/types/number.php:58
+msgid "Specifies the minimum value allowed, leave blank if not needed."
+msgstr ""
+
+#: includes/fields/types/number.php:63
+msgid "Maximum value"
+msgstr ""
+
+#: includes/fields/types/number.php:64
+msgid "Specifies the maximum value allowed, leave blank if not needed."
+msgstr ""
+
+#: includes/fields/types/url.php:57
+msgid "Nofollow"
+msgstr ""
+
+#: includes/fields/types/url.php:58
+msgid ""
+"Enable this option to specify that the search spiders should not follow "
+"this link."
 msgstr ""
 
 #: includes/filters.php:22
@@ -1517,8 +1638,13 @@ msgid ""
 "href=\"%2$s\" target=\"_blank\">WordPress.org</a>"
 msgstr ""
 
-#: includes/filters.php:330
+#: includes/filters.php:205
 msgid "WPUM Page"
+msgstr ""
+
+#: includes/forms/class-wpum-form-custom-group.php:161
+#: includes/template-actions.php:143
+msgid "Profile successfully updated."
 msgstr ""
 
 #: includes/forms/class-wpum-form-password.php:59 includes/functions.php:92
@@ -1570,75 +1696,74 @@ msgstr ""
 msgid "Invalid key."
 msgstr ""
 
-#: includes/forms/class-wpum-form-profile.php:231
-#: includes/forms/class-wpum-form-register.php:216
+#: includes/forms/class-wpum-form-profile.php:234
+#: includes/forms/class-wpum-form-register.php:209
 msgid "Email address already exists."
 msgstr ""
 
-#: includes/forms/class-wpum-form-profile.php:249
-#: includes/forms/class-wpum-form-profile.php:257
-#: includes/forms/class-wpum-form-register.php:350
-#: includes/forms/class-wpum-form-register.php:358
+#: includes/forms/class-wpum-form-profile.php:252
+#: includes/forms/class-wpum-form-profile.php:260
+#: includes/forms/class-wpum-form-register.php:343
+#: includes/forms/class-wpum-form-register.php:351
 msgid "This nickname cannot be used."
 msgstr ""
 
-#: includes/forms/class-wpum-form-profile.php:319
-#: includes/forms/class-wpum-form-register.php:213
+#: includes/forms/class-wpum-form-profile.php:325
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:163
+#: includes/forms/class-wpum-form-register.php:145
 #: includes/forms/class-wpum-form-update-password.php:95
 msgid "Password must be at least 8 characters long."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:167
+#: includes/forms/class-wpum-form-register.php:149
 #: includes/forms/class-wpum-form-update-password.php:99
 msgid ""
 "Password must be at least 8 characters long and contain at least 1 number "
 "and 1 uppercase letter."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:171
+#: includes/forms/class-wpum-form-register.php:153
 #: includes/forms/class-wpum-form-update-password.php:103
 msgid ""
 "Password must be at least 8 characters long and contain at least 1 number "
 "and 1 uppercase letter and 1 special character."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:256
+#: includes/forms/class-wpum-form-register.php:249
 msgid "Failed Honeypot validation"
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:274
+#: includes/forms/class-wpum-form-register.php:267
 msgid ""
 "By registering to this website you agree to the <a href=\"%s\" "
 "target=\"_blank\">terms &amp; conditions</a>."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:293
+#: includes/forms/class-wpum-form-register.php:286
 msgid "Select Role"
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:297
+#: includes/forms/class-wpum-form-register.php:290
 msgid "Select your user role"
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:318
+#: includes/forms/class-wpum-form-register.php:311
 msgid "Select a valid role from the list."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:468
+#: includes/forms/class-wpum-form-register.php:479
 msgid ""
 "Registration complete. We have sent you a confirmation email with your "
 "password."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:470
+#: includes/forms/class-wpum-form-register.php:481
 msgid "Registration complete."
 msgstr ""
 
-#: includes/forms/class-wpum-form-register.php:527
+#: includes/forms/class-wpum-form-register.php:538
 msgid "Registrations are currently disabled."
 msgstr ""
 
@@ -1676,6 +1801,10 @@ msgstr ""
 
 #: includes/functions.php:87
 msgid "Username"
+msgstr ""
+
+#: includes/functions.php:90
+msgid "Email"
 msgstr ""
 
 #: includes/install.php:33
@@ -1830,43 +1959,51 @@ msgstr ""
 msgid "Insert image"
 msgstr ""
 
-#: includes/misc-functions.php:406
+#: includes/misc-functions.php:365
 msgid "Allowed files types are: %s"
 msgstr ""
 
-#: includes/misc-functions.php:409
+#: includes/misc-functions.php:368
 msgid "The uploaded file is too big."
 msgstr ""
 
-#: includes/misc-functions.php:499
+#: includes/misc-functions.php:380
+msgid "Error: the \"%s\" field allows only %s files to be uploaded."
+msgstr ""
+
+#: includes/misc-functions.php:478
+msgid "\"%s\" (filetype %s) needs to be one of the following file types: %s"
+msgstr ""
+
+#: includes/misc-functions.php:480
 msgid "Uploaded files need to be one of the following file types: %s"
 msgstr ""
 
-#: includes/misc-functions.php:550
+#: includes/misc-functions.php:531
 msgid "Verify upload permissions"
 msgstr ""
 
-#: includes/misc-functions.php:551
+#: includes/misc-functions.php:532
 msgid "Press the button above if avatar uploads does not work."
 msgstr ""
 
-#: includes/misc-functions.php:604
+#: includes/misc-functions.php:569
 msgid "Password Reset"
 msgstr ""
 
-#: includes/misc-functions.php:640
+#: includes/misc-functions.php:605
 msgid "Account"
 msgstr ""
 
-#: includes/misc-functions.php:658
+#: includes/misc-functions.php:623
 msgid "Profile"
 msgstr ""
 
-#: includes/misc-functions.php:696
+#: includes/misc-functions.php:661
 msgid "Change Password"
 msgstr ""
 
-#: includes/misc-functions.php:778
+#: includes/misc-functions.php:743
 msgid "Strength Indicator"
 msgstr ""
 
@@ -1892,10 +2029,6 @@ msgstr ""
 
 #: includes/template-actions.php:122
 msgid "Login failed: You have entered incorrect login details, please try again."
-msgstr ""
-
-#: includes/template-actions.php:143
-msgid "Profile successfully updated."
 msgstr ""
 
 #: includes/widgets/wpum-login-form.php:31
@@ -2011,7 +2144,15 @@ msgid "Content not found."
 msgstr ""
 
 #: templates/already-logged-in.php:22
-msgid "Your are currently logged in as %s. <a href=\"%s\">Logout &raquo;</a>"
+msgid "You are currently logged in as %s. <a href=\"%s\">Logout &raquo;</a>"
+msgstr ""
+
+#: templates/directory/search-form.php:23
+msgid "Search for users"
+msgstr ""
+
+#: templates/directory/search-form.php:33
+msgid "Search"
 msgstr ""
 
 #: templates/directory/single-user.php:28
@@ -2043,15 +2184,16 @@ msgstr ""
 msgid "Results per page:"
 msgstr ""
 
-#: templates/form-fields/file-field.php:53
-msgid "Maximum file size: %s."
-msgstr ""
-
-#: templates/form-fields/uploaded-file-html.php:22
+#: templates/form-fields/file-field.php:69
 msgid "remove"
 msgstr ""
 
-#: templates/forms/account-form.php:42
+#: templates/form-fields/file-field.php:91
+#: templates/form-fields/file-field.php:95
+msgid "Maximum file size: %s."
+msgstr ""
+
+#: templates/forms/account-form.php:42 templates/forms/group-form.php:31
 msgid "Update Profile"
 msgstr ""
 
@@ -2097,22 +2239,6 @@ msgstr ""
 msgid "Visit website"
 msgstr ""
 
-#: templates/profile/profile-overview.php:18
-msgid "Name"
-msgstr ""
-
-#: templates/profile/profile-overview.php:23
-msgid "Nickname"
-msgstr ""
-
-#: templates/profile/profile-overview.php:33
-msgid "Website"
-msgstr ""
-
-#: templates/profile/profile-overview.php:37
-msgid "Registered"
-msgstr ""
-
 #: templates/profile/profile-posts.php:33
 msgid "Posted on:"
 msgstr ""
@@ -2145,11 +2271,11 @@ msgstr ""
 msgid "No user has been found."
 msgstr ""
 
-#: templates/user-directory.php:38
+#: templates/user-directory.php:39
 msgid "No users have been found"
 msgstr ""
 
-#: wp-user-manager.php:151 wp-user-manager.php:163
+#: wp-user-manager.php:147 wp-user-manager.php:159
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
@@ -2225,6 +2351,11 @@ msgctxt "field type name"
 msgid "Checkbox"
 msgstr ""
 
+#: includes/fields/types/checkboxes.php:32
+msgctxt "field type name"
+msgid "Checkboxes"
+msgstr ""
+
 #: includes/fields/types/display_name.php:32
 msgctxt "field type name"
 msgid "Name Display"
@@ -2240,14 +2371,29 @@ msgctxt "field type name"
 msgid "File"
 msgstr ""
 
+#: includes/fields/types/multiselect.php:32
+msgctxt "field type name"
+msgid "Multi Select"
+msgstr ""
+
 #: includes/fields/types/nickname.php:32
 msgctxt "field type name"
 msgid "Nickname"
 msgstr ""
 
+#: includes/fields/types/number.php:32
+msgctxt "field type name"
+msgid "Number"
+msgstr ""
+
 #: includes/fields/types/password.php:32
 msgctxt "field type name"
 msgid "Password"
+msgstr ""
+
+#: includes/fields/types/radio.php:32
+msgctxt "field type name"
+msgid "Radio buttons"
 msgstr ""
 
 #: includes/fields/types/select.php:32
@@ -2265,32 +2411,42 @@ msgctxt "field type name"
 msgid "Textarea"
 msgstr ""
 
+#: includes/fields/types/url.php:32
+msgctxt "field type name"
+msgid "Url"
+msgstr ""
+
 #: includes/fields/types/username.php:32
 msgctxt "field type name"
 msgid "Username"
 msgstr ""
 
-#: includes/misc-functions.php:172
+#: includes/fields/types/checkbox.php:77
+msgctxt "Used when displaying the value of a checkbox field within the profile page."
+msgid "Yes"
+msgstr ""
+
+#: includes/misc-functions.php:126
 msgctxt "Permalink structure"
 msgid "Display user ID"
 msgstr ""
 
-#: includes/misc-functions.php:177
+#: includes/misc-functions.php:131
 msgctxt "Permalink structure"
 msgid "Display username"
 msgstr ""
 
-#: includes/misc-functions.php:182
+#: includes/misc-functions.php:136
 msgctxt "Permalink structure"
 msgid "Display nickname"
 msgstr ""
 
-#: includes/misc-functions.php:178
+#: includes/misc-functions.php:132
 msgctxt "Example of permalink setting"
 msgid "username"
 msgstr ""
 
-#: includes/misc-functions.php:183
+#: includes/misc-functions.php:137
 msgctxt "Example of permalink setting"
 msgid "nickname"
 msgstr ""

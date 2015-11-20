@@ -126,7 +126,7 @@ class WPUM_DB_Fields extends WPUM_DB {
 
 		if ( $id > 0 ) {
 
-			if( !$this->can_delete( $id ) ) {
+			if( ! $this->can_delete( $id ) ) {
 				wp_die( 'You cannot delete this field.' );
 			}
 
@@ -146,9 +146,7 @@ class WPUM_DB_Fields extends WPUM_DB {
 	 * @since   1.0.0
 	*/
 	public function can_delete( $field_id = '' ) {
-
-		return (bool) $this->get_column_by( 'id', 'can_delete', $field_id );
-
+		return (bool) $this->get_column_by( 'can_delete', 'id', $field_id );
 	}
 
 	/**
@@ -158,9 +156,18 @@ class WPUM_DB_Fields extends WPUM_DB {
 	 * @since   1.0.0
 	*/
 	public function show_on_registration( $field_meta = '' ) {
-
 		return (bool) $this->get_column_by( 'show_on_registration', 'meta', $field_meta );
+	}
 
+	/**
+	 * Retrieve the type of a field.
+	 *
+	 * @param  string $field_id the id number of the field.
+	 * @return string           the field type.
+	 * @since 1.2.0
+	 */
+	public function get_type( $field_id = '' ) {
+		return $this->get_column_by( 'type', 'id', $field_id );
 	}
 
 	/**
@@ -174,13 +181,14 @@ class WPUM_DB_Fields extends WPUM_DB {
 		global $wpdb;
 
 		$defaults = array(
-			'id'           => '',
-			'array'        => false,
-			'registration' => false,
-			'number'       => 20,
-			'offset'       => 0,
-			'orderby'      => 'id',
-			'order'        => 'DESC'
+			'id'             => '',
+			'array'          => false,
+			'registration'   => false,
+			'number'         => -1,
+			'offset'         => 0,
+			'orderby'        => 'id',
+			'order'          => 'DESC',
+			'exclude_fields' => false,
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -205,6 +213,16 @@ class WPUM_DB_Fields extends WPUM_DB {
 
 			$where .= "WHERE `group_id` IN( {$ids} ) ";
 
+		}
+
+		// If we have items to exclude, exclude them.
+		if( ! empty( $args['exclude_fields'] ) ) {
+			$exclude  = explode( ',', $args['exclude_fields'] );
+			if( ! empty( $where ) && is_array( $exclude ) ) {
+				foreach ( $exclude as $key => $value ) {
+					$where .= " AND `ID` NOT IN( {$value} ) ";
+				}
+			}
 		}
 
 		// only registration fields ?

@@ -1,4 +1,4 @@
-/*! WP User Manager - v1.0.5
+/*! WP User Manager - v1.1.0
  * http://wpusermanager.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 jQuery(document).ready(function ($) {
@@ -14,7 +14,7 @@ jQuery(document).ready(function ($) {
 	var WPUM_Frontend = {
 
 		init : function() {
-			this.ajax_remove_avatar();
+			this.ajax_remove_file();
 			this.directory_sort();
 		},
 
@@ -61,23 +61,27 @@ jQuery(document).ready(function ($) {
 		},
 
 		// Process removal of the user avatar
-		ajax_remove_avatar : function() {
+		ajax_remove_file : function() {
 
 			$('a.wpum-remove-uploaded-file').on('click', function(e) {
 
 				e.preventDefault();
 				var wpum_removal_button = this; // form element
-				var wpum_removal_nonce  = $( '#wpum-form-profile' ).find('#_wpnonce').val();
+				var wpum_removal_nonce  = $( '.wpum-profile-form' ).find('#_wpnonce').val();
 				var wpum_field_id = $( wpum_removal_button ).data("remove");
+				var wpum_submitted_form = $( '.wpum-profile-form' ).find("[name='wpum_submit_form']").val();
+
+				console.log( wpum_submitted_form );
 
 				$.ajax({
 					type: 'GET',
 					dataType: 'json',
 					url: wpum_frontend_js.ajax,
 					data: {
-						'action' : 'wpum_remove_avatar', // Calls the ajax action
+						'action' : 'wpum_remove_file', // Calls the ajax action
 						'wpum_removal_nonce' : wpum_removal_nonce,
 						'field_id' : wpum_field_id,
+						'submitted_form' : wpum_submitted_form
 					},
 					beforeSend: function() {
 						$( wpum_removal_button ).find('div.wpum-message').remove();

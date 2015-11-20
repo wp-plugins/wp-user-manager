@@ -1,19 +1,15 @@
 <?php
-/**
- * Plugin Name: WP User Manager
- * Plugin URI:  http://wpusermanager.com
- * Description: Create customized user profiles and easily add custom user registration, login and password recovery forms to your WordPress website. WP User Manager is the best solution to manage your users.
- * Version: 1.1.0
- * Author:      Alessandro Tesoro
- * Author URI:  http://wpusermanager.com
- * License:     GPLv2+
- * Text Domain: wpum
- * Domain Path: /languages
- *
- * @package wp-user-manager
- * @author Alessandro Tesoro
- * @version 1.0.0
- */
+/*
+Plugin Name: WP User Manager
+Plugin URI:  http://wpusermanager.com
+Description: Create customized user profiles and easily add custom user registration, login and password recovery forms to your WordPress website. WP User Manager is the best solution to manage your users.
+Version: 1.2.0
+Author:      Alessandro Tesoro
+Author URI:  http://wpusermanager.com
+License:     GPLv2+
+Text Domain: wpum
+Domain Path: /languages
+*/
 
 /**
  * Copyright (c) 2015 Alessandro Tesoro
@@ -174,7 +170,7 @@ class WP_User_Manager {
 
 		// Plugin version
 		if ( ! defined( 'WPUM_VERSION' ) ) {
-			define( 'WPUM_VERSION', '1.1.0' );
+			define( 'WPUM_VERSION', '1.2.0' );
 		}
 
 		// Plugin Folder Path
@@ -237,36 +233,39 @@ class WP_User_Manager {
 		require_once WPUM_PLUGIN_DIR . 'includes/abstracts/abstract-wpum-db.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/class-wpum-db-field-groups.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/class-wpum-db-fields.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/class-wpum-fields-data-template.php';
 		// Load fields helpers
 		require_once WPUM_PLUGIN_DIR . 'includes/abstracts/abstract-wpum-field-type.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/avatar.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/checkbox.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/checkboxes.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/display_name.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/email.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/file.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/multiselect.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/nickname.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/number.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/password.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/radio.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/select.php';
-		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/username.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/text.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/textarea.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/url.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/types/username.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/fields/functions.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/fields/filters.php';
 		// Forms
 		require_once WPUM_PLUGIN_DIR . 'includes/classes/class-wpum-forms.php';
 
-		// Files loaded only on the admin side
+		// Files loaded only on the admin side.
 		if ( is_admin() || ( defined( 'WP_CLI' ) && WP_CLI ) ) {
 
-			// Load Welcome Page
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/welcome.php';
-			// Load Settings Pages
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/admin-pages.php';
-			// Load Admin Notices
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/admin-notices.php';
-			// Load Admin Actions
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/admin-actions.php';
-			// Display Settings Page
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/settings/display-settings.php';
+
 			// Load Emails
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/emails/class-wpum-emails-editor.php';
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/emails/class-wpum-emails-list.php';
@@ -285,6 +284,8 @@ class WP_User_Manager {
 			if ( ! class_exists( 'Pretty_Metabox' ) )
 				require_once WPUM_PLUGIN_DIR . 'includes/lib/wp-pretty-fields/wp-pretty-fields.php';
 
+			// Load Tools Page
+			require_once WPUM_PLUGIN_DIR . 'includes/admin/tools.php';
 			// Load Addons Page
 			require_once WPUM_PLUGIN_DIR . 'includes/admin/addons.php';
 
@@ -293,6 +294,7 @@ class WP_User_Manager {
 		// Directory for WPUM
 		require_once WPUM_PLUGIN_DIR . 'includes/directories/class-wpum-directory.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/directories/actions.php';
+		require_once WPUM_PLUGIN_DIR . 'includes/directories/filters.php';
 		require_once WPUM_PLUGIN_DIR . 'includes/directories/functions.php';
 		// Ajax Handler
 		require_once WPUM_PLUGIN_DIR . 'includes/classes/class-wpum-ajax-handler.php';

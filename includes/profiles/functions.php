@@ -183,7 +183,7 @@ endif;
 
 if ( ! function_exists( 'wpum_profile_display_name' ) ) :
 /**
- * Display user avatar.
+ * Display user "display name".
  *
  * @since 1.0.0
  * @access public

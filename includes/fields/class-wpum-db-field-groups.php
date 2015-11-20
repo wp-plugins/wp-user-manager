@@ -133,10 +133,12 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 		global $wpdb;
 
 		$defaults = array(
-			'number'       => 20,
-			'offset'       => 0,
-			'orderby'      => 'id',
-			'order'        => 'DESC'
+			'number'         => 20,
+			'offset'         => 0,
+			'orderby'        => 'id',
+			'order'          => 'DESC',
+			'exclude_groups' => false,
+			'array'          => false,
 		);
 
 		$args  = wp_parse_args( $args, $defaults );
@@ -147,6 +149,28 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 
 		$where = '';
 
+		// If we have groups to exclude, exclude them.
+		if( ! empty( $args['exclude_groups'] ) ) {
+
+			$exclude_groups = explode( ',', $args['exclude_groups'] );
+
+			if( is_array( $exclude_groups ) ) {
+				foreach ( $exclude_groups as $key => $group_id ) {
+					if( $key == 0 ) {
+						$where .= "WHERE `ID` NOT IN( {$group_id} )";
+					} elseif( $key > 0 ) {
+						$where .= " AND `ID` NOT IN( {$group_id} )";
+					}
+				}
+			}
+
+		}
+
+		// Return as array?
+		$return_type = 'OBJECT';
+		if( $args['array'] === true )
+			$return_type = 'ARRAY_A';
+
 		$args['orderby'] = ! array_key_exists( $args['orderby'], $this->get_columns() ) ? 'id' : $args['orderby'];
 
 		$cache_key = md5( 'wpum_field_groups_' . serialize( $args ) );
@@ -154,7 +178,7 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 		$field_groups = wp_cache_get( $cache_key, 'field_groups' );
 
 		if( $field_groups === false ) {
-			$field_groups = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM  $this->table_name $where ORDER BY {$args['orderby']} {$args['order']} LIMIT %d,%d;", absint( $args['offset'] ), absint( $args['number'] ) ) );
+			$field_groups = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM  $this->table_name $where ORDER BY {$args['orderby']} {$args['order']} LIMIT %d,%d;", absint( $args['offset'] ), absint( $args['number'] ) ), $return_type );
 			wp_cache_set( $cache_key, $field_groups, 'field_groups', 3600 );
 		}
 
@@ -191,11 +215,12 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 	 *
 	 * @access public
 	 * @since  1.0.0
-	 * @param  string $column id or primary
-	 * @param  mixed  $value  the id to search
-	 * @return mixed          Upon success, an object of the group. Upon failure, NULL
+	 * @param  string $column id or primary.
+	 * @param  mixed  $value  the id to search.
+	 * @param  bool   $array  whether content returned should be an array.
+	 * @return mixed
 	 */
-	public function get_group_by( $field = 'id', $value = 0 ) {
+	public function get_group_by( $field = 'id', $value = 0, $array = false ) {
 		global $wpdb;
 
 		if ( empty( $field ) || $field == 'id' && empty( $value ) ) {
@@ -221,6 +246,11 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 			$value = true;
 		}
 
+		// Return as array?
+		$return_type = 'OBJECT';
+		if( $array === true )
+			$return_type = 'ARRAY_A';
+
 		if ( ! $value ) {
 			return false;
 		}
@@ -236,7 +266,7 @@ class WPUM_DB_Field_Groups extends WPUM_DB {
 				return false;
 		}
 
-		if ( ! $group = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $db_field = %s LIMIT 1", $value ) ) ) {
+		if ( ! $group = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $this->table_name WHERE $db_field = %s LIMIT 1", $value ), $return_type ) ) {
 			return false;
 		}
 

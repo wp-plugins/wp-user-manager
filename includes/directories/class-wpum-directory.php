@@ -127,14 +127,13 @@ class WPUM_Directory {
 					'type'    => 'multiselect',
 					'options' => wpum_get_roles( true )
 				),
-				/* Search form feature under construction.
 				array(
 					'id'   => 'display_search_form',
-					'name' => __( 'Display search form' ),
-					'desc' => __( 'Enable this option to display the user search form' ),
+					'name' => __( 'Display search form', 'wpum' ),
+					'desc' => __( 'Enable this option to display the user search form', 'wpum' ),
 					'type' => 'checkbox',
 					'std'  => 1
-				),*/
+				),
 				array(
 					'id'   => 'excluded_ids',
 					'name' => __( 'Exclude users', 'wpum' ),
@@ -212,10 +211,10 @@ class WPUM_Directory {
 
 		unset( $columns['date'], $columns['author'] );
 
-		$columns["roles"]             = __( 'User Roles', 'wpum' );
-		//$columns["search_form"]       = __( 'Display search form' ); Under construction
-		$columns["profiles_per_page"] = __( 'Profiles per page', 'wpum' );
-		$columns["shortcode"]         = __( 'Shortcode', 'wpum' );
+		$columns["roles"]             = esc_html__( 'User Roles', 'wpum' );
+		$columns["search_form"]       = esc_html__( 'Search form', 'wpum' );
+		$columns["profiles_per_page"] = esc_html__( 'Profiles per page', 'wpum' );
+		$columns["shortcode"]         = esc_html__( 'Shortcode', 'wpum' );
 
 		return $columns;
 	}

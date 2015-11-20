@@ -1,6 +1,6 @@
 <?php
 /**
- * WPUM Template: Radio Field Template.
+ * WPUM Template: Multicheckbox Field Template.
  *
  * @package     wp-user-manager
  * @copyright   Copyright (c) 2015, Alessandro Tesoro
@@ -8,16 +8,17 @@
  * @since       1.0.0
  */
 ?>
+
 <?php foreach ( $field['options'] as $opt_key => $value ) : ?>
 
-<label><input
-	type="radio"
-	class="input-radio"
-	name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?>"
-	<?php checked( ( ! empty( $field['value'] ) && $opt_key == $field['value'] ), true ); ?>
-	value="<?php echo esc_attr( $opt_key ); ?>"
-/>
-<?php echo esc_html( $value ); ?></label><br/>
+	<label><input
+		type="checkbox"
+		class="input-checkbox"
+		name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?>[]"
+		<?php if ( ! empty( $field['value'] ) && is_array( $field['value'] ) ) checked( in_array( $opt_key, $field['value'] ), true ); ?>
+		value="<?php echo esc_attr( $opt_key ); ?>"
+	/>
+	<?php echo esc_html( $value ); ?></label><br/>
 
 <?php endforeach; ?>
 

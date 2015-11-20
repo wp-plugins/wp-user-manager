@@ -7,7 +7,7 @@ Requires at least: 4.1
 Tested up to: 4.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Stable tag: 1.1.0
+Stable tag: 1.2.0
 
 WP User Manager is the best solution to manage your users and create front-end profiles for your members.
 
@@ -86,6 +86,40 @@ Here [http://docs.wpusermanager.com/](http://docs.wpusermanager.com/)
 View all the screenshots here [http://wpusermanager.com/screenshots/](http://wpusermanager.com/screenshots/)
 
 == Changelog ==
+
+= 1.2.0 =
+
+Checkout an overview of all the new features here [http://wpusermanager.com/?p=16236](http://wpusermanager.com/?p=16236)
+
+- **Added**: you can now import and export the plugin's settings from a site to another.
+- **Added**: basic search form functionality into user directories.
+- **Added**: developers now have access to a whole new user fields query class similar to WP_Query.
+- **Added**: option to always force redirect after login and remove referral page redirect.
+- **Added**: password recovery link to wpum dynamic menu items in menu manager.
+- **Added**: you can now choose to hide/show fields into the user profile when editing a field.
+- **Added**: first name and last name fields can now display full name too into user profile page.
+- **Added**: profile page now displays fields group title and description.
+- **Added**: several new functions, filters and actions for developers for advanced customizations.
+- **Added**: language file updated with new strings.
+- **Added**: compatibility for custom fields addon.
+
+- Tweaked: removed admin redirect after plugin update.
+- Tweaked: removed unused options from options panel.
+- Tweaked: several improvements to fields classes and output.
+- Tweaked: user directory will display it's layout even when no users have been found.
+- Tweaked: several improvements to fields html output into forms.
+- Tweaked: restructured files upload functionality
+- Tweaked: fields in profile page have custom classes.
+- Tweaked: minor adjustments to profile layout.
+- Tweaked: admin role can now be selected for directories.
+- Tweaked: minor adjustments to fields list in user profile.
+- Tweaked: deleting a group will now also delete it's fields.
+- Tweaked: adjustments to fields validation in forms.
+- Tweaked: minor ux adjustments to the fields editor.
+
+- Fixed: display correct field type within fields table.
+- Fixed: Registration redirect not working when automatic login selected.
+- Fixed: typo into already logged in message.
 
 = 1.1.0 =
 

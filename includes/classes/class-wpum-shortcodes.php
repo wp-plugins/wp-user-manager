@@ -526,7 +526,7 @@ class WPUM_Shortcodes {
 			'total_pages'  => $total_pages,
 			'directory_id' => $directory_id,
 			'paged'        => $paged,
-			//'search_form'  => wpum_directory_has_search_form( $directory_id ), Search form is under construction.
+			'search_form'  => wpum_directory_has_search_form( $directory_id )
 		);
 
 		// Load the template

@@ -11,45 +11,89 @@
 $classes            = array( 'input-upload' );
 $allowed_mime_types = array_keys( ! empty( $field['allowed_mime_types'] ) ? $field['allowed_mime_types'] : get_allowed_mime_types() );
 $field_name         = isset( $field['name'] ) ? $field['name'] : $key;
-$field_name         .= ! empty( $field['multiple'] ) ? '[]' : '';
+
+// Store current field files.
+$field_files = isset( $field['value'] ) ? $field['value'] : '';
+
 ?>
-<?php if( !is_page( wpum_get_core_page_id('register') ) ) : ?>
-<div class="wpum-uploaded-files">
-	<?php if ( ! empty( $field['value'] ) && !is_wp_error( $field['value'] ) ) : ?>
-		<?php if ( is_array( $field['value'] ) ) : ?>
-			<?php foreach ( $field['value'] as $value ) : ?>
-				<?php get_wpum_template( 'form-fields/uploaded-file-html.php', 
-						array( 
+
+<?php if( ! is_page( wpum_get_core_page_id( 'register' ) ) ) : ?>
+
+	<div class="wpum-uploaded-files">
+
+		<?php
+
+		if ( ! empty( $field['value'] ) && ! is_wp_error( $field['value'] ) ) :
+
+			// Check if we have multiple files.
+			if( wpum_is_multi_array( $field_files ) ) {
+
+				foreach ( $field_files as $key => $file ) {
+
+					get_wpum_template( 'form-fields/uploaded-file-html.php',
+					    array(
+					      'key'        => $key,
+					      'name'       => 'current_' . $field_name,
+					      'value'      => $file['url'],
+					      'field'      => $field,
+					      'field_name' => $field_name,
+								'number'     => $key
+					    )
+					);
+
+				}
+
+			// We have single file.
+			} else {
+
+				get_wpum_template( 'form-fields/uploaded-file-html.php',
+						array(
 							'key'        => $key,
 							'name'       => 'current_' . $field_name,
-							'value'      => $value,
+							'value'      => $field_files,
 							'field'      => $field,
 							'field_name' => $field_name
-						) 
-					); 
-				?>
-			<?php endforeach; ?>
-		<?php elseif ( $value = $field['value'] ) : ?>
-			<?php get_wpum_template( 'form-fields/uploaded-file-html.php', 
-					array( 
-						'key'        => $key,
-						'name'       => 'current_' . $field_name,
-						'value'      => $value,
-						'field'      => $field,
-						'field_name' => $field_name
-					) 
-				); 
-			?>
-		<?php endif; ?>
+						)
+				);
+
+			}
+
+		endif;
+
+		?>
+
+	</div>
+
+	<?php if( ! empty( $field_files ) ) : ?>
+
+	<a class="wpum-remove-uploaded-file" href="#" data-remove="<?php echo esc_attr( $field_name ); ?>">[<?php _e( 'remove', 'wpum' ); ?>]</a>
+
 	<?php endif; ?>
-</div>
+
 <?php endif; ?>
 
-<input type="file" class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>" data-file_types="<?php echo esc_attr( implode( '|', $allowed_mime_types ) ); ?>" <?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?> name="<?php echo esc_attr( isset( $field['name'] ) ? $field['name'] : $key ); ?><?php if ( ! empty( $field['multiple'] ) ) echo '[]'; ?>" id="<?php echo esc_attr( $key ); ?>" placeholder="<?php echo empty( $field['placeholder'] ) ? '' : esc_attr( $field['placeholder'] ); ?>" />
+<input
+	type="file"
+	class="<?php echo esc_attr( implode( ' ', $classes ) ); ?>"
+	<?php if ( ! empty( $field['multiple'] ) ) echo 'multiple'; ?>
+	name="<?php echo $field_name; ?><?php if ( ! empty( $field['multiple'] ) ) echo '[]'; ?>"
+	id="<?php echo esc_attr( $key ); ?>"
+/>
+
 <small class="description">
+
 	<?php if ( ! empty( $field['description'] ) ) : ?>
-		<?php echo $field['description']; ?>
-	<?php else : ?>
-		<?php printf( __( 'Maximum file size: %s.', 'wpum' ), wpum_max_upload_size( $field_name ) ); ?>
+		<p><?php echo $field['description']; ?></p>
 	<?php endif; ?>
+
+	<?php if( array_key_exists( 'max_file_size' , $field ) ) : ?>
+
+		<?php printf( esc_html__( 'Maximum file size: %s.', 'wpum' ), size_format( $field['max_file_size'] ) ); ?>
+
+	<?php else : ?>
+
+		<?php printf( __( 'Maximum file size: %s.', 'wpum' ), wpum_max_upload_size( $field_name ) ); ?>
+
+	<?php endif; ?>
+
 </small>

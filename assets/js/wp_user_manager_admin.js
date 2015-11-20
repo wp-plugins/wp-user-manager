@@ -1,4 +1,4 @@
-/*! WP User Manager - v1.0.5
+/*! WP User Manager - v1.1.0
  * http://wpusermanager.com
  * Copyright (c) 2015; * Licensed GPLv2+ */
 jQuery(document).ready(function ($) {

@@ -82,6 +82,15 @@ function wpum_admin_messages() {
 
 	}
 
+	// messages for tools page
+	if( $screen->base == 'users_page_wpum-tools' ) {
+
+		if( isset( $_GET['message'] ) && $_GET['message'] == 'settings_imported' ) :
+			add_settings_error( 'wpum-notices', 'settings-imported', __( 'Settings successfully imported.', 'wpum' ), 'updated' );
+		endif;
+
+	}
+
 	settings_errors( 'wpum-notices' );
 
 }

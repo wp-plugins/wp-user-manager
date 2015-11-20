@@ -1,6 +1,6 @@
 <?php
 /**
- * Registers the checkbox type field.
+ * Registers the url type field.
  *
  * @package     wp-user-manager
  * @copyright   Copyright (c) 2015, Alessandro Tesoro
@@ -12,11 +12,11 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * WPUM_Field_Type_Checkbox Class
+ * WPUM_Field_Type_Url Class
  *
  * @since 1.0.0
  */
-class WPUM_Field_Type_Checkbox extends WPUM_Field_Type {
+class WPUM_Field_Type_Url extends WPUM_Field_Type {
 
 	/**
 	 * Constructor for the field type
@@ -25,19 +25,19 @@ class WPUM_Field_Type_Checkbox extends WPUM_Field_Type {
 	*/
 	public function __construct() {
 
-		// DO NOT DELETE
+		// DO NOT DELETE.
 		parent::__construct();
 
-		// Label of this field type
-		$this->name             = _x( 'Checkbox', 'field type name', 'wpum' );
+		// Label of this field type.
+		$this->name             = _x( 'Url', 'field type name', 'wpum' );
 		// Field type name
-		$this->type             = 'checkbox';
+		$this->type             = 'url';
 		// Class of this field
 		$this->class            = __CLASS__;
 		// Set registration
 		$this->set_registration = true;
 		// Set requirement
-		$this->set_requirement  = false;
+		$this->set_requirement  = true;
 
 	}
 
@@ -53,10 +53,10 @@ class WPUM_Field_Type_Checkbox extends WPUM_Field_Type {
 		$options = array();
 
 		$options[] = array(
-			'name'  => 'checked',
-			'label' => esc_html__( 'Enabled by default', 'wpum' ),
-			'desc'  => esc_html__( 'Enable this option to set this checkbox as enabeld by default.', 'wpum' ),
-			'type'  => 'checkbox',
+			'name'     => 'rel',
+			'label'    => esc_html__( 'Nofollow', 'wpum' ),
+			'desc'     => esc_html__( 'Enable this option to specify that the search spiders should not follow this link.', 'wpum' ),
+			'type'     => 'checkbox',
 		);
 
 		return $options;
@@ -73,14 +73,22 @@ class WPUM_Field_Type_Checkbox extends WPUM_Field_Type {
 	 */
 	public static function output_html( $value, $field ) {
 
-		if( $value == '1' ) {
-			$value = esc_html_x( 'Yes', 'Used when displaying the value of a checkbox field within the profile page.', 'wpum' );
-		}
+		$nofollow = wpum_get_serialized_field_option( $field->options, 'rel' );
 
-		return $value;
+		if( ! empty( $nofollow ) ) :
+
+			$output = '<a href="' . esc_url( $value ) .'" rel="nofollow">' . esc_url( $value ) . '</a>';
+
+		else :
+
+			$output = '<a href="' . esc_url( $value ) .'">' . esc_url( $value ) . '</a>';
+
+		endif;
+
+		return $output;
 
 	}
 
 }
 
-new WPUM_Field_Type_Checkbox;
+new WPUM_Field_Type_Url;

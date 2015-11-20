@@ -88,3 +88,46 @@ function wpum_new_user_notification( $user_id, $plaintext_pass ) {
 	}
 
 }
+
+/**
+ * Gets all the email templates that have been registerd. The list is extendable
+ * and more templates can be added.
+ *
+ * @since 1.0.0
+ * @return array $templates All the registered email templates
+ */
+function wpum_get_email_templates() {
+	$templates = new WPUM_Emails;
+	return $templates->get_templates();
+}
+
+/**
+ * Checks whether a given email id exists into the database.
+ *
+ * @since 1.0.0
+ * @return bool
+ */
+function wpum_email_exists( $email_id ) {
+
+	$exists = false;
+	$emails = get_option( 'wpum_emails', array() );
+
+	if ( array_key_exists( $email_id, $emails ) )
+		$exists = true;
+
+	return $exists;
+}
+
+/**
+ * Get an email from the database.
+ *
+ * @since 1.0.0
+ * @return array email details containing subject and message
+ */
+function wpum_get_email( $email_id ) {
+
+	$emails = get_option( 'wpum_emails', array() );
+
+	return $emails[ $email_id ];
+
+}

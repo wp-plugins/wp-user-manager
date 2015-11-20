@@ -53,6 +53,7 @@ class WPUM_Forms {
 	 * @return string class name on success, false on failure
 	 */
 	public function load_form_class( $form_name ) {
+
 		// Load the form abtract
 		if ( ! class_exists( 'WPUM_Form' ) )
 			include( WPUM_PLUGIN_DIR . 'includes/abstracts/abstract-wpum-form.php' );
@@ -74,6 +75,7 @@ class WPUM_Forms {
 		call_user_func( array( $form_class, "init" ) );
 
 		return $form_class;
+
 	}
 
 	/**

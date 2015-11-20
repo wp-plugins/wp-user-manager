@@ -187,16 +187,27 @@
   margin-left: 0px;
   -webkit-border-radius: 4px;
   border-radius: 4px; }
+  .wpum-single-profile .wpum-user-details-list dl + h3.group-title {
+    margin-top: 30px; }
 .wpum-single-profile .wpum-user-details-list dl dt {
   float: left;
   font-weight: bold;
   margin-right: 10px;
-  padding: 5px;
-  width: 100px;
-  border-right: 2px solid #f6f6f6; }
+  padding: 5px 5px 5px 0px;
+  width: 110px;
+  border-right: 2px solid #f6f6f6;
+  overflow: hidden;
+  clear: left;
+  text-overflow: ellipsis;
+  white-space: nowrap; }
 .wpum-single-profile .wpum-user-details-list dl dd {
   margin: 2px 0;
   padding: 5px 0; }
+  .wpum-single-profile .wpum-user-details-list dl dd span.wpum-uploaded-file-name {
+    display: block; }
+.wpum-single-profile .wpum-user-details-list .group-title {
+  margin-top: 0;
+  margin-bottom: 1rem; }
 
 /* profile posts */
 .wpum-single-profile .wpum-post-meta {
@@ -351,12 +362,31 @@ ul.wpum-user-listings {
         margin: 0; }
 
 /* Directory Elements */
-.wpum-directory-top-bar {
+.wpum-directory-top-bar,
+.wpum-directory-search-form {
   padding: .5em 1em;
   background: #f9f9f9;
   border-top: 1px solid #e5e5e5; }
-  .wpum-directory-top-bar div p {
+  .wpum-directory-top-bar div p,
+  .wpum-directory-search-form div p {
     margin: 0px; }
+
+.wpum-directory-search-form {
+  padding: 1em; }
+  .wpum-directory-search-form input {
+    width: 100%;
+    display: block; }
+  .wpum-directory-search-form .form-fields,
+  .wpum-directory-search-form .form-submit {
+    position: relative;
+    margin-right: 4%;
+    float: left; }
+  .wpum-directory-search-form .form-fields {
+    width: 74%; }
+  .wpum-directory-search-form .form-submit {
+    width: 22%;
+    margin-right: 0;
+    clear: right; }
 
 .wpum-directory-pagination {
   padding: .5em 1em;
@@ -585,5 +615,11 @@ div.wpum-message {
 
 .wpum-required-star {
   color: #b94a48; }
+
+.wpum-remove-uploaded-file {
+  display: block; }
+
+#wpum-no-user-found {
+  margin-top: 1rem; }
 
 /*# sourceMappingURL=wp_user_manager_frontend.css.map */

@@ -59,9 +59,6 @@ function wpum_get_roles( $force = false ) {
 
 	$roles = $wp_roles->get_names();
 
-	// Remove administrator role for safety
-	unset( $roles['administrator'] );
-
 	return apply_filters( 'wpum_get_roles', $roles );
 }
 
@@ -78,9 +75,9 @@ function wpum_get_allowed_user_roles() {
 	if ( ! isset( $wp_roles ) )
 		$wp_roles = new WP_Roles();
 
-	$user_roles = array();
-	$selected_roles = wpum_get_option( 'register_roles' );
-	$allowed_user_roles = is_array( $selected_roles ) ? $selected_roles : array( $selected_roles );
+	$user_roles         = array();
+	$selected_roles     = wpum_get_option( 'register_roles' );
+	$allowed_user_roles = is_array( $selected_roles ) ? $selected_roles: array( $selected_roles );
 
 	foreach ( $allowed_user_roles as $role ) {
 		$user_roles[ $role ] = $wp_roles->roles[ $role ]['name'];
@@ -112,49 +109,6 @@ function wpum_get_disabled_usernames() {
 	}
 
 	return array_flip( $usernames );
-
-}
-
-/**
- * Gets all the email templates that have been registerd. The list is extendable
- * and more templates can be added.
- *
- * @since 1.0.0
- * @return array $templates All the registered email templates
- */
-function wpum_get_email_templates() {
-	$templates = new WPUM_Emails;
-	return $templates->get_templates();
-}
-
-/**
- * Checks whether a given email id exists into the database.
- *
- * @since 1.0.0
- * @return bool
- */
-function wpum_email_exists( $email_id ) {
-
-	$exists = false;
-	$emails = get_option( 'wpum_emails', array() );
-
-	if ( array_key_exists( $email_id, $emails ) )
-		$exists = true;
-
-	return $exists;
-}
-
-/**
- * Get an email from the database.
- *
- * @since 1.0.0
- * @return array email details containing subject and message
- */
-function wpum_get_email( $email_id ) {
-
-	$emails = get_option( 'wpum_emails', array() );
-
-	return $emails[ $email_id ];
 
 }
 
@@ -393,7 +347,9 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 
 	if ( isset( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ] ) && ! empty( $_FILES[ $field_key ]['name'] ) ) {
 
-		add_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
+		if( $field_key == 'user_avatar' ) {
+			add_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
+		}
 
 		$allowed_mime_types = get_allowed_mime_types();
 
@@ -402,23 +358,46 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 
 		foreach ( $files_to_upload as $file_key => $file_to_upload ) {
 
-			if ( !in_array( $file_to_upload['type'] , $allowed_mime_types ) )
-				return new WP_Error( 'validation-error', sprintf( __( 'Allowed files types are: %s', 'wpum' ), implode( ', ', array_keys( $allowed_mime_types ) ) ) );
+			// Trigger validation rules for avatar only.
+			if( $field_key == 'user_avatar' ) {
 
-			if ( defined( 'WPUM_MAX_AVATAR_SIZE' ) && $field_key == 'user_avatar' && $file_to_upload['size'] > WPUM_MAX_AVATAR_SIZE )
-				return new WP_Error( 'avatar-too-big', __( 'The uploaded file is too big.', 'wpum' ) );
+				if ( !in_array( $file_to_upload['type'] , $allowed_mime_types ) )
+					return new WP_Error( 'validation-error', sprintf( __( 'Allowed files types are: %s', 'wpum' ), implode( ', ', array_keys( $allowed_mime_types ) ) ) );
+
+				if ( defined( 'WPUM_MAX_AVATAR_SIZE' ) && $field_key == 'user_avatar' && $file_to_upload['size'] > WPUM_MAX_AVATAR_SIZE )
+					return new WP_Error( 'avatar-too-big', __( 'The uploaded file is too big.', 'wpum' ) );
+
+			} else {
+
+				// Trigger verification for other file fields.
+				if( array_key_exists( 'allowed_extensions' , $field ) && is_array( $field['allowed_extensions'] ) ) {
+
+					$allowed_field_extensions = $field['allowed_extensions'];
+					$uploaded_file_extension  = pathinfo( $file_to_upload['name'] );
+					$uploaded_file_extension  = $uploaded_file_extension['extension'];
+
+					if( ! in_array( $uploaded_file_extension , $allowed_field_extensions ) ) {
+						return new WP_Error( 'validation-error', sprintf( esc_html__( 'Error: the "%s" field allows only %s files to be uploaded.', 'wpum' ), $field['label'], implode ( ", ", $allowed_field_extensions ) ) );
+					}
+
+				}
+
+			}
 
 			$uploaded_file = wpum_upload_file( $file_to_upload, array( 'file_key' => $file_key ) );
 
 			if ( is_wp_error( $uploaded_file ) ) {
+
 				return new WP_Error( 'validation-error', $uploaded_file->get_error_message() );
+
 			} else {
 
 				$file_urls[] = array(
-					'url' => $uploaded_file->url,
+					'url'  => $uploaded_file->url,
 					'path' => $uploaded_file->path,
 					'size' => $uploaded_file->size
 				);
+
 			}
 
 		}
@@ -429,7 +408,9 @@ function wpum_trigger_upload_file( $field_key, $field ) {
 			return current( $file_urls );
 		}
 
-		remove_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
+		if( $field_key == 'user_avatar' ) {
+			remove_filter( 'upload_mimes' , 'wpum_adjust_mime_types' );
+		}
 
 		return $files_to_upload;
 	}
@@ -526,7 +507,7 @@ function wpum_upload_file( $file, $args = array() ) {
  * @param string  $size  in bytes
  * @return string
  */
-function wpum_max_upload_size( $field_name ) {
+function wpum_max_upload_size( $field_name = '' ) {
 
 	// Default max upload size
 	$output = size_format( wp_max_upload_size() );
@@ -551,22 +532,6 @@ function wpum_check_permissions_button() {
 	$output .= '<p class="description">'.__( 'Press the button above if avatar uploads does not work.', 'wpum' ).'</p>';
 
 	return $output;
-
-}
-
-/**
- * List of fields to retrieve during the WP_User_Query for user directories.
- * Limiting the query to certain fields, speeds it up.
- *
- * @since 1.0.0
- * @see https://codex.wordpress.org/Class_Reference/WP_User_Query#Return_Fields_Parameter
- * @return array $fields - https://codex.wordpress.org/Class_Reference/WP_User_Query#Return_Fields_Parameter
- */
-function wpum_get_user_query_fields() {
-
-	$fields = array( 'ID', 'display_name', 'user_login', 'user_nicename', 'user_email', 'user_url', 'user_registered' );
-
-	return apply_filters( 'wpum_get_user_query_fields', $fields );
 
 }
 
@@ -794,4 +759,236 @@ function wpum_registration_redirect_url() {
 
 	return apply_filters( 'wpum_registration_redirect_url', $url );
 
+}
+
+/**
+ * Check whether a function is disabled.
+ *
+ * @since 1.2.0
+ * @param  string  $function name of the function
+ * @return boolean
+ */
+function wpum_is_func_disabled( $function ) {
+	$disabled = explode( ',',  ini_get( 'disable_functions' ) );
+	return in_array( $function, $disabled );
+}
+
+/**
+ * Gets file extension of a file.
+ *
+ * @since 1.2.0
+ * @param  string $str file name
+ * @return string      extension of the file
+ */
+function wpum_get_file_extension( $str ) {
+	$parts = explode( '.', $str );
+	return end( $parts );
+}
+
+/**
+ * Covert object data to array.
+ *
+ * @since 1.2.0
+ * @param  array|object $data data to pass and convert.
+ * @return array
+ */
+function wpum_object_to_array( $data ) {
+	if ( is_array( $data ) || is_object( $data ) ) {
+		$result = array();
+		foreach ( $data as $key => $value ) {
+			$result[ $key ] = wpum_object_to_array( $value );
+		}
+		return $result;
+	}
+	return $data;
+}
+
+/**
+ * Wrapper function to install groups database table and install primary group.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function wpum_install_groups() {
+
+	if( ! get_option( 'wpum_version_upgraded_from' ) ) {
+
+		// Create database table for field groups
+		@WPUM()->field_groups->create_table();
+
+		// Add primary group
+		$field_groups_args = array(
+			'id'         => 1,
+			'name'       => 'Primary',
+			'can_delete' => false,
+			'is_primary' => true
+		);
+
+		WPUM()->field_groups->add( $field_groups_args );
+
+	}
+
+}
+
+/**
+ * Wrapper function to install fields database table and install primary fields.
+ *
+ * @since 1.0.0
+ * @return void
+ */
+function wpum_install_fields() {
+
+	if( ! get_option( 'wpum_version_upgraded_from' ) ) {
+
+		// Create database table for field groups
+		@WPUM()->fields->create_table();
+
+		// Get primary group id
+		$primary_group = WPUM()->field_groups->get_group_by( 'primary' );
+
+		// Install fields
+		$fields = array(
+			array(
+				'id'                   => 1,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'username',
+				'name'                 => 'Username',
+				'is_required'          => true,
+				'show_on_registration' => true,
+				'can_delete'           => false,
+				'meta'                 => 'username',
+			),
+			array(
+				'id'                   => 2,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'email',
+				'name'                 => 'Email',
+				'is_required'          => true,
+				'show_on_registration' => true,
+				'can_delete'           => false,
+				'meta'                 => 'user_email',
+			),
+			array(
+				'id'                   => 3,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'password',
+				'name'                 => 'Password',
+				'is_required'          => true,
+				'show_on_registration' => true,
+				'can_delete'           => false,
+				'meta'                 => 'password',
+			),
+			array(
+				'id'                   => 4,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'text',
+				'name'                 => 'First Name',
+				'is_required'          => false,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'first_name',
+			),
+			array(
+				'id'                   => 5,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'text',
+				'name'                 => 'Last Name',
+				'is_required'          => false,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'last_name',
+			),
+			array(
+				'id'                   => 6,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'nickname',
+				'name'                 => 'Nickname',
+				'is_required'          => true,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'nickname',
+			),
+			array(
+				'id'                   => 7,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'display_name',
+				'name'                 => 'Display Name',
+				'is_required'          => true,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'display_name',
+			),
+			array(
+				'id'                   => 8,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'text',
+				'name'                 => 'Website',
+				'is_required'          => false,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'user_url',
+			),
+			array(
+				'id'                   => 9,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'textarea',
+				'name'                 => 'Description',
+				'is_required'          => false,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'description',
+			),
+			array(
+				'id'                   => 10,
+				'group_id'             => $primary_group->id,
+				'type'                 => 'avatar',
+				'name'                 => 'Profile Picture',
+				'is_required'          => false,
+				'show_on_registration' => false,
+				'can_delete'           => false,
+				'meta'                 => 'user_avatar',
+			)
+		);
+
+		foreach ( $fields as $field ) {
+			WPUM()->fields->add( $field );
+		}
+
+	}
+
+}
+
+/**
+ * Utility function to convert an array to an object.
+ *
+ * @since 1.2.0
+ * @param  array $array the array to convert.
+ * @return object        converted object.
+ */
+function wpum_array_to_object( $array ) {
+
+	$object = new stdClass();
+
+	if ( is_array( $array ) && count( $array ) > 0) {
+		foreach ( $array as $name => $value ) {
+			$name = strtolower( trim( $name ) );
+			if ( ! empty( $name ) ) {
+	      $object->$name = $value;
+	    }
+		}
+	}
+
+	return $object;
+
+}
+
+/**
+ * Utility function to check if an array is multidimensional.
+ *
+ * @since 1.2.0
+ * @param  array  $array the array to check.
+ * @return boolean
+ */
+function wpum_is_multi_array( $array ) {
+	return ( count( $array ) !== count( $array, COUNT_RECURSIVE ) );
 }

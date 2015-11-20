@@ -53,3 +53,17 @@ td.page-title span.post-state i.wpum-shortcodes-icon:before {
 
 @import 'addons';
 @import 'dashboard_widget';
+
+#wpum-tools-page {
+
+  .hndle {
+    &:hover {
+      cursor: auto;
+    }
+  }
+
+  .inside {
+    padding-bottom: 0px;
+  }
+
+}
