@@ -124,4 +124,9 @@ body.wpum_addons_page .wpum-extension {
     #wpum_dashboard_users ul li:first-child {
       border-top: 0; }
 
+#wpum-tools-page .hndle:hover {
+  cursor: auto; }
+#wpum-tools-page .inside {
+  padding-bottom: 0px; }
+
 /*# sourceMappingURL=wp_user_manager_admin_general.css.map */

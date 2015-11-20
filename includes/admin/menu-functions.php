@@ -135,7 +135,7 @@ function wpum_nav_menu_get_loggedin_pages() {
  * for the admin menu manager.
  *
  * @since 1.1.0
- * @return void
+ * @return array
  */
 function wpum_nav_menu_get_loggedout_pages() {
 
@@ -150,6 +150,11 @@ function wpum_nav_menu_get_loggedout_pages() {
 		'name' => __( 'Log in', 'wpum' ),
 		'slug' => 'login',
 		'link' => wpum_get_core_page_url( 'login' ),
+	);
+	$wpum_menu_items[] = array(
+		'name' => __( 'Password recovery', 'wpum' ),
+		'slug' => 'psw-recovery',
+		'link' => wpum_get_core_page_url( 'password' ),
 	);
 
 	$wpum_menu_items = apply_filters( 'wpum_nav_menu_get_loggedout_pages', $wpum_menu_items );

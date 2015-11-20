@@ -169,7 +169,7 @@ class WPUM_Getting_Started {
 						</div>
 						<div class="welcome-panel-column welcome-panel-last">
 							<h4><?php _e('Documentation', 'wpum'); ?></h4>
-							<p class="welcome-icon welcome-learn-more"><?php echo sprintf( __( 'Looking for help? <a href="%s" target="_blank">WP User Manager documentation</a> has got you covered.', 'wpum' ), 'http://documentation.wpusermanager.com' ); ?> <br/><br/><a href="http://documentation.wpusermanager.com" class="button" target="_blank"><?php _e('Read documentation', 'wpum') ;?></a></p>
+							<p class="welcome-icon welcome-learn-more"><?php echo sprintf( __( 'Looking for help? <a href="%s" target="_blank">WP User Manager documentation</a> has got you covered.', 'wpum' ), 'http://docs.wpusermanager.com' ); ?> <br/><br/><a href="http://docs.wpusermanager.com" class="button" target="_blank"><?php _e('Read documentation', 'wpum') ;?></a></p>
 						</div>
 					</div>
 				</div>
@@ -181,7 +181,7 @@ class WPUM_Getting_Started {
 
 					<div class="col">
 						<h3><?php _e('Looking for help ?', 'wpum'); ?></h3>
-						<p><?php echo sprintf( __('We do all we can to provide every user with the best support possible. If you encounter a problem or have a question, please <a href="%s" target="_blank">contact us.</a> Make sure you <a href="%s">read the documentation</a> first.', 'wpum'), 'http://wpusermanager.com/contacts', 'http://documentation.wpusermanager.com' ); ?></p>
+						<p><?php echo sprintf( __('We do all we can to provide every user with the best support possible. If you encounter a problem or have a question, please <a href="%s" target="_blank">contact us.</a> Make sure you <a href="%s">read the documentation</a> first.', 'wpum'), 'http://wpusermanager.com/contacts', 'http://docs.wpusermanager.com' ); ?></p>
 					</div>
 
 					<div class="last-feature col">

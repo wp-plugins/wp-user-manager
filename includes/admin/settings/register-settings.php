@@ -252,18 +252,6 @@ function wpum_get_registered_settings() {
 					'type'    => 'select',
 					'options' => wpum_get_login_methods()
 				),
-				'display_registration_link' => array(
-					'id'   => 'display_registration_link',
-					'name' => __( 'Display registration link:', 'wpum' ),
-					'desc' => __('Enable to display a registration link into the login form.', 'wpum'),
-					'type' => 'checkbox'
-				),
-				'display_password_link' => array(
-					'id'   => 'display_password_link',
-					'name' => __( 'Display password recovery link:', 'wpum' ),
-					'desc' => __('Enable to display a password recovery link into the login form.', 'wpum'),
-					'type' => 'checkbox'
-				),
 				'adminbar_roles' => array(
 					'id'          => 'adminbar_roles',
 					'name'        => __( 'Admin Bar:', 'wpum' ),
@@ -443,10 +431,16 @@ function wpum_get_registered_settings() {
 				'login_redirect' => array(
 					'id'      => 'login_redirect',
 					'name'    => __( 'Login', 'wpum' ),
-					'desc'    => __('Select the page where you want to redirect users after they login. If empty will return to the current page.', 'wpum'),
+					'desc'    => __('Select the page where you want to redirect users after they login.', 'wpum'),
 					'type'    => 'select',
 					'class'   => 'select2',
 					'options' => wpum_get_pages()
+				),
+				'always_redirect' => array(
+					'id'   => 'always_redirect',
+					'name' => __( 'Always redirect', 'wpum' ),
+					'desc' => sprintf( __( 'Enable this option to always redirect to the page selected above after login. Please <a href="%s" target="_blank">read documentation</a> for more information.', 'wpum' ), 'http://docs.wpusermanager.com/article/323-understanding-how-login-redirect-works' ),
+					'type' => 'checkbox'
 				),
 				'logout_redirect' => array(
 					'id'      => 'logout_redirect',

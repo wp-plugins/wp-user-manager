@@ -25,7 +25,7 @@ if ( ! function_exists( 'wpum_directory_sort_dropdown' ) ) :
 		$defaults = array(
 			'exclude'  => '',
 			'selected' => '',
-			'class' => 'wpum-dropdown-sort',
+			'class'    => 'wpum-dropdown-sort',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -37,7 +37,7 @@ if ( ! function_exists( 'wpum_directory_sort_dropdown' ) ) :
 		$sorting_methods = wpum_get_directory_sorting_methods();
 
 		// Exclude methods if any
-		if ( !empty( $args['exclude'] ) ) {
+		if ( ! empty( $args['exclude'] ) ) {
 
 			// Check if it's only one value that we need to exclude
 			if ( is_string( $args['exclude'] ) ) :
@@ -56,7 +56,7 @@ if ( ! function_exists( 'wpum_directory_sort_dropdown' ) ) :
 		}
 
 		$sorting_methods = apply_filters( 'wpum_sort_dropdown_methods', $sorting_methods, $args );
-		$selected = isset( $_GET['sort'] ) ? $selected = $_GET['sort'] : $selected = $args['selected'];
+		$selected        = isset( $_GET['sort'] ) ? $selected = $_GET['sort']: $selected = $args['selected'];
 
 		$output = "<select name='wpum-dropdown' id='wpum-dropdown' class='$class'>\n";
 
@@ -91,8 +91,8 @@ if ( ! function_exists( 'wpum_directory_results_amount_dropdown' ) ) :
 	function wpum_directory_results_amount_dropdown( $args = '' ) {
 
 		$defaults = array(
-			'exclude'  => '',
-			'class' => 'wpum-results-dropdown-sort',
+			'exclude' => '',
+			'class'   => 'wpum-results-dropdown-sort',
 		);
 
 		$args = wp_parse_args( $args, $defaults );
@@ -102,7 +102,7 @@ if ( ! function_exists( 'wpum_directory_results_amount_dropdown' ) ) :
 
 		// Get options
 		$results_options = wpum_get_directory_amount_options();
-		$selected = isset( $_GET['amount'] ) ? $_GET['amount'] : false;
+		$selected        = isset( $_GET['amount'] ) ? $_GET['amount']: false;
 
 		$output = "<select name='wpum-amount-dropdown' id='wpum-amount-dropdown' class='$class'>\n";
 
@@ -328,5 +328,21 @@ function wpum_directory_display_amount_sorter( $directory_id = 0 ) {
 		return true;
 
 	return false;
+
+}
+
+/**
+ * List of fields to retrieve during the WP_User_Query for user directories.
+ * Limiting the query to certain fields, speeds it up.
+ *
+ * @since 1.0.0
+ * @see https://codex.wordpress.org/Class_Reference/WP_User_Query#Return_Fields_Parameter
+ * @return array $fields - https://codex.wordpress.org/Class_Reference/WP_User_Query#Return_Fields_Parameter
+ */
+function wpum_get_user_query_fields() {
+
+	$fields = array( 'ID', 'display_name', 'user_login', 'user_nicename', 'user_email', 'user_url', 'user_registered' );
+
+	return apply_filters( 'wpum_get_user_query_fields', $fields );
 
 }

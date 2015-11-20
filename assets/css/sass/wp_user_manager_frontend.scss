@@ -144,23 +144,45 @@
 
 /* Profile details */
 .wpum-single-profile .wpum-user-details-list {
+
 	dl {
 		margin-left: 0px;
 		-webkit-border-radius: 4px;
 		border-radius: 4px;
+
+		+ h3.group-title {
+			margin-top: 30px;
+		}
+
 	}
+
 	dl dt {
-	    float:left;
-	    font-weight:bold;
-	    margin-right:10px;
-	    padding:5px;
-	    width:100px;
+	  float:left;
+	  font-weight:bold;
+	  margin-right:10px;
+	  padding:5px 5px 5px 0px;
+	  width:110px;
 		border-right: 2px solid #f6f6f6;
+		overflow: hidden;
+	  clear: left;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
 	}
+
 	dl dd {
 	    margin:2px 0;
 	    padding:5px 0;
+
+			span.wpum-uploaded-file-name {
+				display: block;
+			}
 	}
+
+	.group-title {
+		margin-top: 0;
+		margin-bottom: 1rem;
+	}
+
 }
 
 /* profile posts */
@@ -351,13 +373,45 @@ ul.wpum-user-listings {
 }
 
 /* Directory Elements */
-.wpum-directory-top-bar {
+.wpum-directory-top-bar,
+.wpum-directory-search-form {
+
 	padding: .5em 1em;
 	background: #f9f9f9;
 	border-top: 1px solid #e5e5e5;
+
 	div p {
 		margin:0px;
 	}
+
+}
+
+.wpum-directory-search-form {
+
+	padding: 1em;
+
+	input {
+		width: 100%;
+		display: block;
+	}
+
+	.form-fields,
+	.form-submit {
+		position: relative;
+		margin-right: 4%;
+		float: left;
+	}
+
+	.form-fields {
+		width: 74%;
+	}
+
+	.form-submit {
+		width: 22%;
+		margin-right: 0;
+	  clear: right;
+	}
+
 }
 
 .wpum-directory-pagination {
@@ -612,4 +666,12 @@ div.wpum-message {
 
 .wpum-required-star {
 	color: #b94a48;
+}
+
+.wpum-remove-uploaded-file {
+	display: block;
+}
+
+#wpum-no-user-found {
+	margin-top: 1rem;
 }

@@ -322,20 +322,3 @@ function wpum_admin_user_action_link( $actions, $user_object ) {
 
 }
 add_filter( 'user_row_actions', 'wpum_admin_user_action_link', 10, 2 );
-
-/**
- * Redirect user to a page upon successfull registration.
- *
- * @param  int $user_id id of the newly registered user.
- * @param  array $values  list of values submitted into the registration form.
- * @return void
- */
-function wpum_redirect_on_successfull_registration( $user_id, $values ) {
-
-	if( wpum_registration_redirect_url() ) {
-		wp_redirect( wpum_registration_redirect_url() );
-		exit;
-	}
-
-}
-add_action( 'wpum/form/register/success', 'wpum_redirect_on_successfull_registration', 9999, 3 );

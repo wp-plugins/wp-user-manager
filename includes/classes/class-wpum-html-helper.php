@@ -44,9 +44,11 @@ class WPUM_HTML_Elements {
 
 
 		if( $args['multiple'] ) {
-			$multiple = ' MULTIPLE';
+			$multiple       = ' MULTIPLE';
+			$multiple_param = '[]';
 		} else {
-			$multiple = '';
+			$multiple       = '';
+			$multiple_param = '';
 		}
 
 		if( $args['placeholder'] ) {
@@ -55,12 +57,12 @@ class WPUM_HTML_Elements {
 			$placeholder = '';
 		}
 
-		$output = '';
+		$output = '<span id="wpum-' . sanitize_key( $args['name'] ) . '-wrap">';
 
 		if( !empty( $args['label'] ) )
 			$output .= '<label class="wpum-label" for="' . sanitize_key( $args['name'] ) . '">' . esc_html( $args['label'] ) . '</label>';
 
-		$output .= '<select name="' . esc_attr( $args['name'] ) . '" id="' . esc_attr( sanitize_key( str_replace( '-', '_', $args['id'] ) ) ) . '" class="wpum-select ' . esc_attr( $args['class'] ) . '"' . $multiple . ' data-placeholder="' . $placeholder . '">';
+		$output .= '<select name="' . esc_attr( $args['name'] ) . $multiple_param .'" id="' . esc_attr( sanitize_key( str_replace( '-', '_', $args['id'] ) ) ) . '" class="wpum-select ' . esc_attr( $args['class'] ) . '"' . $multiple . ' data-placeholder="' . $placeholder . '">';
 
 		if ( $args['show_option_all'] ) {
 			if( $args['multiple'] ) {
@@ -97,9 +99,11 @@ class WPUM_HTML_Elements {
 		$output .= '</select>';
 
 		if ( ! empty( $args['desc'] ) ) {
-			$output .= '<span class="wpum-description">' . esc_html( $args['desc'] ) . '</span>';
+			$output .= '<br/><span class="wpum-description">' . esc_html( $args['desc'] ) . '</span>';
 		}
-		
+
+		$output .= '</span>';
+
 		return $output;
 	}
 

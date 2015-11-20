@@ -20,12 +20,16 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 abstract class WPUM_Field_Type {
 
 	/**
+	 * The name of this field.
+	 *
 	 * @since 1.0.0
 	 * @var string The name of this field type
 	 */
 	public $name = '';
 
 	/**
+	 * The field type name.
+	 *
 	 * @since 1.0.0
 	 * @var string The type of this field
 	 */
@@ -72,6 +76,14 @@ abstract class WPUM_Field_Type {
 	public $set_requirement = true;
 
 	/**
+	 * If this is set, the editor will allow to create selectable options for this field.
+	 *
+	 * @since 1.2.0
+	 * @var bool.
+	 */
+	public $has_repeater = false;
+
+	/**
 	 * Class name.
 	 *
 	 * @since 1.0.0
@@ -80,7 +92,7 @@ abstract class WPUM_Field_Type {
 	public $class = '';
 
 	/**
-	 * Get things started
+	 * Get things started.
 	 *
 	 * @since   1.0.0
 	 */
@@ -92,33 +104,23 @@ abstract class WPUM_Field_Type {
 	}
 
 	/**
-	 * Get supported field types
+	 * Get support field types.
 	 *
-	 * @access  public
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 * @param  array $fields field types
+	 * @return array        field types list split into categories.
 	 */
 	public function get_field_types( $fields ) {
-		
-		$l10n = array(
-			'basic' => __('Basic', 'wpum'),
-		);
-		
-		// If no category is selected - add it to the basic category
+
+		// If no category is selected - add it to the basic category.
 		if( ! $this->category ) {
 			$this->category = 'basic';
 		}
-		
-		// Set the category
-		if( isset( $l10n[ $this->category ] ) ) {
-			$cat = $l10n[ $this->category ];
-		} else {
-			$cat = $this->category;
-		}
-		
-		// add to array
-		$fields[ $cat ][ $this->type ] = $this->name;
-		
-		// return array
+
+		// add to array.
+		$fields[ $this->category ][ $this->type ] = $this->name;
+
+		// return array.
 		return $fields;
 
 	}
@@ -126,24 +128,26 @@ abstract class WPUM_Field_Type {
 	/**
 	 * Get registered field php class names.
 	 *
-	 * @access  public
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 * @param  array $classes list of class names.
+	 * @return array          list of class names.
 	 */
 	public function get_field_classes( $classes ) {
-		
-		// add to array
+
+		// add to array.
 		$classes[ $this->type ] = $this->class;
-		
-		// return array
+
+		// return array.
 		return $classes;
 
 	}
 
 	/**
-	 * Use this method to register options for the field.
+	 * Method to register options for fields.
 	 *
-	 * @access  public
-	 * @since   1.0.0
+	 * @since 1.0.0
+	 * @access public
+	 * @return array list of options.
 	 */
 	public static function options() {
 		return array();

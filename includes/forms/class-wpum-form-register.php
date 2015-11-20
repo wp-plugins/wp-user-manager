@@ -39,16 +39,7 @@ class WPUM_Form_Register extends WPUM_Form {
 
 		add_action( 'wp', array( __CLASS__, 'process' ) );
 
-		/**
-		 * The following hooks validate and process passwords,
-		 * they also execute functions that are only available when
-		 * custom passwords are enabled.
-		 *
-		 * 1 - Validate password strength
-		 * 2 - Add meter after password field
-		 * 3 - Execute automatic login
-		 *
-		 */
+		// Validate and process passwords.
 		if( wpum_get_option( 'custom_passwords' ) ) {
 
 			self::$random_password = false;
@@ -65,18 +56,10 @@ class WPUM_Form_Register extends WPUM_Form {
 
 		}
 
-		/**
-		 * Make sure the submitted email is valid and not in use.
-		 */
+		// Make sure the submitted email is valid and not in use.
 		add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_email' ), 10, 3 );
 
-		/**
-		 * The following hooks add a very basic honeypot spam prevention field.
-		 *
-		 * 1 - Adds new field within the registration fields array through filter.
-		 * 2 - Adds a new validation method through filter.
-		 *
-		 */
+		// Add a very basic honeypot spam prevention field.
 		if( wpum_get_option( 'enable_honeypot' ) ) {
 			add_action( 'wpum_get_registration_fields', array( __CLASS__, 'add_honeypot' ) );
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_honeypot' ), 10, 3 );
@@ -89,36 +72,35 @@ class WPUM_Form_Register extends WPUM_Form {
 			add_action( 'wpum_get_registration_fields', array( __CLASS__, 'add_terms' ) );
 		}
 
-		/**
-		 * Allow user to select a user role upon registration.
-		 *
-		 * 1 - Adds new field within the registration form.
-		 * 2 - Adds a new validation method through filter.
-		 * 3 - Saves the selected role upon registration
-		 *
-		 */
+		// Allow user to select a user role upon registration.
 		if( wpum_get_option( 'allow_role_select' ) ) {
-
 			add_action( 'wpum_get_registration_fields', array( __CLASS__, 'add_role' ) );
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_role' ), 10, 3 );
 			add_action( 'wpum/form/register/success', array( __CLASS__, 'save_role' ), 10, 10 );
-
 		}
 
-		/**
-		 * Prevent users from using specific usernames if enabled
-		 */
+		// Prevent users from using specific usernames if enabled.
 		$exclude_usernames = wpum_get_option( 'exclude_usernames' );
 
 		if( ! empty( $exclude_usernames ) ) {
 			add_filter( 'wpum/form/validate=register', array( __CLASS__, 'validate_username' ), 10, 3 );
 		}
 
-		/**
-		 * Store uploaded avatars into the database.
-		 */
+		// Store uploaded avatars into the database.
 		if( wpum_get_option('custom_avatars') && WPUM()->fields->show_on_registration( 'user_avatar' ) ) {
 			add_action( 'wpum/form/register/success', array( __CLASS__, 'save_avatar' ), 10, 3 );
+		}
+
+		// Redirect to a page after successfull registration.
+		if( wpum_get_option('login_after_registration') && wpum_get_option( 'custom_passwords' ) && wpum_get_option( 'registration_redirect' ) ) {
+
+			add_filter( 'wpum_redirect_after_automatic_login', array( __CLASS__, 'adjust_redirect_url' ), 10, 2 );
+
+		} elseif( ! wpum_get_option('login_after_registration') || ! wpum_get_option( 'custom_passwords' ) ) {
+
+			if( wpum_get_option( 'registration_redirect' ) )
+				add_action( 'wpum/form/register/success', array( __CLASS__, 'redirect_on_success' ), 9999, 3 );
+
 		}
 
 	}
@@ -199,6 +181,20 @@ class WPUM_Form_Register extends WPUM_Form {
 	}
 
 	/**
+	 * Adjust the redirect url of the automatic login functionality.
+	 * This is triggered when a custom successfull registration page has been assigned.
+	 *
+	 * @param  string $permalink original url.
+	 * @param  int $user_id   the id of the user.
+	 * @return string            the new url.
+	 */
+	public static function adjust_redirect_url( $permalink, $user_id ) {
+
+		return wpum_registration_redirect_url();
+
+	}
+
+	/**
 	 * Validate email field.
 	 *
 	 * @access public
@@ -208,9 +204,6 @@ class WPUM_Form_Register extends WPUM_Form {
 	public static function validate_email( $passed, $fields, $values ) {
 
 		$mail = $values['register'][ 'user_email' ];
-
-		if( ! is_email( $mail ) )
-			return new WP_Error( 'email-validation-error', __( 'Please enter a valid email address.', 'wpum' ) );
 
 		if( email_exists( $mail ) )
 			return new WP_Error( 'email-validation-error', __( 'Email address already exists.', 'wpum' ) );
@@ -378,6 +371,24 @@ class WPUM_Form_Register extends WPUM_Form {
 		if( !empty( $avatar_field ) && is_array( $avatar_field ) ) {
 			update_user_meta( $user_id, "current_user_avatar", esc_url( $avatar_field['url'] ) );
 			update_user_meta( $user_id, '_current_user_avatar_path', $avatar_field['path'] );
+		}
+
+	}
+
+	/**
+	 * Redirect user to a page upon successfull registration.
+	 *
+	 * @param  int $user_id id of the newly registered user.
+	 * @param  array $values  list of values submitted into the registration form.
+	 * @return void
+	 */
+	public static function redirect_on_success( $user_id, $values ) {
+
+		if( wpum_registration_redirect_url() ) {
+
+			wp_redirect( wpum_registration_redirect_url() );
+			exit;
+
 		}
 
 	}

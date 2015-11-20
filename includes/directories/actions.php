@@ -12,19 +12,34 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
+ * Add a search form on top of a directory.
+ *
+ * @param array $directory_args directory arguments.
+ * @return void
+ * @since 1.2.0
+ */
+function wpum_directory_add_search_form( $directory_args ) {
+
+	if( $directory_args['search_form'] ) {
+		get_wpum_template( "directory/search-form.php", array(
+			'directory_args'  =>  $directory_args
+		) );
+	}
+
+}
+add_action( 'wpum_before_user_directory', 'wpum_directory_add_search_form' );
+
+/**
  * Adds total number of users found on top of the directory.
  *
  * @since 1.0.0
- * @access public
  * @param array   $directory_args directory arguments.
- * @see
  * @return void
  */
 function wpum_directory_topbar( $directory_args ) {
 
 	get_wpum_template( "directory/top-bar.php", array(
 		'users_found'  => $directory_args['users_found'],
-		//'search_form'  => $directory_args['search_form'], Search form under construction
 		'directory_id' => $directory_args['directory_id']
 	) );
 

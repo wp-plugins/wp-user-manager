@@ -24,7 +24,7 @@ class WPUM_Field_Type_Textarea extends WPUM_Field_Type {
 	 * @since 1.0.0
  	 */
 	public function __construct() {
-		
+
 		// DO NOT DELETE
 		parent::__construct();
 

@@ -141,7 +141,7 @@ class WPUM_Fields_Editor {
 	public static function editor_page() {
 
 		ob_start();
-		
+
 		?>
 
 		<div class="wrap wpum-fields-editor-wrap">
@@ -151,7 +151,10 @@ class WPUM_Fields_Editor {
 				<?php do_action( 'wpum/fields/editor/title' ); ?>
 			</h2>
 
-			<?php echo self::navbar(); ?>
+			<div class="wp-filter">
+				<?php echo self::navbar(); ?>
+				<?php do_action( 'wpum/fields/editor/navbar' ); ?>
+			</div>
 
 			<?php echo self::primary_message(); ?>
 
@@ -159,16 +162,16 @@ class WPUM_Fields_Editor {
 
 				<!-- Sidebar -->
 				<div id="menu-settings-column" class="metabox-holder">
-					
+
 					<div class="clear"></div>
 
 					<?php do_accordion_sections( self::editor_hook, 'side', null ); ?>
-						
+
 				</div>
 				<!-- End Sidebar -->
 
 				<div id="menu-management-liquid" class="wpum-editor-container">
-					
+
 					<?php echo self::group_table(); ?>
 
 					<div class="wpum-table-loader">
@@ -182,7 +185,7 @@ class WPUM_Fields_Editor {
 		</div>
 
 		<?php
-		
+
 		echo ob_get_clean();
 
 	}
@@ -204,9 +207,9 @@ class WPUM_Fields_Editor {
 				$output .= __('It seems you do not have any field groups. Please deactivate and re-activate the plugin.', 'wpum');
 			$output .= '</p></div>';
 
-		else:  
-			$output = '<div class="wp-filter">';
-				$output .= '<form method="get" action="'. admin_url( 'users.php?page=wpum-profile-fields' ) .'">';
+		else:
+
+				$output = '<form method="get" action="'. admin_url( 'users.php?page=wpum-profile-fields' ) .'">';
 
 					$output .= '<input type="hidden" name="page" value="wpum-profile-fields">';
 					$output .= '<input type="hidden" name="action" value="edit">';
@@ -216,7 +219,7 @@ class WPUM_Fields_Editor {
 					foreach ( $groups as $key => $group ) {
 						$options += array( $group->id => $group->name );
 					}
-		 
+
 					// Generate dropdown menu
 					$args = array(
 						'options'          => $options,
@@ -235,7 +238,6 @@ class WPUM_Fields_Editor {
 
 				$output .= '</form>';
 
-			$output .= '</div>';
 		endif;
 
 		return $output;
@@ -253,7 +255,7 @@ class WPUM_Fields_Editor {
 		$custom_fields_table = new WPUM_Groups_Fields();
 		$custom_fields_table->prepare_items();
 		$custom_fields_table->display();
-		
+
 		wp_nonce_field( 'wpum_fields_editor_nonce', 'wpum_fields_editor_nonce' );
 
 	}
@@ -265,10 +267,10 @@ class WPUM_Fields_Editor {
 	 * @return void
 	 */
 	public function load_editor() {
- 
+
 	    do_action( 'add_meta_boxes_'.self::editor_hook, null );
 	    do_action( 'add_meta_boxes', self::editor_hook, null );
-	 
+
 	    /* Enqueue WordPress' script for handling the meta boxes */
 	    wp_enqueue_script('postbox');
 
@@ -285,10 +287,10 @@ class WPUM_Fields_Editor {
 	 * @return void
 	 */
 	public function single_field_load_editor() {
- 
+
 	    do_action( 'add_meta_boxes_'.self::single_field_hook, null );
 	    do_action( 'add_meta_boxes', self::single_field_hook, null );
-	 
+
 	    /* Enqueue WordPress' script for handling the meta boxes */
 	    wp_enqueue_script('postbox');
 
@@ -314,12 +316,22 @@ class WPUM_Fields_Editor {
 	public function single_field_add_meta_box() {
 
 		// Add Field Requirement metabox
-		if( $this->field_object->set_requirement )
-			add_meta_box( 'wpum_field_requirement', __( 'Requirement', 'wpum' ), array( $this, 'requirement_setting' ), self::single_field_hook, 'side' );
+		if( $this->field_object->set_requirement && $this->field->meta !== 'user_email' )
+			add_meta_box( 'wpum_field_requirement', esc_html__( 'Requirement', 'wpum' ), array( $this, 'requirement_setting' ), self::single_field_hook, 'side' );
 
 		// Add option to display on registration form if it's in primary group.
-		if( WPUM()->field_groups->is_primary( intval( $_GET['from_group'] ) ) && $this->field_object->set_registration )
-			add_meta_box( 'wpum_field_on_registration', __( 'Show on registration form', 'wpum' ), array( $this, 'field_on_registration' ), self::single_field_hook, 'side' );
+		if( WPUM()->field_groups->is_primary( intval( $_GET['from_group'] ) ) && $this->field_object->set_registration && $this->field->meta !== 'user_email' )
+			add_meta_box( 'wpum_field_on_registration', esc_html__( 'Show on registration form', 'wpum' ), array( $this, 'field_on_registration' ), self::single_field_hook, 'side' );
+
+		// Add name adjustment option.
+		if( $this->field->meta == 'first_name' || $this->field->meta == 'last_name' )
+			add_meta_box( 'wpum_field_adjust_name', esc_html__( 'Display full name', 'wpum' ), array( $this, 'name_setting' ), self::single_field_hook, 'side' );
+
+		// Add profile visibility metabox.
+		if( $this->field->meta !== 'password' || $this->field->meta !== 'user_avatar' ) {
+			add_meta_box( 'wpum_profile_visibility', esc_html__( 'Visibility', 'wpum' ), array( $this, 'visibility_settings' ), self::single_field_hook, 'side' );
+		}
+
 	}
 
 	/**
@@ -414,22 +426,34 @@ class WPUM_Fields_Editor {
 	}
 
 	/**
-	 * Process the update of the group settings
+	 * Process the update of the group settings.
 	 *
 	 * @access private
 	 */
 	public function process_group() {
 
-		// Process the group delete action
+		// Process the group delete action.
 		if( isset( $_GET['action'] ) && $_GET['action'] == 'delete' && isset( $_GET['group'] ) && is_numeric( $_GET['group'] ) ) {
 
-			// nonce verification
+			// nonce verification.
 			if ( ! wp_verify_nonce( $_GET['nonce'], 'delete' ) ) {
 				return;
 			}
 
 			if( WPUM()->field_groups->delete( (int) $_GET['group'] ) ) {
-				// Redirect now
+
+				// Get all fields of the group and delete them too.
+				$args = array(
+					'id'     => (int) $_GET['group'],
+					'number' => -1,
+				);
+				$fields = WPUM()->fields->get_by_group( $args );
+
+				foreach ( $fields as $field_to_delete ) {
+					WPUM()->fields->delete( $field_to_delete->id );
+				}
+
+				// Redirect now.
 				$admin_url = add_query_arg( array( 'message' => 'group_delete_success' ), admin_url( 'users.php?page=wpum-profile-fields' ) );
 				wp_redirect( $admin_url );
 				exit();
@@ -437,7 +461,7 @@ class WPUM_Fields_Editor {
 
 		}
 
-		// Check whether the group settings form has been submitted
+		// Check whether the group settings form has been submitted.
 		if( isset( $_POST['wpum-action'] ) && $_POST['wpum-action'] == 'edit_group' ) {
 
 			// nonce verification
@@ -445,8 +469,8 @@ class WPUM_Fields_Editor {
 				return;
 			}
 
-			// bail if something is wrong
-			if( !is_numeric( $_POST['group'] ) && !current_user_can( 'manage_options' ) )
+			// bail if something is wrong.
+			if( ! is_numeric( $_POST['group'] ) && ! current_user_can( 'manage_options' ) )
 				return;
 
 			$args = array(
@@ -479,19 +503,22 @@ class WPUM_Fields_Editor {
 		if( !isset( $_GET['field'] ) || !is_numeric( $_GET['field'] ) )
 			wp_die( 'To edit a field please go to Users -> Profile fields' );
 
+			$current_group = ( isset( $_GET['from_group'] ) && is_numeric( $_GET['from_group'] ) ) ? $_GET['from_group'] : false;
+			$editor_url = add_query_arg( array( 'action' => 'edit', 'group' => $current_group ), admin_url( 'users.php?page=wpum-profile-fields' ) );
+
 		?>
-		
+
 		<div class="wrap wpum-fields-editor-wrap">
 
 			<h2 class="wpum-page-title">
 				<?php echo __( 'Editing field', 'wpum' ); ?>
-				<a href="<?php echo esc_url( admin_url( 'users.php?page=wpum-profile-fields' ) ); ?>" class="add-new-h2"><?php _e('Back to editor', 'wpum'); ?></a>
+				<a href="<?php echo esc_url( $editor_url ); ?>" class="add-new-h2"><?php _e('Back to editor', 'wpum'); ?></a>
 			</h2>
 
 			<form name="wpum-edit-field-form" action="#" method="post" id="wpum-edit-field-form" autocomplete="off">
 				<div id="poststuff">
 					<div id="post-body" class="metabox-holder columns-2">
-						
+
 						<div id="post-body-content">
 
 							<?php do_action( 'wpum/fields/editor/single' ); ?>
@@ -528,14 +555,14 @@ class WPUM_Fields_Editor {
 							</div>
 						</div><!-- postbox-container sidebar -->
 
-					</div> 
+					</div>
 				</div>
 			</form>
 
 		</div>
 
 		<?php
-		
+
 		echo ob_get_clean();
 
 	}
@@ -577,7 +604,7 @@ class WPUM_Fields_Editor {
 	 */
 	public function field_description_editor() {
 
-		$description_settings = array( 
+		$description_settings = array(
 			'media_buttons' => false,
 			'teeny'         => true,
 			'quicktags'     => false,
@@ -587,7 +614,7 @@ class WPUM_Fields_Editor {
 		?>
 
 		<div class="description-editor">
-			<h3><?php _e('Field Description (optional)', 'wpum'); ?></h3>
+			<h3><?php esc_html_e('Field Description (optional)', 'wpum'); ?></h3>
 			<?php wp_editor( $this->field->description, 'field_description', $description_settings ); ?>
 		</div>
 
@@ -606,8 +633,8 @@ class WPUM_Fields_Editor {
 		$args = array(
 			'name'    => 'set_as_required',
 			'current' => $this->field->is_required,
-			'label'   => __('Set this field as required ?', 'wpum'),
-			'desc'    => __('Enable to force the user to fill this field.', 'wpum'),
+			'label'   => esc_html__('Set this field as required', 'wpum'),
+			'desc'    => esc_html__('Enable to force the user to fill this field.', 'wpum'),
 		);
 
 		echo WPUM()->html->checkbox( $args );
@@ -625,11 +652,53 @@ class WPUM_Fields_Editor {
 		$args = array(
 			'name'    => 'show_on_registration',
 			'current' => $this->field->show_on_registration,
-			'label'   => __('Display this field on registration ?', 'wpum'),
-			'desc'    => __('Enable to display this field on the registration form.', 'wpum'),
+			'label'   => esc_html__('Display this field on registration', 'wpum'),
+			'desc'    => esc_html__('Enable to display this field on the registration form.', 'wpum'),
 		);
 
 		echo WPUM()->html->checkbox( $args );
+
+	}
+
+	/**
+	 * Render the full name setting for the field editor.
+	 *
+	 * @access public
+	 * @return void
+	 */
+	public function name_setting() {
+
+		$args = array(
+			'name'    => 'display_full_name',
+			'current' => wpum_get_field_option( $this->field->id, 'display_full_name' ) ? true : false,
+			'label'   => esc_html__( 'Display full name', 'wpum' ),
+			'desc'    => esc_html__( 'Enable to display the user full name instead.', 'wpum' ),
+		);
+
+		echo WPUM()->html->checkbox( $args );
+
+	}
+
+	/**
+	 * Render the visibility settings metabox.
+	 *
+	 * @access public
+	 * @return void
+	 * @since 1.2.0
+	 */
+	public function visibility_settings() {
+
+		$args = array(
+			'name'             => 'field_visibility',
+			'selected'         => $this->field->default_visibility,
+			'label'            => esc_html__( 'Field Visibility', 'wpum' ),
+			'desc'             => esc_html__( 'Determine the visibility of this field.', 'wpum' ),
+			'show_option_all'  => false,
+			'show_option_none' => false,
+			'options'          => wpum_get_field_visibility_settings()
+		);
+
+		echo WPUM()->html->select( $args );
 
 	}
 
@@ -662,8 +731,9 @@ class WPUM_Fields_Editor {
 			$args = array(
 				'name'                 => sanitize_text_field( $_POST['name'] ),
 				'description'          => wp_kses_post( $_POST['field_description'] ),
-				'is_required'          => isset( $_POST['set_as_required'] ) ? (bool) $_POST['set_as_required'] : false,
-				'show_on_registration' => isset( $_POST['show_on_registration'] ) ? (bool) $_POST['show_on_registration'] : false
+				'is_required'          => isset( $_POST['set_as_required'] ) ? (bool) $_POST['set_as_required']:            false,
+				'show_on_registration' => isset( $_POST['show_on_registration'] ) ? (bool) $_POST['show_on_registration']:  false,
+				'default_visibility'   => isset( $_POST['field_visibility'] ) ? sanitize_key( $_POST['field_visibility'] ): 'public'
 			);
 
 			// Unset options from being saved if field type doesn't support them
@@ -672,15 +742,35 @@ class WPUM_Fields_Editor {
 			if( ! $this->field_object->set_requirement )
 				unset( $args['is_required'] );
 
-			// Allow plugins to extend the save process
-			do_action( 'wpum/fields/editor/single/before_save', $field_id, $group_id, $this->field, $this->field_object );
-
 			// Save the field
 			if( WPUM()->fields->update( $field_id, $args ) ) {
 
+				// Verify whether the "display full name" option has been checked or not.
+				// If it's checked, then we store the value into the field options.
+				if( $this->field->meta == 'first_name' || $this->field->meta == 'last_name' ) {
+
+					$display_full_name = isset( $_POST['display_full_name'] ) ? (bool) $_POST['display_full_name'] : false;
+
+					if( $display_full_name ) {
+						wpum_update_field_option( $field_id, 'display_full_name', true );
+					} elseif ( $display_full_name === false ) {
+						wpum_delete_field_option( $field_id, 'display_full_name' );
+					}
+
+				}
+
+				// Allow plugins to extend the save process
+				do_action( 'wpum/fields/editor/single/before_save', $field_id, $group_id, $this->field, $this->field_object );
+
 				// Redirect now
-				$admin_url = add_query_arg( array( 'message' => 'field_saved' ), admin_url( 'users.php?page=wpum-profile-fields' ) );
+				$admin_url = add_query_arg( array(
+					'message' => 'field_saved',
+					'action'  => 'edit',
+					'group' => $group_id
+				), admin_url( 'users.php?page=wpum-profile-fields' ) );
+
 				wp_redirect( $admin_url );
+
 				exit();
 
 			}
