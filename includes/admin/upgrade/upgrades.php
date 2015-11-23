@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  */
 function wpum_upgrades_notices() {
 
-  if( ! get_option( 'wpum_did_121_update' ) ) {
+  if( ! get_option( 'wpum_did_121_update' ) && get_option( 'wpum_version_upgraded_from' ) ) {
 
     $update_action = add_query_arg( array( 'wpum_upgrade' => 121 ), admin_url( 'index.php' ) );
 
