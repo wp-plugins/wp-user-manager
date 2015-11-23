@@ -739,7 +739,7 @@ class WPUM_Fields_Editor {
 			// Unset options from being saved if field type doesn't support them
 			if( ! $this->field_object->set_registration )
 				unset( $args['show_on_registration'] );
-			if( ! $this->field_object->set_requirement )
+			if( ! $this->field_object->set_requirement || $this->field->meta == 'user_email' )
 				unset( $args['is_required'] );
 
 			// Save the field

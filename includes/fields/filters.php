@@ -18,10 +18,8 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * to change it's output to a link.
  *
  * @param  string $value the value of field.
- * @param  string $type  field type.
- * @param  string $meta  field meta key.
- * @param  int $id    the field id number.
- * @return mixed        html output of this field.
+ * @param  string $field  field object.
+ * @return string        output of this field.
  * @since 1.2.0
  */
 function wpum_adjust_website_meta_output( $value, $field ) {
@@ -33,7 +31,7 @@ function wpum_adjust_website_meta_output( $value, $field ) {
 	return $value;
 
 }
-add_filter( 'wpum_get_the_field_value', 'wpum_adjust_website_meta_output', 10, 4 );
+add_filter( 'wpum_get_the_field_value', 'wpum_adjust_website_meta_output', 10, 2 );
 
 /**
  * Adjust the output of the first name/last name field to display a full name if the option is enabled.
@@ -41,10 +39,8 @@ add_filter( 'wpum_get_the_field_value', 'wpum_adjust_website_meta_output', 10, 4
  * if the option is enabled into the last name field, WPUM will display the last name + first name.
  *
  * @param  string $value the value of field.
- * @param  string $type  field type.
- * @param  string $meta  field meta key.
- * @param  int $id    the field id number.
- * @return mixed        html output of this field.
+ * @param  string $field  field object.
+ * @return string        output of this field.
  * @since 1.2.0
  */
 function wpum_adjust_name_meta_output( $value, $field ) {
@@ -62,4 +58,4 @@ function wpum_adjust_name_meta_output( $value, $field ) {
 	return $value;
 
 }
-add_filter( 'wpum_get_the_field_value', 'wpum_adjust_name_meta_output', 10, 4 );
+add_filter( 'wpum_get_the_field_value', 'wpum_adjust_name_meta_output', 10, 2 );
