@@ -75,6 +75,7 @@ function wpum_install() {
 
 	// Update current version
 	update_option( 'wpum_version', WPUM_VERSION );
+	update_option( 'wpum_did_121_update', true );
 
 	// Add the transient to redirect
 	set_transient( '_wpum_activation_redirect', true, 30 );
